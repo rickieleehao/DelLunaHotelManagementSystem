@@ -16,6 +16,10 @@ public class Booking {
 		
 	}
 	
+	public boolean validatePolicy(Date dateToday) {//yy
+		return true;
+	}
+	
 	public void setCheckInDate(Date checkInDate) {
 		
 	}
