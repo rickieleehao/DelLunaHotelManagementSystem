@@ -1,6 +1,6 @@
 package hotel_entity;
 
-public class ClientProfile {
+public class ClientProfile { //done
 	private String NRIC;
 	private String firstName;
 	private String lastName;
