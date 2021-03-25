@@ -1,5 +1,5 @@
 package hotel_main;
-
+import hotel_entity.*;
 import java.util.*;
 
 public class SystemUI {
@@ -52,7 +52,7 @@ public class SystemUI {
 	}
 	
 	public ClientProfile createClientProfile(String NRIC) {
-		
+		return null;
 	}
 	
 	public void changeBookingDets(Booking theBooking) {

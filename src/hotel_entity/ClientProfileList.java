@@ -1,24 +1,25 @@
 package hotel_entity;
 
-import hotel_interface.ClientProfile;
+import java.util.List;
+
 import hotel_interface.IClientData;
 
 public class ClientProfileList implements IClientData {
 	
-	List<ClientProfile> clientProfileList = new List<ClientProfile>;
+	List<ClientProfile> clientProfileList;
 	
-	puiblic ClientProfileList(String fileName) {
+	public ClientProfileList(String fileName) {
 		
 	}
 
 	@Override
-	public void addClientProfile(ClientProfile newClientProfile) {
+	public void addClientProfile(hotel_entity.ClientProfile newClientProfile) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public ClientProfile getClientProfile(String NRIC) {
+	public hotel_entity.ClientProfile getClientProfile(String NRIC) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -28,5 +29,4 @@ public class ClientProfileList implements IClientData {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

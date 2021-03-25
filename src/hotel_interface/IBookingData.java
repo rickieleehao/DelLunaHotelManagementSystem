@@ -1,5 +1,9 @@
 package hotel_interface;
 
+import java.util.Date;
+
+import hotel_entity.*;
+
 public interface IBookingData {
 
 	public void addBooking(Booking newBooking);
@@ -23,8 +27,8 @@ public interface IBookingData {
 	public void updateBooking (Booking theBooking, Date checkInDate, Date checkOutDate,
 			Room room, int numOfGuest);
 	
-	public void uodateBooking (Booking theBooking, Room room);
+	public void updateBooking (Booking theBooking, Room room);
 	
-	public void uodateBooking (Booking theBooking, int numOfGuest);
+	public void updateBooking (Booking theBooking, int numOfGuest);
 	
 }
