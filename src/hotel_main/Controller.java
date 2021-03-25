@@ -70,7 +70,9 @@ public class Controller {
 		return null;
 	}
 
-	public void getClientProfile(String NRIC) { // hy
+
+	public ClientProfile getClientProfile(String NRIC) { //hy
+		return null;
 
 	}
 
