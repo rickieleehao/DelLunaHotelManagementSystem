@@ -66,8 +66,8 @@ public class Controller {
 		return null;
 	}
 
-	public void getClientProfile(String NRIC) {
-
+	public ClientProfile getClientProfile(String NRIC) {
+		return null;
 	}
 
 	public double getDeposit(Booking theBooking) {
