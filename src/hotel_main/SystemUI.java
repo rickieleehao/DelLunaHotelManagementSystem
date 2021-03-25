@@ -175,15 +175,7 @@ public class SystemUI {
 		else
 			System.out.println(""); //view booking
 		
-		System.out.println();
-
-		System.out.println("----Here is the Client Info----");
-		System.out.println("First Name  :"+clientProfile.getFirstName());
-		System.out.println("Last Name   :"+clientProfile.getLastName());
-		System.out.println("NRIC        :"+clientProfile.getNRIC());
-		System.out.println("Gender      :"+clientProfile.getGender());
-		System.out.println("Address     :"+clientProfile.getAddress());
-		System.out.println();
+		
 		
 		
 	}
@@ -233,6 +225,15 @@ public class SystemUI {
 
 	private void displayClientInfo(ClientProfile clientProfile) { // xz
 
+		System.out.println();
+
+		System.out.println("----Here is the Client Info----");
+		System.out.println("First Name  :"+clientProfile.getFirstName());
+		System.out.println("Last Name   :"+clientProfile.getLastName());
+		System.out.println("NRIC        :"+clientProfile.getNRIC());
+		System.out.println("Gender      :"+clientProfile.getGender());
+		System.out.println("Address     :"+clientProfile.getAddress());
+		System.out.println();
 	}
 
 	private void displayAvailableRoom(List<Room> availableRoomList) { // yy
