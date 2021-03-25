@@ -273,10 +273,9 @@ public class SystemUI {
 		
 		System.out.print("Enter client's address ----> ");
 		address = scanner.nextLine();
-		
-		ClientProfile newClientProfile = new ClientProfile(NRIC, firstName, lastName, gender, address);
+		ClientProfile clientProfile = controller.createClientProfile(NRIC, firstName, lastName, gender, address);
 		System.out.println("Client's profile is created.");
-		return newClientProfile;
+		return clientProfile;
 	}
 
 	private void changeBookingDets(Booking theBooking) { // hy
@@ -289,19 +288,19 @@ public class SystemUI {
 		boolean isRefundable = theBooking.validatePolicy(dateToday);
 		if(isRefundable) {
 			System.out.println("The deposit is refundable");
-			double deposit = theBooking.getPayment().getDeposit();
+			double deposit = controller.getDeposit(theBooking);
 			System.out.println("Deposit amount ----> " + deposit);
-			PaymentMethod paymentMethod = theBooking.getPayment().getPaymentMethod();
+			PaymentMethod paymentMethod = controller.getPaymentMethod(theBooking);
 			if(paymentMethod == PaymentMethod.CreditCard) {
 				System.out.println("Payment Method ----> Credit Card");
-				int cardNumber = theBooking.getPayment().getCardNumber();
+				int cardNumber = controller.getCardNumber(theBooking);
 				System.out.println("Card Number ----> " + cardNumber);
 			}
 			else {
 				System.out.println("Payment Method ----> Cash");
 			}
 		}
-		theBooking.setStatus(BookingStatus.Cancelled);
+		controller.cancelBooking(theBooking);
 		System.out.println("The booking is cancelled.");
 		
 	}
