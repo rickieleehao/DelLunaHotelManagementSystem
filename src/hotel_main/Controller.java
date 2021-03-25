@@ -65,6 +65,10 @@ public class Controller {
 	public Date getCheckInDate(Booking theBooking) {
 		return null;
 	}
+	
+	public Date getCheckOutDate(Booking theBooking) {
+		return null;
+	}
 
 	public void getClientProfile(String NRIC) {
 
