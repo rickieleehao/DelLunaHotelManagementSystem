@@ -214,6 +214,7 @@ public class SystemUI {
 			System.out.printf("%-16d", availableRoomList.get(i).getNumOfBed());
 			System.out.println("");
 		}
+		System.out.println(""); // view booking
 
 	}
 
