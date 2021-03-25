@@ -12,58 +12,72 @@ public class SystemUI {
 	}
 	
 	public void start() {
-		
+		/*
+		 * displayMenu
+		 * 
+		 * choice
+		 * 
+		 * switch(choice)
+		 * 
+		 * case 1: createBooking();
+		 * ..
+		 * ..
+		 * ...
+		 * 
+		 */
 	}
 	
 	public void login() {
 		
 	}
 	
-	public void createBooking() {
+	public void createBooking() { //xz
+		int bookingID = controller.generateBookingID();
+		System.out.print("Enter NRIC ----> ");
+		String NRIC = scanner.nextLine();
+		boolean isProfileFound = controller.searchClientProfile(NRIC);
+	}
+	
+	public void updateBooking() { //hy
+	}
+	
+	public void checkIn() { //april
 		
 	}
 	
-	public void updateBooking() {
+	public void checkOut() { //april
 		
 	}
 	
-	public void checkIn() {
+	public void searchBooking() { // april
 		
 	}
 	
-	public void checkOut() {
+	public void displayMenu() { //R
 		
 	}
 	
-	public void searchBooking() {
+	public void displayClientInfo(ClientProfile clientProfile) { //xz
 		
 	}
 	
-	public void displayMenu() {
+	public void displayAvailableRoom(List<Room> availableRoomList) { // yy
 		
 	}
 	
-	public void displayClientInfo(ClientProfile clientProfile) {
-		
-	}
-	
-	public void displayAvailableRoom(List<Room> availableRoomList) {
-		
-	}
-	
-	public ClientProfile createClientProfile(String NRIC) {
+	public ClientProfile createClientProfile(String NRIC) { // yy
 		return null;
 	}
 	
-	public void changeBookingDets(Booking theBooking) {
+	public void changeBookingDets(Booking theBooking) { //hy
 		
 	}
 	
-	public void cancelBooking(Booking theBooking) {
+	public void cancelBooking(Booking theBooking) { //yy
 		
 	}
 	
-	public void makePayment(Booking theBooking) {
+	public void makePayment(Booking theBooking) { // tbc
 		
 	}
 	
