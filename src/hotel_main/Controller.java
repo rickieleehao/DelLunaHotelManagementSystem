@@ -78,7 +78,7 @@ public class Controller {
 		return null;
 	}
 
-	public Booking searchBooking(Booking theBooking) {
+	public Booking searchBooking(int bookingID) {
 		return null;
 	}
 

@@ -2,6 +2,7 @@ package hotel_main;
 import hotel_entity.*;
 import java.util.*;
 
+
 public class SystemUI {
 	private Scanner scanner;
 	private Controller controller;
@@ -43,13 +44,45 @@ public class SystemUI {
 	
 	public void checkIn() { //april
 		
-	}
-	
-	public void checkOut() { //april
+		System.out.print("Enter booking ID ----> ");
+		int bookingID= scanner.nextInt();
+		
+		Booking theBooking= controller.searchBooking(bookingID);
+		if(theBooking==null) 
+			System.out.println("Booking not found.");
+		else
+			System.out.println();
+			controller.checkIn(theBooking);
 		
 	}
 	
+	public void checkOut() { //april
+		System.out.print("Enter booking ID ----> ");
+		int bookingID= scanner.nextInt();
+		
+		Booking theBooking= controller.searchBooking(bookingID);
+		if(theBooking==null) 
+			System.out.println("Booking not found.");
+		else
+		{
+			System.out.println();
+			makePayment(theBooking);
+			controller.checkOut(theBooking);
+		}
+	}
+	
 	public void searchBooking() { // april
+		
+		System.out.print("Enter booking ID ----> ");
+		int bookingID= scanner.nextInt();
+		
+		Booking theBooking= controller.searchBooking(bookingID);
+		if(theBooking==null) 
+			System.out.println("Booking not found.");
+		else
+			System.out.println(""); //view booking
+		
+		System.out.println();
 		
 	}
 	
