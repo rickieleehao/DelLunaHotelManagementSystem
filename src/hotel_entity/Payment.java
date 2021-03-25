@@ -1,6 +1,6 @@
 package hotel_entity;
 
-public class Payment {
+public class Payment { //yy
 	private double totalPrice, deposit;
 	private PaymentMethod paymentMethod;
 	private int cardNumber;
