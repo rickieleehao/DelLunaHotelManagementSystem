@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
 public class SystemUI {
 	private Scanner scanner;
 	private Controller controller;
@@ -72,114 +71,135 @@ public class SystemUI {
 
 	}
 
-	
-	public void createBooking() throws ParseException { //xz
-		
+	public void createBooking() throws ParseException { // xz
 
 		int bookingID = controller.generateBookingID();
 		System.out.print("Enter NRIC ----> ");
 		String NRIC = scanner.nextLine();
-		
+
 		boolean isProfileFound = controller.searchClientProfile(NRIC);
 
-		
 		String skip;
 		ClientProfile clientProfile;
-		
-		if(isProfileFound==true) {	
-			
-			 clientProfile= controller.getClientProfile(NRIC);	
-					
+
+		if (isProfileFound == true) {
+
+			clientProfile = controller.getClientProfile(NRIC);
+
 		}
-		
+
 		else {
-			
-			 clientProfile = createClientProfile(NRIC);
+
+			clientProfile = createClientProfile(NRIC);
 		}
-		
+
 		displayClientInfo(clientProfile);
-		
-		System.out.print("Enter Check In Date (DD/MM/YYYY) ----> ");
-		String checkInDateString = scanner.nextLine();
-		
-		System.out.print("Enter Check Out Date (DD/MM/YYYY) ----> ");
-		String checkOutDateString = scanner.nextLine();
-		
-		Date checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);		
-		Date checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
-		
+		boolean isDate;
+		do {
+			System.out.print("Enter Check In Date (DD/MM/YYYY) ----> ");
+			String checkInDateString = scanner.nextLine();
+
+			System.out.print("Enter Check Out Date (DD/MM/YYYY) ----> ");
+			String checkOutDateString = scanner.nextLine();
+
+			try {
+				Date checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
+				Date checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
+				isDate = true;
+			} catch (ParseException e) {
+				System.out.println("invliad date");
+				isDate = false;
+			}
+		} while (!isDate);
+
 		List<Room> availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
-				
+
 		displayAvailableRoom(availableRoomList);
-		
+
 		System.out.print("Select available room by enter room number ----> ");
-		int roomNo = scanner.nextInt();		
-		//clear enter key
-		skip= scanner.nextLine();
-		Room room = availableRoomList.get(roomNo-1);
-		
+		int roomNo = scanner.nextInt();
+		// clear enter key
+		skip = scanner.nextLine();
+		Room room = availableRoomList.get(roomNo - 1);
+
 		System.out.print("Enter number of guest ----> ");
 		int numOfGuest = scanner.nextInt();
-		//clear enter key
-		skip= scanner.nextLine();
-		
-		Booking newBooking = controller.createBooking(bookingID,clientProfile,checkInDate,checkOutDate,room,numOfGuest);
-		
+		// clear enter key
+		skip = scanner.nextLine();
+
+		Booking newBooking = controller.createBooking(bookingID, clientProfile, checkInDate, checkOutDate, room,
+				numOfGuest);
+
 		controller.addBooking(newBooking);
-		
+
 		System.out.println(" Your booking has been created successful ");
-						
 
 	}
 
-	public void updateBooking() { // hy
+	public void updateBooking() throws ParseException { // hy
+		int choice;
+		do {
+			Booking theBooking = searchBooking();
+			System.out.println("Update Booking");
+			System.out.println("--------------");
+			System.out.println("1. Change booking detail.");
+			System.out.println("2. Cancel booking.");
+			System.out.println("3. Exit.");
+			System.out.print("Enter number ----> ");
+			choice = scanner.nextInt();
+			scanner.nextLine();
+			switch (choice) {
+			case 1:
+				changeBookingDets(theBooking);
+				break;
+			case 2:
+				cancelBooking(theBooking);
+				break;
+			}
+		} while (choice != 3);
 	}
-	
-	public void checkIn() { //april
-		
+
+	public void checkIn() { // april
+
 		System.out.print("Enter booking ID ----> ");
-		int bookingID= scanner.nextInt();
-		
-		Booking theBooking= controller.searchBooking(bookingID);
-		if(theBooking==null) 
+		int bookingID = scanner.nextInt();
+
+		Booking theBooking = controller.searchBooking(bookingID);
+		if (theBooking == null)
 			System.out.println("Booking not found.");
 		else
 			System.out.println();
-			controller.checkIn(theBooking);
-		
+		controller.checkIn(theBooking);
+
 	}
-	
-	public void checkOut() { //april
+
+	public void checkOut() { // april
 		System.out.print("Enter booking ID ----> ");
-		int bookingID= scanner.nextInt();
-		
-		Booking theBooking= controller.searchBooking(bookingID);
-		if(theBooking==null) 
+		int bookingID = scanner.nextInt();
+
+		Booking theBooking = controller.searchBooking(bookingID);
+		if (theBooking == null)
 			System.out.println("Booking not found.");
-		else
-		{
+		else {
 			System.out.println();
 			makePayment(theBooking);
 			controller.checkOut(theBooking);
 		}
 	}
 
-	public void searchBooking() { // april
-		
+	public Booking searchBooking() { // april
+
 		System.out.print("Enter booking ID ----> ");
-		int bookingID= scanner.nextInt();
-		
-		Booking theBooking= controller.searchBooking(bookingID);
-		if(theBooking==null) 
+		int bookingID = scanner.nextInt();
+
+		Booking theBooking = controller.searchBooking(bookingID);
+		if (theBooking == null)
 			System.out.println("Booking not found.");
 		else
-			System.out.println(""); //view booking
-		
-		
-		
-		
+			System.out.println(""); // view booking
+		return theBooking;
 	}
-	
+
 	private void displayAvailableRoom(List<Room> availableRoomList) { // yy
 		System.out.printf("%-9s", "Room ID");
 		System.out.printf("%-8s", "Rates");
@@ -187,14 +207,14 @@ public class SystemUI {
 		System.out.printf("%-16s", "Number of Beds");
 		System.out.println("");
 		System.out.println("");
-		for(int i = 0; i < availableRoomList.size(); i++) {
+		for (int i = 0; i < availableRoomList.size(); i++) {
 			System.out.printf("%-9d", availableRoomList.get(i).getRoomID());
 			System.out.printf("%-8.2f", availableRoomList.get(i).getRate());
 			System.out.printf("%-10.2f", availableRoomList.get(i).getDiscount());
 			System.out.printf("%-16d", availableRoomList.get(i).getNumOfBed());
 			System.out.println("");
 		}
-		
+
 	}
 
 	private boolean displayClientMenu() { // R
@@ -240,37 +260,36 @@ public class SystemUI {
 		System.out.println();
 
 		System.out.println("----Here is the Client Info----");
-		System.out.println("First Name  :"+clientProfile.getFirstName());
-		System.out.println("Last Name   :"+clientProfile.getLastName());
-		System.out.println("NRIC        :"+clientProfile.getNRIC());
-		System.out.println("Gender      :"+clientProfile.getGender());
-		System.out.println("Address     :"+clientProfile.getAddress());
+		System.out.println("First Name  :" + clientProfile.getFirstName());
+		System.out.println("Last Name   :" + clientProfile.getLastName());
+		System.out.println("NRIC        :" + clientProfile.getNRIC());
+		System.out.println("Gender      :" + clientProfile.getGender());
+		System.out.println("Address     :" + clientProfile.getAddress());
 		System.out.println();
 	}
 
 	private ClientProfile createClientProfile(String NRIC) { // yy
-		
+
 		String firstName;
 		String lastName;
 		String temp;
 		Gender gender = null;
 		String address;
-		
+
 		System.out.print("Enter client's first name ----> ");
 		firstName = scanner.nextLine();
-		
+
 		System.out.print("Enter client's last name ----> ");
 		lastName = scanner.nextLine();
-		
+
 		System.out.print("Enter client's gender(M/F) ----> ");
 		temp = scanner.nextLine();
-		if(temp.toLowerCase().equals("m")) {
+		if (temp.toLowerCase().equals("m")) {
 			gender = Gender.Male;
-		}
-		else if(temp.toLowerCase().equals("f")) {
+		} else if (temp.toLowerCase().equals("f")) {
 			gender = Gender.Female;
 		}
-		
+
 		System.out.print("Enter client's address ----> ");
 		address = scanner.nextLine();
 		ClientProfile clientProfile = controller.createClientProfile(NRIC, firstName, lastName, gender, address);
@@ -278,15 +297,65 @@ public class SystemUI {
 		return clientProfile;
 	}
 
-	private void changeBookingDets(Booking theBooking) { // hy
-
+	private void changeBookingDets(Booking theBooking) throws ParseException { // hy
+		int choice, roomNo;
+		Date checkInDate, checkOutDate;
+		List<Room> availableRoomList;
+		Room room;
+		do {
+			System.out.println("Change Booking Detail");
+			System.out.println("---------------------");
+			System.out.println("1. Change check-in date & check-out date.");
+			System.out.println("2. Change room.");
+			System.out.println("3. Change number of guest.");
+			System.out.println("4. Exit.");
+			System.out.print("Enter number ----> ");
+			choice = scanner.nextInt();
+			scanner.nextLine();
+			switch (choice) {
+			case 1:
+				System.out.print("Enter new check-in date (DD/MM/YYYY) ----> ");
+				String checkInDateString = scanner.nextLine();
+				System.out.print("Enter new check-out date (DD/MM/YYYY) ----> ");
+				String checkOutDateString = scanner.nextLine();
+				checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
+				checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
+				availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
+				for (int i = 0; i < availableRoomList.size(); i++) {
+					Room arl = availableRoomList.get(i);
+					System.out.println("");
+				}
+				System.out.print("Enter new room ----> ");
+				roomNo = scanner.nextInt();
+				scanner.nextLine();
+				room = availableRoomList.get(roomNo - 1);
+				int numOfGuest = scanner.nextInt();
+				scanner.nextLine();
+				controller.updateBooking(theBooking, checkInDate, checkOutDate, room, numOfGuest);
+				break;
+			case 2:
+				checkInDate = controller.getCheckInDate(theBooking);
+				checkOutDate = controller.getCheckOutDate(theBooking);
+				availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
+				for (int i = 0; i < availableRoomList.size(); i++) {
+					Room arl = availableRoomList.get(i);
+					System.out.println("");
+				}
+				System.out.print("Enter new room ----> ");
+				roomNo = scanner.nextInt();
+				scanner.nextLine();
+				room = availableRoomList.get(roomNo - 1);
+				// not complete
+				break;
+			}
+		} while (choice != 4);
 	}
 
 	private void cancelBooking(Booking theBooking) { // yy
 		Calendar calendar = Calendar.getInstance();
 		Date dateToday = calendar.getTime();
 		boolean isRefundable = theBooking.validatePolicy(dateToday);
-		if(isRefundable) {
+		if (isRefundable) {
 			System.out.println("The deposit is refundable");
 			double deposit = controller.getDeposit(theBooking);
 			System.out.println("Deposit amount ----> " + deposit);
@@ -295,14 +364,13 @@ public class SystemUI {
 				System.out.println("Payment Method ----> Credit Card");
 				int cardNumber = controller.getCardNumber(theBooking);
 				System.out.println("Card Number ----> " + cardNumber);
-			}
-			else {
+			} else {
 				System.out.println("Payment Method ----> Cash");
 			}
 		}
 		controller.cancelBooking(theBooking);
 		System.out.println("The booking is cancelled.");
-		
+
 	}
 
 	private void makePayment(Booking theBooking) { // tbc
