@@ -20,49 +20,49 @@ public class Controller {
 		this.user = user;
 	}
 
-	public void addBooking(Booking newBooking) {
+	public void addBooking(Booking newBooking) { // april
+		
+	}
+
+	public void cancelBooking(Booking theBooking) { // april
 
 	}
 
-	public void cancelBooking(Booking theBooking) {
+	public void checkIn(Booking theBooking) { // april
 
 	}
 
-	public void checkIn(Booking theBooking) {
-
-	}
-
-	public void checkOut(Booking theBooking) {
+	public void checkOut(Booking theBooking) { // april
 
 	}
 
 	public Booking createBooking(int bookingID, ClientProfile clientProfile, Date checkInDate, Date checkOutDate,
-			Room room, int numOfGuest) {
+			Room room, int numOfGuest) { // april
 		return null;
 	}
 
 	public ClientProfile createClientProfile(String NRIC, String firstName, String lastName, Gender gender,
-			String address) {
+			String address) { // xz
 		return null;
 	}
 
-	public List<Room> findAvailableRoom(Date checkInDate, Date checkOutDate) {
+	public List<Room> findAvailableRoom(Date checkInDate, Date checkOutDate) { // xz
 		return null;
 	}
 
-	public int generateBookingID() {
+	public int generateBookingID() { // ignore
 		return 0;
 	}
 
-	public Booking getBooking(Booking theBooking) {
+	public Booking getBooking(Booking theBooking) { // xz
 		return null;
 	}
 
-	public int getCardNumber(Booking theBooking) {
+	public int getCardNumber(Booking theBooking) { // xz
 		return 0;
 	}
 
-	public Date getCheckInDate(Booking theBooking) {
+	public Date getCheckInDate(Booking theBooking) { // xz
 		return null;
 	}
 	
@@ -70,40 +70,44 @@ public class Controller {
 		return null;
 	}
 
-	public void getClientProfile(String NRIC) {
+	public void getClientProfile(String NRIC) { // hy
 
 	}
 
-	public double getDeposit(Booking theBooking) {
+	public double getDeposit(Booking theBooking) { // hy
 		return 0;
 	}
 
-	public PaymentMethod getPaymentMethod(Booking theBooking) {
+	public PaymentMethod getPaymentMethod(Booking theBooking) { // hy
 		return null;
 	}
 
-	public Booking searchBooking(Booking theBooking) {
+	public Booking searchBooking(int bookingID) {
 		return null;
 	}
 
-	public boolean searchClientProfile(String NRIC) {
+	public boolean searchClientProfile(String NRIC) { // hy
 		return true;
 	}
 
-	public void updateBooking(Booking theBooking, Room room) {
+	public void updateBooking(Booking theBooking, Room room) { // yy
 
 	}
 
-	public void updateBooking(Booking theBooking, int numOfGuest) {
+	public void updateBooking(Booking theBooking, int numOfGuest) { // yy
 
 	}
 
-	public void updateBooking(Booking theBooking, Date checkInDate, Date checkOutDate, Room room, int numOfGuest) {
+	public void updateBooking(Booking theBooking, Date checkInDate, Date checkOutDate, Room room, int numOfGuest) { // yy
 
 	}
 
-	public boolean validatePolicy(Booking theBooking, Date dateToday) {
+	public boolean validatePolicy(Booking theBooking, Date dateToday) { // yy
 		return true;
+	}
+
+	public UserType getUserType() { // yy
+		return this.user.getType();
 	}
 
 }
