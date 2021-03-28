@@ -44,8 +44,10 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public List<Booking> findAvailableRoom(java.util.Date checkInDate, java.util.Date checkOutDate) { //yy
+	//return type changed from List<Booking> to List<Room>
+	public List<Room> findAvailableRoom(java.util.Date checkInDate, java.util.Date checkOutDate) { //yy
 		RoomList availableRoomList = new RoomList();
+		
 		return availableRoomList;
 	}
 
