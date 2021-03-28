@@ -5,13 +5,34 @@ public class Payment { //yy
 	private PaymentMethod paymentMethod;
 	private int cardNumber;
 	
+	public Payment() {
+		
+	}
+	
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+	
 	public double getDeposit() {
-		return 0;
+		return deposit;
 	}
 	public PaymentMethod getPaymentMethod() {
-		return null;
+		return paymentMethod;
 	}
 	public int getCardNumber() {
-		return 0;
+		return cardNumber;
 	}
+	
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+	
+	public void setcardNumber(int cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+	
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	
 }

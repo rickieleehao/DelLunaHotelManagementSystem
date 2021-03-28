@@ -1,6 +1,7 @@
 package hotel_interface;
 
 import java.util.Date;
+import java.util.List;
 
 import hotel_entity.*;
 
@@ -18,7 +19,7 @@ public interface IBookingData {
 	public Booking createBooking (int bookingID, ClientProfile clientProfile, 
 					Date checkInDate, Date checkOutDate, Room room, int numOfGuest);
 	
-	public void findAvailableRoom (Date checkInDate, Date checkOutDate);
+	public List<Booking> findAvailableRoom (Date checkInDate, Date checkOutDate);
 	
 	public Booking generateBookingID () ;
 	

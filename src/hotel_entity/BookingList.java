@@ -44,9 +44,9 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public void findAvailableRoom(java.util.Date checkInDate, java.util.Date checkOutDate) { //yy
-		// TODO Auto-generated method stub
-		
+	public List<Booking> findAvailableRoom(java.util.Date checkInDate, java.util.Date checkOutDate) { //yy
+		RoomList availableRoomList = new RoomList();
+		return availableRoomList;
 	}
 
 	@Override

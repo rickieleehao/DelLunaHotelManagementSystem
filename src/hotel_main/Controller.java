@@ -93,19 +93,20 @@ public class Controller {
 	}
 
 	public void updateBooking(Booking theBooking, Room room) { // yy
-
+		bookingList.updateBooking(theBooking, room);
 	}
 
 	public void updateBooking(Booking theBooking, int numOfGuest) { // yy
-
+		bookingList.updateBooking(theBooking, numOfGuest);
 	}
 
 	public void updateBooking(Booking theBooking, Date checkInDate, Date checkOutDate, Room room, int numOfGuest) { // yy
-
+		bookingList.updateBooking(theBooking, checkInDate, checkOutDate, room, numOfGuest);
 	}
 
 	public boolean validatePolicy(Booking theBooking, Date dateToday) { // yy
-		return true;
+		boolean isRefundable = theBooking.validatePolicy(dateToday);
+		return isRefundable;
 	}
 
 	public UserType getUserType() { // yy
