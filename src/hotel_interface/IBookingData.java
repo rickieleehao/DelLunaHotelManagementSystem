@@ -19,7 +19,7 @@ public interface IBookingData {
 	public Booking createBooking (int bookingID, ClientProfile clientProfile, 
 					Date checkInDate, Date checkOutDate, Room room, int numOfGuest);
 	
-	public List<Booking> findAvailableRoom (Date checkInDate, Date checkOutDate);
+	public List<Room> findAvailableRoom (Date checkInDate, Date checkOutDate);
 	
 	public Booking generateBookingID () ;
 	
