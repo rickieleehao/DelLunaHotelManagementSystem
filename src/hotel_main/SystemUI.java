@@ -136,8 +136,9 @@ public class SystemUI {
 
 	}
 
-	public void updateBooking() throws ParseException { // hy
+	public void updateBooking() { // hy
 		int choice;
+		boolean exit = false;
 		do {
 			Booking theBooking = searchBooking();
 			System.out.println("Update Booking");
@@ -145,9 +146,17 @@ public class SystemUI {
 			System.out.println("1. Change booking detail.");
 			System.out.println("2. Cancel booking.");
 			System.out.println("3. Exit.");
-			System.out.print("Enter number ----> ");
+			System.out.print("Pick option (1-3) ----> ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
+			
+			while(choice < 1 || choice > 3) {
+				System.out.println("Invalid oprion.");
+				System.out.print("Pick option (1-3) ----> ");
+				choice = scanner.nextInt();
+				scanner.nextLine();
+			}
+			
 			switch (choice) {
 			case 1:
 				changeBookingDets(theBooking);
@@ -155,8 +164,11 @@ public class SystemUI {
 			case 2:
 				cancelBooking(theBooking);
 				break;
+			case 3:
+				exit = true;
+				break;
 			}
-		} while (choice != 3);
+		} while (!exit);
 	}
 
 	public void checkIn() { // april
@@ -298,9 +310,10 @@ public class SystemUI {
 		return clientProfile;
 	}
 
-	private void changeBookingDets(Booking theBooking) throws ParseException { // hy
-		int choice, roomNo;
-		Date checkInDate, checkOutDate;
+	private void changeBookingDets(Booking theBooking) { // hy
+		int choice, roomNo, numOfGuest;
+		boolean isDate, exit = false;
+		Date checkInDate = null, checkOutDate = null; 
 		List<Room> availableRoomList;
 		Room room;
 		do {
@@ -310,27 +323,40 @@ public class SystemUI {
 			System.out.println("2. Change room.");
 			System.out.println("3. Change number of guest.");
 			System.out.println("4. Exit.");
-			System.out.print("Enter number ----> ");
+			System.out.print("Pick option (1-4) ----> ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
+			
+			while(choice < 1 || choice > 4) {
+				System.out.println("Invalid option.");
+				System.out.print("Pick option (1-4) ----> ");
+				choice = scanner.nextInt();
+				scanner.nextLine();
+			}
+			
 			switch (choice) {
 			case 1:
-				System.out.print("Enter new check-in date (DD/MM/YYYY) ----> ");
-				String checkInDateString = scanner.nextLine();
-				System.out.print("Enter new check-out date (DD/MM/YYYY) ----> ");
-				String checkOutDateString = scanner.nextLine();
-				checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
-				checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
+				do {
+					System.out.print("Enter new check-in date (DD/MM/YYYY) ----> ");
+					String checkInDateString = scanner.nextLine();
+					System.out.print("Enter new check-out date (DD/MM/YYYY) ----> ");
+					String checkOutDateString = scanner.nextLine();
+					try {
+						checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
+						checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
+						isDate = true;
+					} catch (ParseException pex) {
+						System.out.println("Invalid date format.");
+						isDate = false;
+					}
+				} while (!isDate);
 				availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
-				for (int i = 0; i < availableRoomList.size(); i++) {
-					Room arl = availableRoomList.get(i);
-					System.out.println("");
-				}
+				displayAvailableRoom(availableRoomList);
 				System.out.print("Enter new room ----> ");
 				roomNo = scanner.nextInt();
 				scanner.nextLine();
 				room = availableRoomList.get(roomNo - 1);
-				int numOfGuest = scanner.nextInt();
+				numOfGuest = scanner.nextInt();
 				scanner.nextLine();
 				controller.updateBooking(theBooking, checkInDate, checkOutDate, room, numOfGuest);
 				break;
@@ -338,18 +364,24 @@ public class SystemUI {
 				checkInDate = controller.getCheckInDate(theBooking);
 				checkOutDate = controller.getCheckOutDate(theBooking);
 				availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
-				for (int i = 0; i < availableRoomList.size(); i++) {
-					Room arl = availableRoomList.get(i);
-					System.out.println("");
-				}
+				displayAvailableRoom(availableRoomList);
 				System.out.print("Enter new room ----> ");
 				roomNo = scanner.nextInt();
 				scanner.nextLine();
 				room = availableRoomList.get(roomNo - 1);
-				// not complete
+				controller.updateBooking(theBooking, room);
+				break;
+			case 3:
+				System.out.print("Enter new number of guest ----> ");
+				numOfGuest = scanner.nextInt();
+				scanner.nextLine();
+				controller.updateBooking(theBooking, numOfGuest);
+				break;
+			case 4:
+				exit = true;
 				break;
 			}
-		} while (choice != 4);
+		} while (!exit);
 	}
 
 	private void cancelBooking(Booking theBooking) { // yy
