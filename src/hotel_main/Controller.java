@@ -43,31 +43,40 @@ public class Controller {
 
 	public ClientProfile createClientProfile(String NRIC, String firstName, String lastName, Gender gender,
 			String address) { // xz
-		return null;
+		
+		ClientProfile newClientProfile = new ClientProfile(NRIC,firstName,lastName,gender,address);
+		clientProfileList.addClientProfile(newClientProfile);
+		
+		return newClientProfile;
 	}
 
 	public List<Room> findAvailableRoom(Date checkInDate, Date checkOutDate) { // xz
-		return null;
+		
+		List<Room>availableRoomList= bookingList.findAvailableRoom(checkInDate, checkOutDate);
+		
+		return availableRoomList;
 	}
 
 	public int generateBookingID() { // ignore
 		return 0;
 	}
 
-	public Booking getBooking(Booking theBooking) { // xz
-		return null;
-	}
+	
 
 	public int getCardNumber(Booking theBooking) { // xz
-		return 0;
+		Payment payment=theBooking.getPayment();
+		int cardNumber = payment.getCardNumber();
+		return cardNumber;
 	}
 
 	public Date getCheckInDate(Booking theBooking) { // xz
-		return null;
+		Date checkInDate = theBooking.getCheckInDate();
+		return checkInDate;
 	}
 	
 	public Date getCheckOutDate(Booking theBooking) {
-		return null;
+		Date checkOutDate = theBooking.getCheckOutDate();
+		return checkOutDate;
 	}
 
 

@@ -71,7 +71,9 @@ public class SystemUI {
 
 	}
 
-	public void createBooking() throws ParseException { // xz
+	public void createBooking() { // xz
+		
+		
 
 		int bookingID = controller.generateBookingID();
 		System.out.print("Enter NRIC ----> ");
@@ -81,6 +83,9 @@ public class SystemUI {
 
 		String skip;
 		ClientProfile clientProfile;
+		Date checkInDate= new Date() ;
+		Date checkOutDate= new Date() ;
+		
 
 		if (isProfileFound == true) {
 
@@ -103,8 +108,8 @@ public class SystemUI {
 			String checkOutDateString = scanner.nextLine();
 
 			try {
-				Date checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
-				Date checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
+				 checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
+				 checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
 				isDate = true;
 			} catch (ParseException e) {
 				System.out.println("invliad date");
