@@ -15,13 +15,14 @@ public class BookingList implements IBookingData {
 	@Override
 	public void addBooking(Booking newBooking) { // xz
 		// TODO Auto-generated method stub
-		
+		bookingList.add(newBooking);
 	}
 
 	@Override
 	public void cancelBooking(Booking theBooking) { //xz
 		// TODO Auto-generated method stub
-		
+		theBooking.setStatus(BookingStatus.Cancelled);
+		bookingList.remove(theBooking);
 	}
 
 	@Override
@@ -36,12 +37,7 @@ public class BookingList implements IBookingData {
 		
 	}
 
-	@Override
-	public Booking createBooking(int bookingID, hotel_entity.ClientProfile clientProfile, java.util.Date checkInDate,
-			java.util.Date checkOutDate, hotel_entity.Room room, int numOfGuest) { //xz
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	//return type changed from List<Booking> to List<Room>
@@ -58,9 +54,16 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public Booking getBooking(Booking theBooking) { //xz
+	public Booking getBooking(int bookingID) { //xz  -parameter booking change to bookingID
 		// TODO Auto-generated method stub
-		return null;
+		Booking theBooking=null;
+		for(int i=0;i<bookingList.size();i++) {
+			if(bookingList.get(i).getBookingID()==bookingID) {
+				theBooking=bookingList.get(i);
+				break;
+			}
+		}
+		return theBooking;
 	}
 
 	@Override

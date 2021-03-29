@@ -16,14 +16,13 @@ public interface IBookingData {
 	
 	public void checkOut (Booking theBooking);
 	
-	public Booking createBooking (int bookingID, ClientProfile clientProfile, 
-					Date checkInDate, Date checkOutDate, Room room, int numOfGuest);
+	
 	
 	public List<Room> findAvailableRoom (Date checkInDate, Date checkOutDate);
 	
 	public Booking generateBookingID () ;
 	
-	public Booking getBooking (Booking theBooking);
+	public Booking getBooking (int bookingID);
 	
 	public void updateBooking (Booking theBooking, Date checkInDate, Date checkOutDate,
 			Room room, int numOfGuest);
