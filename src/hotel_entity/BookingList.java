@@ -36,42 +36,50 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public int generateBookingID() { // ignore
+	public Booking generateBookingID() { // ignore
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
-	public void addBooking(Booking newBooking) {
+	public void addBooking(Booking newBooking) { // xz
+		// TODO Auto-generated method stub
 		bookingList.add(newBooking);
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, java.util.Date checkInDate, java.util.Date checkOutDate,
-			hotel_entity.Room room, int numOfGuest) { // april
+	public void updateBooking(Booking theBooking, Date checkInDate, java.util.Date checkOutDate,
+			hotel_entity.Room room, int numOfGuest) { 
 		// TODO Auto-generated method stub
-
+		theBooking.setCheckInDate(checkInDate);
+		theBooking.setCheckInDate(checkOutDate);
+		theBooking.setRoom(room);
+		theBooking.setNumOfGuest(numOfGuest);
+	
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, hotel_entity.Room room) { // april
-		// TODO Auto-generated method stub
-
+	public void updateBooking(Booking theBooking, Room room) { 
+		theBooking.setRoom(room);
+		
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, int numOfGuest) { // april
-		// TODO Auto-generated method stub
-
+	public void updateBooking(Booking theBooking, int numOfGuest) { 
+		theBooking.setNumOfGuest(numOfGuest);
+	
 	}
 
 	@Override
-	public void cancelBooking(Booking theBooking) {
+	public void cancelBooking(Booking theBooking) { // xz
+		// TODO Auto-generated method stub
 		theBooking.setStatus(Status.Cancelled);
+		bookingList.remove(theBooking);
 	}
 
 	@Override
-	public Booking getBooking(int bookingID) {
+	public Booking getBooking(int bookingID) { // xz -parameter booking change to bookingID
+		// TODO Auto-generated method stub
 		Booking theBooking = null;
 		for (int i = 0; i < bookingList.size(); i++) {
 			if (bookingList.get(i).getBookingID() == bookingID) {
@@ -83,31 +91,31 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public void checkIn(Booking theBooking) { // april
-		// TODO Auto-generated method stub
-
+	public void checkIn(Booking theBooking) { 
+		theBooking.setStatus(Status.CheckedIn);
 	}
 
 	@Override
-	public void checkOut(Booking theBooking) { // april
-		// TODO Auto-generated method stub
-
+	public void checkOut(Booking theBooking) { 
+		theBooking.setStatus(Status.CheckedOut);
 	}
 
 	@Override
 	public double getBill(Booking theBooking) {
-		theBooking.computeBill();
-		return theBooking.getBill();
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod) {
 		theBooking.makePayment(paymentMethod);
+		
 	}
 
 	@Override
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod, int cardNumber) {
 		theBooking.makePayment(paymentMethod, cardNumber);
+		
 	}
 
 }

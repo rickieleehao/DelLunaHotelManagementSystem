@@ -28,8 +28,8 @@ public class Controller implements IEntityCtrl {
 		return true;
 	}
 
-	public int generateBookingID() {
-		return bookingList.generateBookingID();
+	public int generateBookingID() { // ignore
+		return 0;
 	}
 
 	public ClientProfile getClientProfile(String NRIC) { // hy

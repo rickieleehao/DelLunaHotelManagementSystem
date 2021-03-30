@@ -396,26 +396,7 @@ public class SystemUI {
 	}
 	
 	private void printReceipt(Booking theBooking) {
-		System.out.println("");
-		System.out.println("     DELLUNA HOTEL     ");
-		System.out.println("");
-		System.out.println("       RECEIPT         ");
-		System.out.println("-----------------------");
-		System.out.println("    Booking Detail     ");
-		System.out.println("-----------------------");
-		System.out.println("Booking ID     : "+ theBooking.getBookingID());
-		System.out.println("First Name     : "+ theBooking.getClientProfile().getFirstName());
-		System.out.println("Last Name      : "+ theBooking.getClientProfile().getLastName());
-		System.out.println("Booking Status : "+ theBooking.getStatus());		
-		System.out.println("-----------------------");
-		System.out.println("    Payment Detail     ");
-		System.out.println("-----------------------");
-		System.out.println("Payment Method : "+ theBooking.getPayment().getPaymentMethod());		
-		System.out.println("     TOTAL     : "+ theBooking.getPayment().getTotalPrice());
-		System.out.println("");
-		System.out.println("-----------------------");
-		System.out.println("       THANK YOU       ");
-		System.out.println("-----------------------");				
+		
 	}
 
 	private boolean clientMenu() { // R

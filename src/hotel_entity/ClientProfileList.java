@@ -11,7 +11,7 @@ public class ClientProfileList implements IClientData {
 
 	List<ClientProfile> clientProfileList;
 
-	public ClientProfileList(String fileName) {
+	public ClientProfileList(String fileName) { // xz -assume using txt.file, delimeter ="#"
 		try {
 			String filename=fileName+".txt";
 			File cpl=new File(filename);
@@ -44,15 +44,21 @@ public class ClientProfileList implements IClientData {
 	}
 
 	@Override
-	public void addClientProfile(ClientProfile newClientProfile) { 
+	public void addClientProfile(hotel_entity.ClientProfile newClientProfile) { // xz
+		// TODO Auto-generated method stub
 		clientProfileList.add(newClientProfile);
+
 	}
 
 	@Override
-	public ClientProfile getClientProfile(String NRIC) {
-		ClientProfile clientProfile = null;		
-		for(int i=0;i<clientProfileList.size();i++) {			
-			if(clientProfileList.get(i).getNRIC().equals(NRIC)) {				
+	public ClientProfile getClientProfile(String NRIC) { // xz
+		// TODO Auto-generated method stub
+		ClientProfile clientProfile = null;
+		
+		for(int i=0;i<clientProfileList.size();i++) {
+			
+			if(clientProfileList.get(i).getNRIC()==NRIC) {
+				
 				clientProfile=clientProfileList.get(i);
 				break;
 			}
@@ -61,10 +67,13 @@ public class ClientProfileList implements IClientData {
 	}
 
 	@Override
-	public boolean searchClientProfile(String NRIC) { 
-		boolean isFound=false;		
+	public boolean searchClientProfile(String NRIC) { // xz
+		// TODO Auto-generated method stub
+		boolean isFound=false;
+		
 		for(int i=0;i<clientProfileList.size();i++) {
-			if(clientProfileList.get(i).getNRIC().equals(NRIC)) {
+			
+			if(clientProfileList.get(i).getNRIC()==NRIC) {
 				isFound=true;
 				break;
 			}
