@@ -10,7 +10,7 @@ public class User implements IUser {
 	}
 	
 	@Override
-	public UserType getType() {
+	public UserType getUserType() {
 		return this.type;
 	}
 }

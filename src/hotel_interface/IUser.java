@@ -4,5 +4,5 @@ import hotel_entity.UserType;
 
 public interface IUser {
 
-	public UserType getType();
+	public UserType getUserType();
 }

@@ -1,6 +1,6 @@
 package hotel_entity;
 
-public class Administrator {
+public class isAdministrator {
 
 	private String password;
 }

@@ -10,7 +10,7 @@ public class Booking { // hy
 	private Room room;
 	private int numOfGuest;
 	private Payment payment;
-	private BookingStatus status;
+	private Status status;
 
 	public Booking(int bookingID, ClientProfile client, Date checkInDate, Date checkOutDate, Room room,
 			int numOfGuest) {
@@ -21,6 +21,18 @@ public class Booking { // hy
 		return true;
 	}
 	
+	public void computeBill() {
+		
+	}
+
+	public void makePayment(PaymentMethod paymentMethod) {
+		
+	}
+
+	public void makePayment(PaymentMethod paymentMethod, int cardNumber) {
+		
+	}
+
 	public void setCheckInDate(Date checkInDate) {
 
 	}
@@ -37,7 +49,7 @@ public class Booking { // hy
 
 	}
 
-	public void setStatus(BookingStatus status) {
+	public void setStatus(Status status) {
 
 	}
 
@@ -69,7 +81,11 @@ public class Booking { // hy
 		return payment;
 	}
 
-	public BookingStatus getStatus() {
+	public Status getStatus() {
 		return status;
+	}
+	
+	public double getBill() {
+		return 0;
 	}
 }

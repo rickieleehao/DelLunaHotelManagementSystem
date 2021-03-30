@@ -15,7 +15,7 @@ public class SystemUI {
 		this.scanner = scanner;
 	}
 
-	public void start() throws ParseException {
+	public void start(){
 
 		boolean exit = false;
 		do {
@@ -23,7 +23,7 @@ public class SystemUI {
 			System.out.println("This is the Menu.");
 			int choice;
 			if (userType == UserType.Client) {
-				displayClientMenu();
+				clientMenu();
 			} else if (userType == UserType.Administrator) {
 				System.out.println("1. Create Booking");
 				System.out.println("2. Update Booking");
@@ -67,13 +67,11 @@ public class SystemUI {
 		} while (!exit);
 	}
 
-	public void login() {
+	private void login() {
 
 	}
 
-	public void createBooking() { // xz
-		
-		
+	private void createBooking() { // xz
 
 		int bookingID = controller.generateBookingID();
 		System.out.print("Enter NRIC ----> ");
@@ -83,9 +81,8 @@ public class SystemUI {
 
 		String skip;
 		ClientProfile clientProfile;
-		Date checkInDate= new Date() ;
-		Date checkOutDate= new Date() ;
-		
+		Date checkInDate = new Date();
+		Date checkOutDate = new Date();
 
 		if (isProfileFound == true) {
 
@@ -98,7 +95,7 @@ public class SystemUI {
 			clientProfile = createClientProfile(NRIC);
 		}
 
-		displayClientInfo(clientProfile);
+		printClientProfileDets(clientProfile);
 		boolean isDate;
 		do {
 			System.out.print("Enter Check In Date (DD/MM/YYYY) ----> ");
@@ -108,8 +105,8 @@ public class SystemUI {
 			String checkOutDateString = scanner.nextLine();
 
 			try {
-				 checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
-				 checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
+				checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
+				checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
 				isDate = true;
 			} catch (ParseException e) {
 				System.out.println("invliad date");
@@ -119,7 +116,7 @@ public class SystemUI {
 
 		List<Room> availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
 
-		displayAvailableRoom(availableRoomList);
+		printRoomList(availableRoomList);
 
 		System.out.print("Select available room by enter room number ----> ");
 		int roomNo = scanner.nextInt();
@@ -141,7 +138,7 @@ public class SystemUI {
 
 	}
 
-	public void updateBooking() { // hy
+	private void updateBooking() { // hy
 		int choice;
 		boolean exit = false;
 		do {
@@ -154,14 +151,14 @@ public class SystemUI {
 			System.out.print("Pick option (1-3) ----> ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
-			
-			while(choice < 1 || choice > 3) {
+
+			while (choice < 1 || choice > 3) {
 				System.out.println("Invalid oprion.");
 				System.out.print("Pick option (1-3) ----> ");
 				choice = scanner.nextInt();
 				scanner.nextLine();
 			}
-			
+
 			switch (choice) {
 			case 1:
 				changeBookingDets(theBooking);
@@ -176,7 +173,7 @@ public class SystemUI {
 		} while (!exit);
 	}
 
-	public void checkIn() { // april
+	private void checkIn() { // april
 
 		System.out.print("Enter booking ID ----> ");
 		int bookingID = scanner.nextInt();
@@ -190,7 +187,7 @@ public class SystemUI {
 
 	}
 
-	public void checkOut() { // april
+	private void checkOut() { // april
 		System.out.print("Enter booking ID ----> ");
 		int bookingID = scanner.nextInt();
 
@@ -204,7 +201,7 @@ public class SystemUI {
 		}
 	}
 
-	public Booking searchBooking() { // april
+	private Booking searchBooking() { // april
 
 		System.out.print("Enter booking ID ----> ");
 		int bookingID = scanner.nextInt();
@@ -217,89 +214,20 @@ public class SystemUI {
 		return theBooking;
 	}
 
-	private void displayAvailableRoom(List<Room> availableRoomList) { // yy
-		System.out.printf("%-9s", "Room ID");
-		System.out.printf("%-8s", "Rates");
-		System.out.printf("%-10s", "Discount");
-		System.out.printf("%-16s", "Number of Beds");
-		System.out.println("");
-		System.out.println("");
-		for (int i = 0; i < availableRoomList.size(); i++) {
-			System.out.printf("%-9d", availableRoomList.get(i).getRoomID());
-			System.out.printf("%-8.2f", availableRoomList.get(i).getRate());
-			System.out.printf("%-10.2f", availableRoomList.get(i).getDiscount());
-			System.out.printf("%-16d", availableRoomList.get(i).getNumOfBed());
-			System.out.println("");
-		}
-		System.out.println(""); // view booking
-
-	}
-
-	private boolean displayClientMenu() { // R
-		boolean isExit = false;
-		int choice;
-
-		System.out.println("1. Login");
-		System.out.println("2. Search Booking");
-		System.out.println("3. Exit");
-
-		System.out.print("Pick option (1-2) ----> ");
-		choice = scanner.nextInt();
-		scanner.nextLine();
-
-		while (choice != 1 && choice != 2) {
-			System.out.print("Invalid option. ");
-			System.out.print("Pick option (1-2) ----> ");
-			choice = scanner.nextInt();
-			scanner.nextLine();
-		}
-
-		switch (choice) {
-		case 1:
-			login();
-			break;
-		case 2:
-			searchBooking();
-			break;
-		case 3:
-			isExit = true;
-			break;
-		}
-
-		return isExit;
-	}
-
-	private void displayAdminMenu() {
-
-	}
-
-	private void displayClientInfo(ClientProfile clientProfile) { // xz
-
-		System.out.println();
-
-		System.out.println("----Here is the Client Info----");
-		System.out.println("First Name  :" + clientProfile.getFirstName());
-		System.out.println("Last Name   :" + clientProfile.getLastName());
-		System.out.println("NRIC        :" + clientProfile.getNRIC());
-		System.out.println("Gender      :" + clientProfile.getGender());
-		System.out.println("Address     :" + clientProfile.getAddress());
-		System.out.println();
-	}
-
 	private ClientProfile createClientProfile(String NRIC) { // yy
-
+	
 		String firstName;
 		String lastName;
 		String temp;
 		Gender gender = null;
 		String address;
-
+	
 		System.out.print("Enter client's first name ----> ");
 		firstName = scanner.nextLine();
-
+	
 		System.out.print("Enter client's last name ----> ");
 		lastName = scanner.nextLine();
-
+	
 		System.out.print("Enter client's gender(M/F) ----> ");
 		temp = scanner.nextLine();
 		if (temp.toLowerCase().equals("m")) {
@@ -307,7 +235,7 @@ public class SystemUI {
 		} else if (temp.toLowerCase().equals("f")) {
 			gender = Gender.Female;
 		}
-
+	
 		System.out.print("Enter client's address ----> ");
 		address = scanner.nextLine();
 		ClientProfile clientProfile = controller.createClientProfile(NRIC, firstName, lastName, gender, address);
@@ -318,7 +246,7 @@ public class SystemUI {
 	private void changeBookingDets(Booking theBooking) { // hy
 		int choice, roomNo, numOfGuest;
 		boolean isDate, exit = false;
-		Date checkInDate = null, checkOutDate = null; 
+		Date checkInDate = null, checkOutDate = null;
 		List<Room> availableRoomList;
 		Room room;
 		do {
@@ -331,14 +259,14 @@ public class SystemUI {
 			System.out.print("Pick option (1-4) ----> ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
-			
-			while(choice < 1 || choice > 4) {
+	
+			while (choice < 1 || choice > 4) {
 				System.out.println("Invalid option.");
 				System.out.print("Pick option (1-4) ----> ");
 				choice = scanner.nextInt();
 				scanner.nextLine();
 			}
-			
+	
 			switch (choice) {
 			case 1:
 				do {
@@ -356,7 +284,7 @@ public class SystemUI {
 					}
 				} while (!isDate);
 				availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
-				displayAvailableRoom(availableRoomList);
+				printRoomList(availableRoomList);
 				System.out.print("Enter new room ----> ");
 				roomNo = scanner.nextInt();
 				scanner.nextLine();
@@ -369,7 +297,7 @@ public class SystemUI {
 				checkInDate = controller.getCheckInDate(theBooking);
 				checkOutDate = controller.getCheckOutDate(theBooking);
 				availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
-				displayAvailableRoom(availableRoomList);
+				printRoomList(availableRoomList);
 				System.out.print("Enter new room ----> ");
 				roomNo = scanner.nextInt();
 				scanner.nextLine();
@@ -398,7 +326,7 @@ public class SystemUI {
 			double deposit = controller.getDeposit(theBooking);
 			System.out.println("Deposit amount ----> " + deposit);
 			PaymentMethod paymentMethod = controller.getPaymentMethod(theBooking);
-			if(paymentMethod == PaymentMethod.CreditCard) {
+			if (paymentMethod == PaymentMethod.CreditCard) {
 				System.out.println("Payment Method ----> Credit Card");
 				int cardNumber = controller.getCardNumber(theBooking);
 				System.out.println("Card Number ----> " + cardNumber);
@@ -408,10 +336,90 @@ public class SystemUI {
 		}
 		controller.cancelBooking(theBooking);
 		System.out.println("The booking is cancelled.");
+	}
 
+	private void viewBooking(Booking theBooking) {
+		
 	}
 
 	private void makePayment(Booking theBooking) { // tbc
+	
+	}
 
+	private void printClientProfileDets(ClientProfile clientProfile) { // xz
+
+		System.out.println();
+
+		System.out.println("----Here is the Client Info----");
+		System.out.println("First Name  :" + clientProfile.getFirstName());
+		System.out.println("Last Name   :" + clientProfile.getLastName());
+		System.out.println("NRIC        :" + clientProfile.getNRIC());
+		System.out.println("Gender      :" + clientProfile.getGender());
+		System.out.println("Address     :" + clientProfile.getAddress());
+		System.out.println();
+	}
+	
+	private void printRoomList(List<Room> availableRoomList) { // yy
+		System.out.printf("%-9s", "Room ID");
+		System.out.printf("%-8s", "Rates");
+		System.out.printf("%-10s", "Discount");
+		System.out.printf("%-16s", "Number of Beds");
+		System.out.println("");
+		System.out.println("");
+		for (int i = 0; i < availableRoomList.size(); i++) {
+			System.out.printf("%-9d", availableRoomList.get(i).getRoomID());
+			System.out.printf("%-8.2f", availableRoomList.get(i).getRate());
+			System.out.printf("%-10.2f", availableRoomList.get(i).getDiscount());
+			System.out.printf("%-16d", availableRoomList.get(i).getNumOfBed());
+			System.out.println("");
+		}
+		System.out.println(""); // view booking
+	
+	}
+
+	private void printBookingDets(UserType userType, Booking theBooking) {
+		
+	}
+	
+	private void printReceipt(Booking theBooking) {
+		
+	}
+
+	private boolean clientMenu() { // R
+		boolean isExit = false;
+		int choice;
+	
+		System.out.println("1. Login");
+		System.out.println("2. Search Booking");
+		System.out.println("3. Exit");
+	
+		System.out.print("Pick option (1-2) ----> ");
+		choice = scanner.nextInt();
+		scanner.nextLine();
+	
+		while (choice != 1 && choice != 2) {
+			System.out.print("Invalid option. ");
+			System.out.print("Pick option (1-2) ----> ");
+			choice = scanner.nextInt();
+			scanner.nextLine();
+		}
+	
+		switch (choice) {
+		case 1:
+			login();
+			break;
+		case 2:
+			searchBooking();
+			break;
+		case 3:
+			isExit = true;
+			break;
+		}
+	
+		return isExit;
+	}
+
+	private void adminMenu() {
+	
 	}
 }

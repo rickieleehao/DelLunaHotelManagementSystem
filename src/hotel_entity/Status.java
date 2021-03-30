@@ -1,6 +1,6 @@
 package hotel_entity;
 
-public enum BookingStatus {
+public enum Status {
 
 	Cancelled,
 	CheckedIn,
