@@ -48,27 +48,31 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, java.util.Date checkInDate, java.util.Date checkOutDate,
-			hotel_entity.Room room, int numOfGuest) { // april
-		// TODO Auto-generated method stub
+	public void updateBooking(Booking theBooking, Date checkInDate, java.util.Date checkOutDate,
+			hotel_entity.Room room, int numOfGuest) {
+		theBooking.setCheckInDate(checkInDate);
+		theBooking.setCheckInDate(checkOutDate);
+		theBooking.setRoom(room);
+		theBooking.setNumOfGuest(numOfGuest);
 
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, hotel_entity.Room room) { // april
-		// TODO Auto-generated method stub
+	public void updateBooking(Booking theBooking, Room room) {
+		theBooking.setRoom(room);
 
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, int numOfGuest) { // april
-		// TODO Auto-generated method stub
+	public void updateBooking(Booking theBooking, int numOfGuest) {
+		theBooking.setNumOfGuest(numOfGuest);
 
 	}
 
 	@Override
 	public void cancelBooking(Booking theBooking) {
 		theBooking.setStatus(Status.Cancelled);
+		bookingList.remove(theBooking);
 	}
 
 	@Override
