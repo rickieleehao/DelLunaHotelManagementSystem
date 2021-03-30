@@ -134,7 +134,7 @@ public class SystemUI {
 
 		controller.addBooking(newBooking);
 
-		System.out.println(" Your booking has been created successful ");
+		System.out.println(" Your booking has been created successfully ");
 
 	}
 
@@ -343,7 +343,21 @@ public class SystemUI {
 	}
 
 	private void makePayment(Booking theBooking) { // tbc
-	
+		controller.getBill(theBooking);
+		PaymentMethod paymentMethod = null;
+		System.out.print("Do you want to pay by cash or credit card(cash/card)?: ");
+		String choice = scanner.nextLine();
+		System.out.println();
+		if(choice.toLowerCase().equals("cash")) {
+			paymentMethod = PaymentMethod.Cash;
+			System.out.println("Pay by cash");
+		}
+		else {
+			paymentMethod = PaymentMethod.CreditCard;
+			System.out.println("Pay by credit card");
+		}
+		
+		controller.makePayment(theBooking, paymentMethod);
 	}
 
 	private void printClientProfileDets(ClientProfile clientProfile) { // xz

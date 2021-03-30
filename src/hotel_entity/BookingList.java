@@ -1,5 +1,7 @@
 package hotel_entity;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -15,9 +17,22 @@ public class BookingList implements IBookingData {
 
 	@Override
 	// return type changed from List<Booking> to List<Room>
-	public List<Room> findAvailableRoom(java.util.Date checkInDate, java.util.Date checkOutDate) { // yy
-		RoomList availableRoomList = new RoomList();
-		return null;
+	public List<Room> findAvailableRoom(Date checkInDate, Date checkOutDate) { // yy
+		RoomList roomList = new RoomList();
+		List<Room> availableRoomList = roomList.getRoomList();
+		int counter;
+		for(int i = 0; i < availableRoomList.size(); i++) {
+			counter = 0;
+			for(int j = 0; i < bookingList.size(); j++) {
+				if(!(checkInDate.after(bookingList.get(j).getCheckOutDate())) || !(checkOutDate.before(bookingList.get(i).getCheckInDate()))) {
+					counter++;
+				}
+			}
+			if(counter == bookingList.size()) {
+				availableRoomList.remove(i);
+			}
+		}
+		return availableRoomList;
 	}
 
 	@Override
@@ -93,13 +108,13 @@ public class BookingList implements IBookingData {
 
 	@Override
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod) {
-		// TODO Auto-generated method stub
+		theBooking.makePayment(paymentMethod);
 		
 	}
 
 	@Override
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod, int cardNumber) {
-		// TODO Auto-generated method stub
+		theBooking.makePayment(paymentMethod, cardNumber);
 		
 	}
 
