@@ -173,7 +173,7 @@ public class SystemUI {
 		} while (!exit);
 	}
 
-	private void checkIn() { // april
+	private void checkIn() { 
 
 		System.out.print("Enter booking ID ----> ");
 		int bookingID = scanner.nextInt();
@@ -187,7 +187,7 @@ public class SystemUI {
 
 	}
 
-	private void checkOut() { // april
+	private void checkOut() { 
 		System.out.print("Enter booking ID ----> ");
 		int bookingID = scanner.nextInt();
 
@@ -201,7 +201,7 @@ public class SystemUI {
 		}
 	}
 
-	private Booking searchBooking() { // april
+	private Booking searchBooking() { 
 
 		System.out.print("Enter booking ID ----> ");
 		int bookingID = scanner.nextInt();

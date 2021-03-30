@@ -37,11 +37,14 @@ public class Controller implements IEntityCtrl {
 	}
 
 	public Booking createBooking(int bookingID, ClientProfile clientProfile, Date checkInDate, Date checkOutDate,
-			Room room, int numOfGuest) { // april
-		return null;
+			Room room, int numOfGuest) { 
+		Booking theBooking= new Booking(bookingID, clientProfile, checkInDate, checkOutDate, room,
+				numOfGuest);
+		return theBooking;
 	}
 
-	public void addBooking(Booking newBooking) { // april
+	public void addBooking(Booking newBooking) { 
+		bookingList.addBooking(newBooking);
 
 	}
 
@@ -85,20 +88,20 @@ public class Controller implements IEntityCtrl {
 		return cardNumber;
 	}
 
-	public void cancelBooking(Booking theBooking) { // april
-
+	public void cancelBooking(Booking theBooking) { 
+		bookingList.cancelBooking(theBooking);
 	}
 
 	public Booking searchBooking(int bookingID) { // hy
 		return null;
 	}
 
-	public void checkIn(Booking theBooking) { // april
-
+	public void checkIn(Booking theBooking) { 
+		bookingList.checkIn(theBooking);
 	}
 
-	public void checkOut(Booking theBooking) { // april
-
+	public void checkOut(Booking theBooking) { 
+		bookingList.checkOut(theBooking);
 	}
 
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod) {

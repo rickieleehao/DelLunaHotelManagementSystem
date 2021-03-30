@@ -1,5 +1,6 @@
 package hotel_entity;
 
+import java.util.Date;
 import java.util.List;
 
 import hotel_interface.IBookingData;
@@ -32,21 +33,25 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, java.util.Date checkInDate, java.util.Date checkOutDate,
-			hotel_entity.Room room, int numOfGuest) { // april
+	public void updateBooking(Booking theBooking, Date checkInDate, java.util.Date checkOutDate,
+			hotel_entity.Room room, int numOfGuest) { 
 		// TODO Auto-generated method stub
+		theBooking.setCheckInDate(checkInDate);
+		theBooking.setCheckInDate(checkOutDate);
+		theBooking.setRoom(room);
+		theBooking.setNumOfGuest(numOfGuest);
 	
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, hotel_entity.Room room) { // april
-		// TODO Auto-generated method stub
-	
+	public void updateBooking(Booking theBooking, Room room) { 
+		theBooking.setRoom(room);
+		
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, int numOfGuest) { // april
-		// TODO Auto-generated method stub
+	public void updateBooking(Booking theBooking, int numOfGuest) { 
+		theBooking.setNumOfGuest(numOfGuest);
 	
 	}
 
@@ -71,15 +76,13 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public void checkIn(Booking theBooking) { // april
-		// TODO Auto-generated method stub
-
+	public void checkIn(Booking theBooking) { 
+		theBooking.setStatus(Status.CheckedIn);
 	}
 
 	@Override
-	public void checkOut(Booking theBooking) { // april
-		// TODO Auto-generated method stub
-
+	public void checkOut(Booking theBooking) { 
+		theBooking.setStatus(Status.CheckedOut);
 	}
 
 	@Override
