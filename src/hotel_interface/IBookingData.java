@@ -9,7 +9,7 @@ public interface IBookingData {
 
 	public List<Room> findAvailableRoom(Date checkInDate, Date checkOutDate);
 
-	public Booking generateBookingID();
+	public int generateBookingID();
 
 	public void addBooking(Booking newBooking);
 
