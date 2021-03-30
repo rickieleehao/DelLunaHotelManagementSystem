@@ -21,14 +21,15 @@ public class BookingList implements IBookingData {
 		RoomList roomList = new RoomList();
 		List<Room> availableRoomList = roomList.getRoomList();
 		int counter;
-		for(int i = 0; i < availableRoomList.size(); i++) {
+		for (int i = 0; i < availableRoomList.size(); i++) {
 			counter = 0;
-			for(int j = 0; i < bookingList.size(); j++) {
-				if(!(checkInDate.after(bookingList.get(j).getCheckOutDate())) || !(checkOutDate.before(bookingList.get(i).getCheckInDate()))) {
+			for (int j = 0; i < bookingList.size(); j++) {
+				if (!(checkInDate.after(bookingList.get(j).getCheckOutDate()))
+						|| !(checkOutDate.before(bookingList.get(i).getCheckInDate()))) {
 					counter++;
 				}
 			}
-			if(counter == bookingList.size()) {
+			if (counter == bookingList.size()) {
 				availableRoomList.remove(i);
 			}
 		}
@@ -83,15 +84,13 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public void checkIn(Booking theBooking) { // april
-		// TODO Auto-generated method stub
-
+	public void checkIn(Booking theBooking) {
+		theBooking.setStatus(Status.CheckedIn);
 	}
 
 	@Override
-	public void checkOut(Booking theBooking) { // april
-		// TODO Auto-generated method stub
-
+	public void checkOut(Booking theBooking) {
+		theBooking.setStatus(Status.CheckedOut);
 	}
 
 	@Override
