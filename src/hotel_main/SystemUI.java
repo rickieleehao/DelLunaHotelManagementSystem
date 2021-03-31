@@ -15,7 +15,7 @@ public class SystemUI {
 		this.scanner = scanner;
 	}
 
-	public void start(){
+	public void start() {
 
 		boolean exit = false;
 		do {
@@ -173,12 +173,8 @@ public class SystemUI {
 		} while (!exit);
 	}
 
-	private void checkIn() { 
-
-		System.out.print("Enter booking ID ----> ");
-		int bookingID = scanner.nextInt();
-
-		Booking theBooking = controller.searchBooking(bookingID);
+	private void checkIn() {
+		Booking theBooking = searchBooking();
 		if (theBooking == null)
 			System.out.println("Booking not found.");
 		else
@@ -187,11 +183,8 @@ public class SystemUI {
 
 	}
 
-	private void checkOut() { 
-		System.out.print("Enter booking ID ----> ");
-		int bookingID = scanner.nextInt();
-
-		Booking theBooking = controller.searchBooking(bookingID);
+	private void checkOut() {
+		Booking theBooking = searchBooking();
 		if (theBooking == null)
 			System.out.println("Booking not found.");
 		else {
@@ -201,33 +194,37 @@ public class SystemUI {
 		}
 	}
 
-	private Booking searchBooking() { 
-
-		System.out.print("Enter booking ID ----> ");
-		int bookingID = scanner.nextInt();
+	private Booking searchBooking() {
+		int bookingID = 0;
+		try {
+			System.out.print("Enter booking ID ----> ");
+			bookingID = scanner.nextInt();
+		} catch (IllegalArgumentException ex) {
+			System.out.println("Enter only integer");
+		}
 
 		Booking theBooking = controller.searchBooking(bookingID);
 		if (theBooking == null)
 			System.out.println("Booking not found.");
 		else
-			System.out.println(""); // view booking
+			viewBooking(theBooking);
 		return theBooking;
 	}
 
 	private ClientProfile createClientProfile(String NRIC) { // yy
-	
+
 		String firstName;
 		String lastName;
 		String temp;
 		Gender gender = null;
 		String address;
-	
+
 		System.out.print("Enter client's first name ----> ");
 		firstName = scanner.nextLine();
-	
+
 		System.out.print("Enter client's last name ----> ");
 		lastName = scanner.nextLine();
-	
+
 		System.out.print("Enter client's gender(M/F) ----> ");
 		temp = scanner.nextLine();
 		if (temp.toLowerCase().equals("m")) {
@@ -235,7 +232,7 @@ public class SystemUI {
 		} else if (temp.toLowerCase().equals("f")) {
 			gender = Gender.Female;
 		}
-	
+
 		System.out.print("Enter client's address ----> ");
 		address = scanner.nextLine();
 		ClientProfile clientProfile = controller.createClientProfile(NRIC, firstName, lastName, gender, address);
@@ -259,14 +256,14 @@ public class SystemUI {
 			System.out.print("Pick option (1-4) ----> ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
-	
+
 			while (choice < 1 || choice > 4) {
 				System.out.println("Invalid option.");
 				System.out.print("Pick option (1-4) ----> ");
 				choice = scanner.nextInt();
 				scanner.nextLine();
 			}
-	
+
 			switch (choice) {
 			case 1:
 				do {
@@ -339,7 +336,7 @@ public class SystemUI {
 	}
 
 	private void viewBooking(Booking theBooking) {
-		
+
 	}
 
 	private void makePayment(Booking theBooking) { // tbc
@@ -348,15 +345,14 @@ public class SystemUI {
 		System.out.print("Do you want to pay by cash or credit card(cash/card)?: ");
 		String choice = scanner.nextLine();
 		System.out.println();
-		if(choice.toLowerCase().equals("cash")) {
+		if (choice.toLowerCase().equals("cash")) {
 			paymentMethod = PaymentMethod.Cash;
 			System.out.println("Pay by cash");
-		}
-		else {
+		} else {
 			paymentMethod = PaymentMethod.CreditCard;
 			System.out.println("Pay by credit card");
 		}
-		
+
 		controller.makePayment(theBooking, paymentMethod);
 	}
 
@@ -365,14 +361,14 @@ public class SystemUI {
 		System.out.println();
 
 		System.out.println("----Here is the Client Info----");
-		System.out.println("First Name  :" + clientProfile.getFirstName());
-		System.out.println("Last Name   :" + clientProfile.getLastName());
-		System.out.println("NRIC        :" + clientProfile.getNRIC());
-		System.out.println("Gender      :" + clientProfile.getGender());
-		System.out.println("Address     :" + clientProfile.getAddress());
+		System.out.println("First Name  :" + controller.getFirstName(clientProfile));
+		System.out.println("Last Name   :" + controller.getLastName(clientProfile));
+		System.out.println("NRIC        :" + controller.getNRIC(clientProfile));
+		System.out.println("Gender      :" + controller.getGender(clientProfile));
+		System.out.println("Address     :" + controller.getAddress(clientProfile));
 		System.out.println();
 	}
-	
+
 	private void printRoomList(List<Room> availableRoomList) { // yy
 		System.out.printf("%-9s", "Room ID");
 		System.out.printf("%-8s", "Rates");
@@ -388,14 +384,15 @@ public class SystemUI {
 			System.out.println("");
 		}
 		System.out.println(""); // view booking
-	
+
 	}
 
 	private void printBookingDets(UserType userType, Booking theBooking) {
-		
+
 	}
-	
+
 	private void printReceipt(Booking theBooking) {
+		ClientProfile clientProfile=theBooking.getClientProfile();
 		System.out.println("");
 		System.out.println("     DELLUNA HOTEL     ");
 		System.out.println("");
@@ -403,40 +400,40 @@ public class SystemUI {
 		System.out.println("-----------------------");
 		System.out.println("    Booking Detail     ");
 		System.out.println("-----------------------");
-		System.out.println("Booking ID     : "+ theBooking.getBookingID());
-		System.out.println("First Name     : "+ theBooking.getClientProfile().getFirstName());
-		System.out.println("Last Name      : "+ theBooking.getClientProfile().getLastName());
-		System.out.println("Booking Status : "+ theBooking.getStatus());		
+		System.out.println("Booking ID     : " + controller.getBookingID(theBooking));
+		System.out.println("First Name     : " + controller.getFirstName(clientProfile));
+		System.out.println("Last Name      : " + controller.getLastName(clientProfile));
+		System.out.println("Booking Status : " + controller.getStatus(theBooking));
 		System.out.println("-----------------------");
 		System.out.println("    Payment Detail     ");
 		System.out.println("-----------------------");
-		System.out.println("Payment Method : "+ theBooking.getPayment().getPaymentMethod());		
-		System.out.println("     TOTAL     : "+ theBooking.getPayment().getTotalPrice());
+		System.out.println("Payment Method : " + controller.getPaymentMethod(theBooking));
+		System.out.println("     TOTAL     : " + controller.getBill(theBooking));
 		System.out.println("");
 		System.out.println("-----------------------");
 		System.out.println("       THANK YOU       ");
-		System.out.println("-----------------------");				
+		System.out.println("-----------------------");
 	}
 
 	private boolean clientMenu() { // R
 		boolean isExit = false;
 		int choice;
-	
+
 		System.out.println("1. Login");
 		System.out.println("2. Search Booking");
 		System.out.println("3. Exit");
-	
+
 		System.out.print("Pick option (1-2) ----> ");
 		choice = scanner.nextInt();
 		scanner.nextLine();
-	
+
 		while (choice != 1 && choice != 2) {
 			System.out.print("Invalid option. ");
 			System.out.print("Pick option (1-2) ----> ");
 			choice = scanner.nextInt();
 			scanner.nextLine();
 		}
-	
+
 		switch (choice) {
 		case 1:
 			login();
@@ -448,11 +445,11 @@ public class SystemUI {
 			isExit = true;
 			break;
 		}
-	
+
 		return isExit;
 	}
 
 	private void adminMenu() {
-	
+
 	}
 }
