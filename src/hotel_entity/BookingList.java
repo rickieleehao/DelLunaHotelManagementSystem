@@ -1,7 +1,5 @@
 package hotel_entity;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -17,20 +15,14 @@ public class BookingList implements IBookingData {
 
 	@Override
 	// return type changed from List<Booking> to List<Room>
-	public List<Room> findAvailableRoom(Date checkInDate, Date checkOutDate) { // yy
+	public List<Room> findAvailableRoom(Date checkInDate, Date checkOutDate) { // yy still not complete
 		RoomList roomList = new RoomList();
 		List<Room> availableRoomList = roomList.getRoomList();
-		int counter;
-		for (int i = 0; i < availableRoomList.size(); i++) {
-			counter = 0;
-			for (int j = 0; i < bookingList.size(); j++) {
-				if (!(checkInDate.after(bookingList.get(j).getCheckOutDate()))
-						|| !(checkOutDate.before(bookingList.get(i).getCheckInDate()))) {
-					counter++;
-				}
-			}
-			if (counter == bookingList.size()) {
-				availableRoomList.remove(i);
+
+		
+		for (int i = 0; i < bookingList.size(); i++) {
+			if (!(checkInDate.after(bookingList.get(i).getCheckOutDate()))
+					&& !(checkOutDate.before(bookingList.get(i).getCheckInDate()))) {
 			}
 		}
 		return availableRoomList;
@@ -127,12 +119,24 @@ public class BookingList implements IBookingData {
 
 	@Override
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod) {
-		theBooking.makePayment(paymentMethod);
+		Booking booking = null;
+		for(int i = 0; i < bookingList.size(); i++) {
+			if(theBooking.getBookingID() == bookingList.get(i).getBookingID()) {
+				booking = bookingList.get(i);
+			}
+		}
+		booking.makePayment(paymentMethod);
 	}
 
 	@Override
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod, int cardNumber) {
-		theBooking.makePayment(paymentMethod, cardNumber);
+		Booking booking = null;
+		for(int i = 0; i < bookingList.size(); i++) {
+			if(theBooking.getBookingID() == bookingList.get(i).getBookingID()) {
+				booking = bookingList.get(i);
+			}
+		}
+		booking.makePayment(paymentMethod, cardNumber);
 	}
 
 }

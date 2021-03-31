@@ -105,11 +105,11 @@ public class Controller implements IEntityCtrl {
 	}
 
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod) {
-
+		bookingList.makePayment(theBooking, paymentMethod);
 	}
 
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod, int cardNumber) {
-
+		bookingList.makePayment(theBooking, paymentMethod, cardNumber);
 	}
 
 	public UserType getUserType() { // yy
@@ -117,7 +117,8 @@ public class Controller implements IEntityCtrl {
 	}
 
 	public boolean login(String password) { //r
-		return true;
+		isAdministrator ia = new isAdministrator();
+		return ia.verifyAdmin(password);				
 	}
 
 	@Override
