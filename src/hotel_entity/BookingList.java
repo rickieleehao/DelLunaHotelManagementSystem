@@ -48,24 +48,37 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, Date checkInDate, java.util.Date checkOutDate,
-			hotel_entity.Room room, int numOfGuest) {
-		theBooking.setCheckInDate(checkInDate);
-		theBooking.setCheckInDate(checkOutDate);
-		theBooking.setRoom(room);
-		theBooking.setNumOfGuest(numOfGuest);
-
+	public void updateBooking(Booking theBooking, Date checkInDate, Date checkOutDate,
+			Room room, int numOfGuest) {
+		for(Booking aBooking : bookingList) {
+			if(aBooking.getBookingID() == theBooking.getBookingID())
+			{
+				theBooking.setCheckInDate(checkInDate);
+				theBooking.setCheckInDate(checkOutDate);
+				theBooking.setRoom(room);
+				theBooking.setNumOfGuest(numOfGuest);
+			}
+		}
 	}
 
 	@Override
 	public void updateBooking(Booking theBooking, Room room) {
-		theBooking.setRoom(room);
-
+		for(Booking aBooking : bookingList) {
+			if(aBooking.getBookingID() == theBooking.getBookingID())
+			{
+				theBooking.setRoom(room);
+			}
+		}
 	}
 
 	@Override
 	public void updateBooking(Booking theBooking, int numOfGuest) {
-		theBooking.setNumOfGuest(numOfGuest);
+		for(Booking aBooking : bookingList) {
+			if(aBooking.getBookingID() == theBooking.getBookingID())
+			{
+				theBooking.setNumOfGuest(numOfGuest);
+			}
+		}
 
 	}
 
@@ -88,12 +101,22 @@ public class BookingList implements IBookingData {
 
 	@Override
 	public void checkIn(Booking theBooking) {
-		theBooking.setStatus(Status.CheckedIn);
+		for(Booking aBooking : bookingList) {
+			if(aBooking.getBookingID() == theBooking.getBookingID())
+			{
+				theBooking.setStatus(Status.CheckedIn);
+			}
+		}
 	}
 
 	@Override
 	public void checkOut(Booking theBooking) {
-		theBooking.setStatus(Status.CheckedOut);
+		for(Booking aBooking : bookingList) {
+			if(aBooking.getBookingID() == theBooking.getBookingID())
+			{
+				theBooking.setStatus(Status.CheckedOut);
+			}
+		}
 	}
 
 	@Override
