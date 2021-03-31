@@ -134,7 +134,7 @@ public class SystemUI {
 
 		controller.addBooking(newBooking);
 
-		System.out.println(" Your booking has been created successful ");
+		System.out.println(" Your booking has been created successfully ");
 
 	}
 
@@ -173,7 +173,7 @@ public class SystemUI {
 		} while (!exit);
 	}
 
-	private void checkIn() { // april
+	private void checkIn() { 
 
 		System.out.print("Enter booking ID ----> ");
 		int bookingID = scanner.nextInt();
@@ -187,7 +187,7 @@ public class SystemUI {
 
 	}
 
-	private void checkOut() { // april
+	private void checkOut() { 
 		System.out.print("Enter booking ID ----> ");
 		int bookingID = scanner.nextInt();
 
@@ -201,7 +201,7 @@ public class SystemUI {
 		}
 	}
 
-	private Booking searchBooking() { // april
+	private Booking searchBooking() { 
 
 		System.out.print("Enter booking ID ----> ");
 		int bookingID = scanner.nextInt();
@@ -343,7 +343,21 @@ public class SystemUI {
 	}
 
 	private void makePayment(Booking theBooking) { // tbc
-	
+		controller.getBill(theBooking);
+		PaymentMethod paymentMethod = null;
+		System.out.print("Do you want to pay by cash or credit card(cash/card)?: ");
+		String choice = scanner.nextLine();
+		System.out.println();
+		if(choice.toLowerCase().equals("cash")) {
+			paymentMethod = PaymentMethod.Cash;
+			System.out.println("Pay by cash");
+		}
+		else {
+			paymentMethod = PaymentMethod.CreditCard;
+			System.out.println("Pay by credit card");
+		}
+		
+		controller.makePayment(theBooking, paymentMethod);
 	}
 
 	private void printClientProfileDets(ClientProfile clientProfile) { // xz
@@ -382,7 +396,26 @@ public class SystemUI {
 	}
 	
 	private void printReceipt(Booking theBooking) {
-		
+		System.out.println("");
+		System.out.println("     DELLUNA HOTEL     ");
+		System.out.println("");
+		System.out.println("       RECEIPT         ");
+		System.out.println("-----------------------");
+		System.out.println("    Booking Detail     ");
+		System.out.println("-----------------------");
+		System.out.println("Booking ID     : "+ theBooking.getBookingID());
+		System.out.println("First Name     : "+ theBooking.getClientProfile().getFirstName());
+		System.out.println("Last Name      : "+ theBooking.getClientProfile().getLastName());
+		System.out.println("Booking Status : "+ theBooking.getStatus());		
+		System.out.println("-----------------------");
+		System.out.println("    Payment Detail     ");
+		System.out.println("-----------------------");
+		System.out.println("Payment Method : "+ theBooking.getPayment().getPaymentMethod());		
+		System.out.println("     TOTAL     : "+ theBooking.getPayment().getTotalPrice());
+		System.out.println("");
+		System.out.println("-----------------------");
+		System.out.println("       THANK YOU       ");
+		System.out.println("-----------------------");				
 	}
 
 	private boolean clientMenu() { // R

@@ -28,8 +28,8 @@ public class Controller implements IEntityCtrl {
 		return true;
 	}
 
-	public int generateBookingID() { // ignore
-		return 0;
+	public int generateBookingID() {
+		return bookingList.generateBookingID();
 	}
 
 	public ClientProfile getClientProfile(String NRIC) { // hy
@@ -37,11 +37,14 @@ public class Controller implements IEntityCtrl {
 	}
 
 	public Booking createBooking(int bookingID, ClientProfile clientProfile, Date checkInDate, Date checkOutDate,
-			Room room, int numOfGuest) { // april
-		return null;
+			Room room, int numOfGuest) { 
+		Booking theBooking= new Booking(bookingID, clientProfile, checkInDate, checkOutDate, room,
+				numOfGuest);
+		return theBooking;
 	}
 
-	public void addBooking(Booking newBooking) { // april
+	public void addBooking(Booking newBooking) { 
+		bookingList.addBooking(newBooking);
 
 	}
 
@@ -85,20 +88,20 @@ public class Controller implements IEntityCtrl {
 		return cardNumber;
 	}
 
-	public void cancelBooking(Booking theBooking) { // april
-
+	public void cancelBooking(Booking theBooking) { 
+		bookingList.cancelBooking(theBooking);
 	}
 
 	public Booking searchBooking(int bookingID) { // hy
 		return null;
 	}
 
-	public void checkIn(Booking theBooking) { // april
-
+	public void checkIn(Booking theBooking) { 
+		bookingList.checkIn(theBooking);
 	}
 
-	public void checkOut(Booking theBooking) { // april
-
+	public void checkOut(Booking theBooking) { 
+		bookingList.checkOut(theBooking);
 	}
 
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod) {
@@ -119,14 +122,14 @@ public class Controller implements IEntityCtrl {
 
 	@Override
 	public int getBookingID(Booking theBooking) {
-		// TODO Auto-generated method stub
-		return 0;
+		int bookingID = theBooking.getBookingID();
+		return bookingID;
 	}
 
 	@Override
 	public ClientProfile getClientProfile(Booking theBooking) {
-		// TODO Auto-generated method stub
-		return null;
+		ClientProfile clientProfile = theBooking.getClientProfile();
+		return clientProfile;
 	}
 
 	@Override
@@ -143,61 +146,61 @@ public class Controller implements IEntityCtrl {
 
 	@Override
 	public Room getRoom(Booking theBooking) {
-		// TODO Auto-generated method stub
-		return null;
+		Room room = theBooking.getRoom();
+		return room;
 	}
 
 	@Override
 	public int getNumOfGuest(Booking theBooking) {
-		// TODO Auto-generated method stub
-		return 0;
+		int numOfGuest = theBooking.getNumOfGuest();
+		return numOfGuest;
 	}
 
 	@Override
 	public Payment getPayment(Booking theBooking) {
-		// TODO Auto-generated method stub
-		return null;
+		Payment payment = theBooking.getPayment();
+		return payment;
 	}
 
 	@Override
 	public Status getStatus(Booking theBooking) {
-		// TODO Auto-generated method stub
-		return null;
+		Status status = theBooking.getStatus();
+		return status;
 	}
 
 	@Override
 	public double getBill(Booking theBooking) {
-		// TODO Auto-generated method stub
-		return 0;
+		double bill = theBooking.getBill();
+		return bill;
 	}
 
 	@Override
 	public String getNRIC(ClientProfile clientProfile) {
-		// TODO Auto-generated method stub
-		return null;
+		String NRIC = clientProfile.getNRIC();
+		return NRIC;
 	}
 
 	@Override
 	public String getFirstName(ClientProfile clientProfile) {
-		// TODO Auto-generated method stub
-		return null;
+		String firstName = clientProfile.getFirstName();
+		return firstName;
 	}
 
 	@Override
 	public String getLastName(ClientProfile clientProfile) {
-		// TODO Auto-generated method stub
-		return null;
+		String lastName = clientProfile.getLastName();
+		return lastName;
 	}
 
 	@Override
 	public Gender getGender(ClientProfile clientProfile) {
-		// TODO Auto-generated method stub
-		return null;
+		Gender gender = clientProfile.getGender();
+		return gender;
 	}
 
 	@Override
 	public String getAddress(ClientProfile clientProfile) {
-		// TODO Auto-generated method stub
-		return null;
+		String address = clientProfile.getAddress();
+		return address;
 	}
 }

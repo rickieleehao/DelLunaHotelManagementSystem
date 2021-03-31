@@ -1,5 +1,8 @@
 package hotel_entity;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import hotel_interface.IBookingData;
@@ -14,52 +17,66 @@ public class BookingList implements IBookingData {
 
 	@Override
 	// return type changed from List<Booking> to List<Room>
-	public List<Room> findAvailableRoom(java.util.Date checkInDate, java.util.Date checkOutDate) { // yy
-		RoomList availableRoomList = new RoomList();
-		return null;
+	public List<Room> findAvailableRoom(Date checkInDate, Date checkOutDate) { // yy
+		RoomList roomList = new RoomList();
+		List<Room> availableRoomList = roomList.getRoomList();
+		int counter;
+		for (int i = 0; i < availableRoomList.size(); i++) {
+			counter = 0;
+			for (int j = 0; i < bookingList.size(); j++) {
+				if (!(checkInDate.after(bookingList.get(j).getCheckOutDate()))
+						|| !(checkOutDate.before(bookingList.get(i).getCheckInDate()))) {
+					counter++;
+				}
+			}
+			if (counter == bookingList.size()) {
+				availableRoomList.remove(i);
+			}
+		}
+		return availableRoomList;
 	}
 
 	@Override
-	public Booking generateBookingID() { // ignore
+	public int generateBookingID() { // ignore
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 	@Override
-	public void addBooking(Booking newBooking) { // xz
-		// TODO Auto-generated method stub
+	public void addBooking(Booking newBooking) {
 		bookingList.add(newBooking);
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, java.util.Date checkInDate, java.util.Date checkOutDate,
-			hotel_entity.Room room, int numOfGuest) { // april
-		// TODO Auto-generated method stub
-	
+	public void updateBooking(Booking theBooking, Date checkInDate, java.util.Date checkOutDate,
+			hotel_entity.Room room, int numOfGuest) {
+		theBooking.setCheckInDate(checkInDate);
+		theBooking.setCheckInDate(checkOutDate);
+		theBooking.setRoom(room);
+		theBooking.setNumOfGuest(numOfGuest);
+
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, hotel_entity.Room room) { // april
-		// TODO Auto-generated method stub
-	
+	public void updateBooking(Booking theBooking, Room room) {
+		theBooking.setRoom(room);
+
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, int numOfGuest) { // april
-		// TODO Auto-generated method stub
-	
+	public void updateBooking(Booking theBooking, int numOfGuest) {
+		theBooking.setNumOfGuest(numOfGuest);
+
 	}
 
 	@Override
-	public void cancelBooking(Booking theBooking) { // xz
-		// TODO Auto-generated method stub
+	public void cancelBooking(Booking theBooking) {
 		theBooking.setStatus(Status.Cancelled);
 		bookingList.remove(theBooking);
 	}
 
 	@Override
-	public Booking getBooking(int bookingID) { // xz -parameter booking change to bookingID
-		// TODO Auto-generated method stub
+	public Booking getBooking(int bookingID) {
 		Booking theBooking = null;
 		for (int i = 0; i < bookingList.size(); i++) {
 			if (bookingList.get(i).getBookingID() == bookingID) {
@@ -71,33 +88,29 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public void checkIn(Booking theBooking) { // april
-		// TODO Auto-generated method stub
-
+	public void checkIn(Booking theBooking) {
+		theBooking.setStatus(Status.CheckedIn);
 	}
 
 	@Override
-	public void checkOut(Booking theBooking) { // april
-		// TODO Auto-generated method stub
-
+	public void checkOut(Booking theBooking) {
+		theBooking.setStatus(Status.CheckedOut);
 	}
 
 	@Override
 	public double getBill(Booking theBooking) {
-		// TODO Auto-generated method stub
-		return 0;
+		theBooking.computeBill();
+		return theBooking.getBill();
 	}
 
 	@Override
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod) {
-		// TODO Auto-generated method stub
-		
+		theBooking.makePayment(paymentMethod);
 	}
 
 	@Override
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod, int cardNumber) {
-		// TODO Auto-generated method stub
-		
+		theBooking.makePayment(paymentMethod, cardNumber);
 	}
 
 }
