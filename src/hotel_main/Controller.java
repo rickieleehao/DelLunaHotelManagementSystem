@@ -24,16 +24,18 @@ public class Controller implements IEntityCtrl {
 		return availableRoomList;
 	}
 
-	public boolean searchClientProfile(String NRIC) { // hy
-		return true;
+	public boolean searchClientProfile(String NRIC) {
+		boolean isProfile = clientProfileList.searchClientProfile(NRIC);
+		return isProfile;
 	}
 
 	public int generateBookingID() {
 		return bookingList.generateBookingID();
 	}
 
-	public ClientProfile getClientProfile(String NRIC) { // hy
-		return null;
+	public ClientProfile getClientProfile(String NRIC) {
+		ClientProfile clientProfile = clientProfileList.getClientProfile(NRIC);
+		return clientProfile;
 	}
 
 	public Booking createBooking(int bookingID, ClientProfile clientProfile, Date checkInDate, Date checkOutDate,
@@ -74,12 +76,14 @@ public class Controller implements IEntityCtrl {
 		return isRefundable;
 	}
 
-	public double getDeposit(Booking theBooking) { // hy
-		return 0;
+	public double getDeposit(Booking theBooking) {
+		double deposit = theBooking.getPayment().getDeposit();
+		return deposit;
 	}
 
-	public PaymentMethod getPaymentMethod(Booking theBooking) { // hy
-		return null;
+	public PaymentMethod getPaymentMethod(Booking theBooking) {
+		PaymentMethod paymentMethod = theBooking.getPayment().getPaymentMethod();
+		return paymentMethod;
 	}
 
 	public int getCardNumber(Booking theBooking) { // xz
@@ -92,8 +96,9 @@ public class Controller implements IEntityCtrl {
 		bookingList.cancelBooking(theBooking);
 	}
 
-	public Booking searchBooking(int bookingID) { // hy
-		return null;
+	public Booking searchBooking(int bookingID) {
+		Booking theBooking = bookingList.getBooking(bookingID);
+		return theBooking;
 	}
 
 	public void checkIn(Booking theBooking) { 
