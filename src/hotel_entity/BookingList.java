@@ -53,10 +53,10 @@ public class BookingList implements IBookingData {
 		for(Booking aBooking : bookingList) {
 			if(aBooking.getBookingID() == theBooking.getBookingID())
 			{
-				theBooking.setCheckInDate(checkInDate);
-				theBooking.setCheckInDate(checkOutDate);
-				theBooking.setRoom(room);
-				theBooking.setNumOfGuest(numOfGuest);
+				aBooking.setCheckInDate(checkInDate);
+				aBooking.setCheckInDate(checkOutDate);
+				aBooking.setRoom(room);
+				aBooking.setNumOfGuest(numOfGuest);
 			}
 		}
 	}
@@ -66,7 +66,7 @@ public class BookingList implements IBookingData {
 		for(Booking aBooking : bookingList) {
 			if(aBooking.getBookingID() == theBooking.getBookingID())
 			{
-				theBooking.setRoom(room);
+				aBooking.setRoom(room);
 			}
 		}
 	}
@@ -76,7 +76,7 @@ public class BookingList implements IBookingData {
 		for(Booking aBooking : bookingList) {
 			if(aBooking.getBookingID() == theBooking.getBookingID())
 			{
-				theBooking.setNumOfGuest(numOfGuest);
+				aBooking.setNumOfGuest(numOfGuest);
 			}
 		}
 
@@ -104,7 +104,7 @@ public class BookingList implements IBookingData {
 		for(Booking aBooking : bookingList) {
 			if(aBooking.getBookingID() == theBooking.getBookingID())
 			{
-				theBooking.setStatus(Status.CheckedIn);
+				aBooking.setStatus(Status.CheckedIn);
 			}
 		}
 	}
@@ -114,7 +114,7 @@ public class BookingList implements IBookingData {
 		for(Booking aBooking : bookingList) {
 			if(aBooking.getBookingID() == theBooking.getBookingID())
 			{
-				theBooking.setStatus(Status.CheckedOut);
+				aBooking.setStatus(Status.CheckedOut);
 			}
 		}
 	}
