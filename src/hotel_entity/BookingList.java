@@ -72,7 +72,6 @@ public class BookingList implements IBookingData {
 	@Override
 	public void cancelBooking(Booking theBooking) {
 		theBooking.setStatus(Status.Cancelled);
-		bookingList.remove(theBooking);
 	}
 
 	@Override
