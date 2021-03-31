@@ -29,9 +29,9 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public int generateBookingID() { // ignore
-		// TODO Auto-generated method stub
-		return 0;
+	public int generateBookingID() {
+		int bookingID=bookingList.size()+1;
+		return bookingID;
 	}
 
 	@Override
@@ -76,7 +76,12 @@ public class BookingList implements IBookingData {
 
 	@Override
 	public void cancelBooking(Booking theBooking) {
-		theBooking.setStatus(Status.Cancelled);
+		for(int i=0;i<bookingList.size();i++) {
+			if(bookingList.get(i).getBookingID()==(theBooking.getBookingID())) {
+				bookingList.get(i).setStatus(Status.Cancelled);
+				break;
+			}
+		}		
 	}
 
 	@Override
@@ -113,8 +118,15 @@ public class BookingList implements IBookingData {
 
 	@Override
 	public double getBill(Booking theBooking) {
-		theBooking.computeBill();
-		return theBooking.getBill();
+		double bill = 0;
+		for(int i=0;i<bookingList.size();i++) {
+			if(bookingList.get(i).getBookingID()==(theBooking.getBookingID())) {
+				bookingList.get(i).computeBill();
+				bill=bookingList.get(i).getBill();
+				break;
+			}
+		}		
+		return bill;
 	}
 
 	@Override

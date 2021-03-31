@@ -361,11 +361,11 @@ public class SystemUI {
 		System.out.println();
 
 		System.out.println("----Here is the Client Info----");
-		System.out.println("First Name  :" + clientProfile.getFirstName());
-		System.out.println("Last Name   :" + clientProfile.getLastName());
-		System.out.println("NRIC        :" + clientProfile.getNRIC());
-		System.out.println("Gender      :" + clientProfile.getGender());
-		System.out.println("Address     :" + clientProfile.getAddress());
+		System.out.println("First Name  :" + controller.getFirstName(clientProfile));
+		System.out.println("Last Name   :" + controller.getLastName(clientProfile));
+		System.out.println("NRIC        :" + controller.getNRIC(clientProfile));
+		System.out.println("Gender      :" + controller.getGender(clientProfile));
+		System.out.println("Address     :" + controller.getAddress(clientProfile));
 		System.out.println();
 	}
 
@@ -392,6 +392,7 @@ public class SystemUI {
 	}
 
 	private void printReceipt(Booking theBooking) {
+		ClientProfile clientProfile=theBooking.getClientProfile();
 		System.out.println("");
 		System.out.println("     DELLUNA HOTEL     ");
 		System.out.println("");
@@ -399,15 +400,15 @@ public class SystemUI {
 		System.out.println("-----------------------");
 		System.out.println("    Booking Detail     ");
 		System.out.println("-----------------------");
-		System.out.println("Booking ID     : " + theBooking.getBookingID());
-		System.out.println("First Name     : " + theBooking.getClientProfile().getFirstName());
-		System.out.println("Last Name      : " + theBooking.getClientProfile().getLastName());
-		System.out.println("Booking Status : " + theBooking.getStatus());
+		System.out.println("Booking ID     : " + controller.getBookingID(theBooking));
+		System.out.println("First Name     : " + controller.getFirstName(clientProfile));
+		System.out.println("Last Name      : " + controller.getLastName(clientProfile));
+		System.out.println("Booking Status : " + controller.getStatus(theBooking));
 		System.out.println("-----------------------");
 		System.out.println("    Payment Detail     ");
 		System.out.println("-----------------------");
-		System.out.println("Payment Method : " + theBooking.getPayment().getPaymentMethod());
-		System.out.println("     TOTAL     : " + theBooking.getPayment().getTotalPrice());
+		System.out.println("Payment Method : " + controller.getPaymentMethod(theBooking));
+		System.out.println("     TOTAL     : " + controller.getBill(theBooking));
 		System.out.println("");
 		System.out.println("-----------------------");
 		System.out.println("       THANK YOU       ");
