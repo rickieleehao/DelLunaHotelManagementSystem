@@ -291,6 +291,7 @@ public class SystemUI {
 				numOfGuest = scanner.nextInt();
 				scanner.nextLine();
 				controller.updateBooking(theBooking, checkInDate, checkOutDate, room, numOfGuest);
+				exit = true;
 				break;
 			case 2:
 				checkInDate = controller.getCheckInDate(theBooking);
@@ -302,12 +303,14 @@ public class SystemUI {
 				scanner.nextLine();
 				room = availableRoomList.get(roomNo - 1);
 				controller.updateBooking(theBooking, room);
+				exit = true;
 				break;
 			case 3:
 				System.out.print("Enter new number of guest ----> ");
 				numOfGuest = scanner.nextInt();
 				scanner.nextLine();
 				controller.updateBooking(theBooking, numOfGuest);
+				exit = true;
 				break;
 			case 4:
 				exit = true;
@@ -338,7 +341,8 @@ public class SystemUI {
 	}
 
 	private void viewBooking(Booking theBooking) {
-
+		UserType userType = controller.getUserType();
+		printBookingDets(userType, theBooking);
 	}
 
 	private void makePayment(Booking theBooking) { // tbc
@@ -390,7 +394,38 @@ public class SystemUI {
 	}
 
 	private void printBookingDets(UserType userType, Booking theBooking) {
-
+		if (userType == UserType.Administrator) {
+			System.out.println("Booking Detail");
+			System.out.println("--------------");
+			System.out.println("Booking ID: " + controller.getBookingID(theBooking));
+			System.out.println("Customer: " + controller.getClientProfile(theBooking).getFirstName() + " "
+					+ controller.getClientProfile(theBooking).getLastName());
+			System.out.println("NRIC: " + controller.getClientProfile(theBooking).getNRIC());
+			System.out.println("Check-in date : "
+					+ new SimpleDateFormat("dd/MM/yyyy").format(controller.getCheckInDate(theBooking)));
+			System.out.println("Check-out date: "
+					+ new SimpleDateFormat("dd/MM/yyyy").format(controller.getCheckOutDate(theBooking)));
+			System.out.println("Room: " + controller.getRoom(theBooking).getRoomID());
+			System.out.println("Number of guest: " + controller.getNumOfGuest(theBooking));
+			System.out.println("Booking status: " + controller.getStatus(theBooking));
+			//Incomplete. Not sure with payment detail. 
+			//When the booking status is confirmed/check in, the payment I can get and print is only deposit?
+			//When the booking status is check out, the payment I can get and print is deposit and total price and payment method?
+			//When the booking status is cancelled, no need payment detail? 
+		} else if (userType == UserType.Client) {
+			System.out.println("Booking Detail");
+			System.out.println("--------------");
+			System.out.println("Booking ID: " + controller.getBookingID(theBooking));
+			System.out.println("Customer: " + controller.getClientProfile(theBooking).getFirstName() + " "
+					+ controller.getClientProfile(theBooking).getLastName());
+			System.out.println("NRIC: " + controller.getClientProfile(theBooking).getNRIC());
+			System.out.println("Check-in date : "
+					+ new SimpleDateFormat("dd/MM/yyyy").format(controller.getCheckInDate(theBooking)));
+			System.out.println("Check-out date: "
+					+ new SimpleDateFormat("dd/MM/yyyy").format(controller.getCheckOutDate(theBooking)));
+			System.out.println("Room: " + controller.getRoom(theBooking).getRoomID());
+			System.out.println("Number of guest: " + controller.getNumOfGuest(theBooking));
+		}
 	}
 
 	private void printReceipt(Booking theBooking) {

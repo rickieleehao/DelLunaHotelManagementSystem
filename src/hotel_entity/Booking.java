@@ -23,6 +23,18 @@ public class Booking {
 		this.room = room;
 		this.numOfGuest = numOfGuest;
 	}
+	
+	public Booking(int bookingID, ClientProfile client, Date checkInDate, Date checkOutDate, Room room,
+			int numOfGuest, PaymentMethod paymentMethod, int cardNumber) {
+		this.bookingID = bookingID;
+		this.client = client;
+		this.checkInDate = checkInDate;
+		this.checkOutDate = checkOutDate;
+		this.room = room;
+		this.numOfGuest = numOfGuest;
+		this.payment = new Payment(this.room.getRate(), paymentMethod, cardNumber);
+		//create booking in controller not use this constructor?
+	}
 
 	public boolean validatePolicy(Date dateToday) {
 		boolean isRefundable;
@@ -41,8 +53,7 @@ public class Booking {
 		long timeDifference = checkOutDate.getTime() - checkInDate.getTime();
 		long dayDifference = TimeUnit.MILLISECONDS.toDays(timeDifference)% 365;
 		double computedBill = room.getRate() * dayDifference * room.getDiscount();
-		//payment.setTotalPrice(computedBill);
-		//missing setTotalPrice in payment even after I pull and refresh
+		payment.setTotalprice(computedBill);
 	}
 
 	public void makePayment(PaymentMethod paymentMethod) {
@@ -107,8 +118,7 @@ public class Booking {
 	}
 
 	public double getBill() {
-		//double bill = payment.getTotalPrice();
-		//missing getTotalPrice in payment even after I pull and refresh
-		return 0;
+		double bill = payment.getTotalPrice();
+		return bill;
 	}
 }
