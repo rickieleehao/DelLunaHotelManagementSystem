@@ -178,8 +178,10 @@ public class SystemUI {
 		if (theBooking == null)
 			System.out.println("Booking not found.");
 		else
+		{
 			System.out.println();
 		controller.checkIn(theBooking);
+		}
 
 	}
 
