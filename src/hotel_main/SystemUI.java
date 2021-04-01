@@ -138,7 +138,7 @@ public class SystemUI {
 
 	}
 
-	private void updateBooking() { // hy
+	private void updateBooking() {
 		int choice;
 		boolean exit = false;
 		do {
@@ -240,7 +240,7 @@ public class SystemUI {
 		return clientProfile;
 	}
 
-	private void changeBookingDets(Booking theBooking) { // hy
+	private void changeBookingDets(Booking theBooking) {
 		int choice, roomNo, numOfGuest;
 		boolean isDate, exit = false;
 		Date checkInDate = null, checkOutDate = null;
