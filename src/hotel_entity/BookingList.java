@@ -1,5 +1,6 @@
 package hotel_entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,12 +19,20 @@ public class BookingList implements IBookingData {
 	public List<Room> findAvailableRoom(Date checkInDate, Date checkOutDate) { // yy still not complete
 		RoomList roomList = new RoomList();
 		List<Room> availableRoomList = roomList.getRoomList();
-
+		ArrayList<Room> removedRoom = new ArrayList<Room>();
 		
 		for (int i = 0; i < bookingList.size(); i++) {
 			if (!(checkInDate.after(bookingList.get(i).getCheckOutDate()))
 					&& !(checkOutDate.before(bookingList.get(i).getCheckInDate()))) {
+				removedRoom.add(bookingList.get(i).getRoom());
 			}
+		}
+		
+		for(int j = 0; j < availableRoomList.size(); j++) {
+			for(int k = 0; k < removedRoom.size(); k++) {
+				if(availableRoomList.get(j).getRoomID() == removedRoom.get(k).getRoomID()) {
+					availableRoomList.remove(k);
+				}
 		}
 		return availableRoomList;
 	}
@@ -135,6 +144,7 @@ public class BookingList implements IBookingData {
 		for(int i = 0; i < bookingList.size(); i++) {
 			if(theBooking.getBookingID() == bookingList.get(i).getBookingID()) {
 				booking = bookingList.get(i);
+				break;
 			}
 		}
 		booking.makePayment(paymentMethod);
@@ -146,6 +156,7 @@ public class BookingList implements IBookingData {
 		for(int i = 0; i < bookingList.size(); i++) {
 			if(theBooking.getBookingID() == bookingList.get(i).getBookingID()) {
 				booking = bookingList.get(i);
+				break;
 			}
 		}
 		booking.makePayment(paymentMethod, cardNumber);

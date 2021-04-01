@@ -348,12 +348,16 @@ public class SystemUI {
 		if (choice.toLowerCase().equals("cash")) {
 			paymentMethod = PaymentMethod.Cash;
 			System.out.println("Pay by cash");
+			controller.makePayment(theBooking, paymentMethod);
 		} else {
 			paymentMethod = PaymentMethod.CreditCard;
 			System.out.println("Pay by credit card");
+			System.out.print("Enter card number: ");
+			int cardNumber = scanner.nextInt();
+			controller.makePayment(theBooking, paymentMethod, cardNumber);
 		}
 
-		controller.makePayment(theBooking, paymentMethod);
+		printReceipt(theBooking);
 	}
 
 	private void printClientProfileDets(ClientProfile clientProfile) { // xz
@@ -370,6 +374,7 @@ public class SystemUI {
 	}
 
 	private void printRoomList(List<Room> availableRoomList) { // yy
+		System.out.printf("%-5s", "No.");
 		System.out.printf("%-9s", "Room ID");
 		System.out.printf("%-8s", "Rates");
 		System.out.printf("%-10s", "Discount");
@@ -377,12 +382,17 @@ public class SystemUI {
 		System.out.println("");
 		System.out.println("");
 		for (int i = 0; i < availableRoomList.size(); i++) {
+			System.out.printf("%-5d", i);
 			System.out.printf("%-9d", availableRoomList.get(i).getRoomID());
 			System.out.printf("%-8.2f", availableRoomList.get(i).getRate());
 			System.out.printf("%-10.2f", availableRoomList.get(i).getDiscount());
 			System.out.printf("%-16d", availableRoomList.get(i).getNumOfBed());
 			System.out.println("");
 		}
+		int choice;
+		System.out.println("Enter a number to choose a room");
+		choice = scanner.nextInt();
+		
 		System.out.println(""); // view booking
 
 	}

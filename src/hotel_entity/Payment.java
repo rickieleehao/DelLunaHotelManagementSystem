@@ -32,7 +32,7 @@ public class Payment { //yy
 		return cardNumber;
 	}
 	
-	public void setTotalprice(double totalprice) {]
+	public void setTotalprice(double totalprice) {
 		this.totalPrice = totalprice;
 	}
 	
