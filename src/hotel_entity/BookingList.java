@@ -58,6 +58,7 @@ public class BookingList implements IBookingData {
 				aBooking.setCheckInDate(checkOutDate);
 				aBooking.setRoom(room);
 				aBooking.setNumOfGuest(numOfGuest);
+				break;
 			}
 		}
 	}
@@ -68,6 +69,7 @@ public class BookingList implements IBookingData {
 			if(aBooking.getBookingID() == theBooking.getBookingID())
 			{
 				aBooking.setRoom(room);
+				break;
 			}
 		}
 	}
@@ -78,6 +80,7 @@ public class BookingList implements IBookingData {
 			if(aBooking.getBookingID() == theBooking.getBookingID())
 			{
 				aBooking.setNumOfGuest(numOfGuest);
+				break;
 			}
 		}
 
@@ -111,6 +114,8 @@ public class BookingList implements IBookingData {
 			if(aBooking.getBookingID() == theBooking.getBookingID())
 			{
 				aBooking.setStatus(Status.CheckedIn);
+				break;
+				
 			}
 		}
 	}
@@ -121,6 +126,7 @@ public class BookingList implements IBookingData {
 			if(aBooking.getBookingID() == theBooking.getBookingID())
 			{
 				aBooking.setStatus(Status.CheckedOut);
+				break;
 			}
 		}
 	}
