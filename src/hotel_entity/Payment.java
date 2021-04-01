@@ -1,7 +1,7 @@
 package hotel_entity;
 
 public class Payment { //yy
-	private double deposit;
+	private double deposit, totalPrice;
 	private PaymentMethod paymentMethod;
 	private int cardNumber;
 	
@@ -20,11 +20,20 @@ public class Payment { //yy
 	public double getDeposit() {
 		return deposit;
 	}
+	
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+	
 	public PaymentMethod getPaymentMethod() {
 		return paymentMethod;
 	}
 	public int getCardNumber() {
 		return cardNumber;
+	}
+	
+	public void setTotalprice(double totalprice) {]
+		this.totalPrice = totalprice;
 	}
 	
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
