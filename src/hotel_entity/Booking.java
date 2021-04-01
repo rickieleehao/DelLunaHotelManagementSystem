@@ -36,6 +36,10 @@ public class Booking {
 		//create booking in controller not use this constructor?
 	}
 
+	public Booking() {
+		
+	}
+	
 	public boolean validatePolicy(Date dateToday) {
 		boolean isRefundable;
 		Calendar cal = Calendar.getInstance();
@@ -120,5 +124,9 @@ public class Booking {
 	public double getBill() {
 		double bill = payment.getTotalPrice();
 		return bill;
+	}
+	
+	public void setBookingID(int bookingID) {
+		this.bookingID = bookingID;
 	}
 }

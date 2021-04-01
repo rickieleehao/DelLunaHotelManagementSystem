@@ -34,12 +34,12 @@ public class BookingList implements IBookingData {
 					availableRoomList.remove(k);
 				}
 		}
-		return availableRoomList;
+		return null;
 	}
 
 	@Override
 	public int generateBookingID() {
-		int bookingID=bookingList.size()+1;
+		int bookingID = bookingList.size() + 1;
 		return bookingID;
 	}
 
@@ -49,11 +49,9 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public void updateBooking(Booking theBooking, Date checkInDate, Date checkOutDate,
-			Room room, int numOfGuest) {
-		for(Booking aBooking : bookingList) {
-			if(aBooking.getBookingID() == theBooking.getBookingID())
-			{
+	public void updateBooking(Booking theBooking, Date checkInDate, Date checkOutDate, Room room, int numOfGuest) {
+		for (Booking aBooking : bookingList) {
+			if (aBooking.getBookingID() == theBooking.getBookingID()) {
 				aBooking.setCheckInDate(checkInDate);
 				aBooking.setCheckInDate(checkOutDate);
 				aBooking.setRoom(room);
@@ -65,9 +63,8 @@ public class BookingList implements IBookingData {
 
 	@Override
 	public void updateBooking(Booking theBooking, Room room) {
-		for(Booking aBooking : bookingList) {
-			if(aBooking.getBookingID() == theBooking.getBookingID())
-			{
+		for (Booking aBooking : bookingList) {
+			if (aBooking.getBookingID() == theBooking.getBookingID()) {
 				aBooking.setRoom(room);
 				break;
 			}
@@ -76,9 +73,8 @@ public class BookingList implements IBookingData {
 
 	@Override
 	public void updateBooking(Booking theBooking, int numOfGuest) {
-		for(Booking aBooking : bookingList) {
-			if(aBooking.getBookingID() == theBooking.getBookingID())
-			{
+		for (Booking aBooking : bookingList) {
+			if (aBooking.getBookingID() == theBooking.getBookingID()) {
 				aBooking.setNumOfGuest(numOfGuest);
 				break;
 			}
@@ -88,12 +84,12 @@ public class BookingList implements IBookingData {
 
 	@Override
 	public void cancelBooking(Booking theBooking) {
-		for(int i=0;i<bookingList.size();i++) {
-			if(bookingList.get(i).getBookingID()==(theBooking.getBookingID())) {
+		for (int i = 0; i < bookingList.size(); i++) {
+			if (bookingList.get(i).getBookingID() == (theBooking.getBookingID())) {
 				bookingList.get(i).setStatus(Status.Cancelled);
 				break;
 			}
-		}		
+		}
 	}
 
 	@Override
@@ -105,26 +101,35 @@ public class BookingList implements IBookingData {
 				break;
 			}
 		}
+
+		if (theBooking.equals(null)) {
+			throw new IllegalArgumentException("Booking not found!");
+		}
+
 		return theBooking;
 	}
 
 	@Override
 	public void checkIn(Booking theBooking) {
-		for(Booking aBooking : bookingList) {
-			if(aBooking.getBookingID() == theBooking.getBookingID())
-			{
+
+		if (theBooking.equals(null)) {
+			throw new IllegalArgumentException("Check-in failed.");
+		}
+
+		for (Booking aBooking : bookingList) {
+			if (aBooking.getBookingID() == theBooking.getBookingID()) {
 				aBooking.setStatus(Status.CheckedIn);
 				break;
-				
+
 			}
 		}
+
 	}
 
 	@Override
 	public void checkOut(Booking theBooking) {
-		for(Booking aBooking : bookingList) {
-			if(aBooking.getBookingID() == theBooking.getBookingID())
-			{
+		for (Booking aBooking : bookingList) {
+			if (aBooking.getBookingID() == theBooking.getBookingID()) {
 				aBooking.setStatus(Status.CheckedOut);
 				break;
 			}
@@ -134,21 +139,21 @@ public class BookingList implements IBookingData {
 	@Override
 	public double getBill(Booking theBooking) {
 		double bill = 0;
-		for(int i=0;i<bookingList.size();i++) {
-			if(bookingList.get(i).getBookingID()==(theBooking.getBookingID())) {
+		for (int i = 0; i < bookingList.size(); i++) {
+			if (bookingList.get(i).getBookingID() == (theBooking.getBookingID())) {
 				bookingList.get(i).computeBill();
-				bill=bookingList.get(i).getBill();
+				bill = bookingList.get(i).getBill();
 				break;
 			}
-		}		
+		}
 		return bill;
 	}
 
 	@Override
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod) {
 		Booking booking = null;
-		for(int i = 0; i < bookingList.size(); i++) {
-			if(theBooking.getBookingID() == bookingList.get(i).getBookingID()) {
+		for (int i = 0; i < bookingList.size(); i++) {
+			if (theBooking.getBookingID() == bookingList.get(i).getBookingID()) {
 				booking = bookingList.get(i);
 				break;
 			}
@@ -159,8 +164,8 @@ public class BookingList implements IBookingData {
 	@Override
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod, int cardNumber) {
 		Booking booking = null;
-		for(int i = 0; i < bookingList.size(); i++) {
-			if(theBooking.getBookingID() == bookingList.get(i).getBookingID()) {
+		for (int i = 0; i < bookingList.size(); i++) {
+			if (theBooking.getBookingID() == bookingList.get(i).getBookingID()) {
 				booking = bookingList.get(i);
 				break;
 			}

@@ -15,6 +15,10 @@ public class ClientProfile { //done
 		this.address = address;
 	}
 	
+	public ClientProfile() {
+		
+	}
+	
 	public String getNRIC() {
 		return NRIC;
 	}
@@ -33,5 +37,15 @@ public class ClientProfile { //done
 	
 	public String getAddress() {
 		return address;
+	}
+	
+	public void setFirstName(String firstName) {
+		if(firstName.length() < 5) {
+			throw new IllegalArgumentException("First name at least need 5 characters.");
+		}else if (firstName.length() > 40) {
+			throw new IllegalArgumentException("First name cannot exceed 40 characters.");
+		}
+		
+		this.firstName = firstName;
 	}
 }

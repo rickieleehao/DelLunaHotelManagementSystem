@@ -28,9 +28,9 @@ public interface IBookingData {
 	public void checkOut(Booking theBooking);
 
 	public double getBill(Booking theBooking);
-	
+
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod);
-	
+
 	public void makePayment(Booking theBooking, PaymentMethod paymentMethod, int cardNumber);
 
 }

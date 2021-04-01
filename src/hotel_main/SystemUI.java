@@ -73,10 +73,32 @@ public class SystemUI {
 
 	private void createBooking() { // xz
 
-		int bookingID = controller.generateBookingID();
-		System.out.print("Enter NRIC ----> ");
-		String NRIC = scanner.nextLine();
+		Booking newBooking = this.controller.createBooking();
+		this.controller.setBookingID(newBooking);
 
+		ClientProfile clientProfile;
+		String NRIC;
+
+		boolean error = true;
+
+		while (error) {
+			try {
+				System.out.print("Enter NRIC ----> ");
+				NRIC = scanner.nextLine();
+				clientProfile = this.controller.getClientProfile(NRIC);
+				error = false;
+			} catch (InputMismatchException e) {
+				System.out.println(e.getMessage());
+				error = true;
+			} catch (IllegalAccessException e) {
+				System.out.println(e.getMessage());
+				clientProfile = createClientProfile(NRIC);
+				error = false;
+			}
+		}
+		
+		
+		
 		boolean isProfileFound = controller.searchClientProfile(NRIC);
 
 		String skip;
@@ -175,18 +197,16 @@ public class SystemUI {
 
 	private void checkIn() {
 		Booking theBooking = searchBooking();
-		if (theBooking == null)
-			System.out.println("Booking not found.");
-		else
-		{
-			System.out.println();
-		controller.checkIn(theBooking);
+		try {
+			this.controller.checkIn(theBooking);
+		} catch (IllegalAccessException e) {
+			System.out.println(e.getMessage());
 		}
-
 	}
 
 	private void checkOut() {
 		Booking theBooking = searchBooking();
+
 		if (theBooking == null)
 			System.out.println("Booking not found.");
 		else {
@@ -197,32 +217,57 @@ public class SystemUI {
 	}
 
 	private Booking searchBooking() {
-		int bookingID = 0;
+		Booking theBooking;
 		try {
 			System.out.print("Enter booking ID ----> ");
-			bookingID = scanner.nextInt();
-		} catch (IllegalArgumentException ex) {
-			System.out.println("Enter only integer");
+			theBooking = this.controller.getBooking(scanner.nextInt());
+			scanner.nextLine();
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} catch (InputMismatchException e) {
+			scanner.nextLine();
+			System.out.println("Invalid number!");
+			return null;
 		}
 
-		Booking theBooking = controller.searchBooking(bookingID);
-		if (theBooking == null)
-			System.out.println("Booking not found.");
-		else
-			viewBooking(theBooking);
 		return theBooking;
 	}
 
 	private ClientProfile createClientProfile(String NRIC) { // yy
 
+		ClientProfile client = new ClientProfile();
 		String firstName;
 		String lastName;
 		String temp;
 		Gender gender = null;
 		String address;
 
-		System.out.print("Enter client's first name ----> ");
-		firstName = scanner.nextLine();
+		boolean error = true;
+
+		while (error) {
+			try {
+				System.out.print("Enter client's first name ----> ");
+				client.setFirstName(scanner.nextLine());
+				error = false;
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+				error = true;
+			}
+		}
+
+		error = true;
+
+		while (error) {
+			try {
+				System.out.print("Enter client's first name ----> ");
+				client.setFirstName(scanner.nextLine());
+				error = false;
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+				error = true;
+			}
+		}
 
 		System.out.print("Enter client's last name ----> ");
 		lastName = scanner.nextLine();
@@ -398,7 +443,7 @@ public class SystemUI {
 		int choice;
 		System.out.println("Enter a number to choose a room");
 		choice = scanner.nextInt();
-		
+
 		System.out.println(""); // view booking
 
 	}
@@ -418,10 +463,12 @@ public class SystemUI {
 			System.out.println("Room: " + controller.getRoom(theBooking).getRoomID());
 			System.out.println("Number of guest: " + controller.getNumOfGuest(theBooking));
 			System.out.println("Booking status: " + controller.getStatus(theBooking));
-			//Incomplete. Not sure with payment detail. 
-			//When the booking status is confirmed/check in, the payment I can get and print is only deposit?
-			//When the booking status is check out, the payment I can get and print is deposit and total price and payment method?
-			//When the booking status is cancelled, no need payment detail? 
+			// Incomplete. Not sure with payment detail.
+			// When the booking status is confirmed/check in, the payment I can get and
+			// print is only deposit?
+			// When the booking status is check out, the payment I can get and print is
+			// deposit and total price and payment method?
+			// When the booking status is cancelled, no need payment detail?
 		} else if (userType == UserType.Client) {
 			System.out.println("Booking Detail");
 			System.out.println("--------------");
@@ -439,7 +486,7 @@ public class SystemUI {
 	}
 
 	private void printReceipt(Booking theBooking) {
-		ClientProfile clientProfile=theBooking.getClientProfile();
+		ClientProfile clientProfile = theBooking.getClientProfile();
 		System.out.println("");
 		System.out.println("     DELLUNA HOTEL     ");
 		System.out.println("");

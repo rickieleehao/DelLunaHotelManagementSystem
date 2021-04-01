@@ -101,7 +101,7 @@ public class Controller implements IEntityCtrl {
 		return theBooking;
 	}
 
-	public void checkIn(Booking theBooking) { 
+	public void checkIn(Booking theBooking){ 
 		bookingList.checkIn(theBooking);
 	}
 
@@ -208,5 +208,18 @@ public class Controller implements IEntityCtrl {
 	public String getAddress(ClientProfile clientProfile) {
 		String address = clientProfile.getAddress();
 		return address;
+	}
+	
+	public Booking getBooking(int bookingID) {
+		return this.bookingList.getBooking(bookingID);
+	}
+	
+	public Booking createBooking() {
+		Booking newBooking = new Booking();
+		return newBooking;
+	}
+	
+	public void setBookingID(Booking newBooking) {
+		newBooking.setBookingID(this.bookingList.generateBookingID());
 	}
 }
