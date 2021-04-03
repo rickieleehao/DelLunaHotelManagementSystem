@@ -7,11 +7,13 @@ import java.util.List;
 
 import hotel_entity.*;
 
-public class Controller implements IEntityCtrl {
+public class Controller {
 
-	private IBookingData bookingList;
-	private IClientData clientProfileList;
 	private IUser user;
+	private IBooking booking;
+	private IBookingData bookingList;
+	private IClientProfile clientProfile;
+	private IClientData clientProfileList;
 
 	public Controller(IBookingData bookingList, IClientData clientProfileList, IUser user) {
 		this.bookingList = bookingList;
@@ -24,189 +26,199 @@ public class Controller implements IEntityCtrl {
 		return availableRoomList;
 	}
 
-	public boolean searchClientProfile(String NRIC) {
-		boolean isProfile = clientProfileList.searchClientProfile(NRIC);
-		return isProfile;
+	public void addBooking() {
+		this.bookingList.addBooking((Booking)booking);
 	}
 
-	public int generateBookingID() {
-		return bookingList.generateBookingID();
+	public void updateBooking() {
+		this.bookingList.updateBookingList((Booking) this.booking);
 	}
 
-	public ClientProfile getClientProfile(String NRIC) {
-		ClientProfile clientProfile = clientProfileList.getClientProfile(NRIC);
-		return clientProfile;
+	public Booking getBooking() {
+		return (Booking) this.booking; // this is add cast, meaning convert IBooking into Booking
 	}
 
-	public Booking createBooking(int bookingID, ClientProfile clientProfile, Date checkInDate, Date checkOutDate,
-			Room room, int numOfGuest) { 
-		Booking theBooking= new Booking(bookingID, clientProfile, checkInDate, checkOutDate, room,
-				numOfGuest);
-		return theBooking;
+	public void createBooking() {
+		this.booking = new Booking();
 	}
 
-	public void addBooking(Booking newBooking) { 
-		bookingList.addBooking(newBooking);
+	public void createBooking(Booking booking) {
+		this.booking = new Booking();
+		this.booking = booking;
+	}
+
+	public void setBookingID(int bookingID) {
+		// TODO Auto-generated method stub
 
 	}
 
-	public ClientProfile createClientProfile(String NRIC, String firstName, String lastName, Gender gender,
-			String address) { // xz
+	public void setClientProfile(ClientProfile clientProfile) {
+		// TODO Auto-generated method stub
 
-		ClientProfile newClientProfile = new ClientProfile(NRIC, firstName, lastName, gender, address);
-		clientProfileList.addClientProfile(newClientProfile);
-
-		return newClientProfile;
 	}
 
-	public void updateBooking(Booking theBooking, Date checkInDate, Date checkOutDate, Room room, int numOfGuest) { // yy
-		bookingList.updateBooking(theBooking, checkInDate, checkOutDate, room, numOfGuest);
+	public void setCheckInDate(Date checkInDate) {
+		// TODO Auto-generated method stub
+
 	}
 
-	public void updateBooking(Booking theBooking, Room room) { // yy
-		bookingList.updateBooking(theBooking, room);
+	public void setCheckOutDate(Date checkOutDate) {
+		// TODO Auto-generated method stub
+
 	}
 
-	public void updateBooking(Booking theBooking, int numOfGuest) { // yy
-		bookingList.updateBooking(theBooking, numOfGuest);
+	public void setRoom(Room room) {
+		// TODO Auto-generated method stub
+
 	}
 
-	public boolean validatePolicy(Booking theBooking, Date dateToday) { // yy
-		boolean isRefundable = theBooking.validatePolicy(dateToday);
-		return isRefundable;
+	public void setNumOfGuest(int numOfGuest) {
+		// TODO Auto-generated method stub
+
 	}
 
-	public double getDeposit(Booking theBooking) {
-		double deposit = theBooking.getPayment().getDeposit();
-		return deposit;
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		// TODO Auto-generated method stub
+
 	}
 
-	public PaymentMethod getPaymentMethod(Booking theBooking) {
-		PaymentMethod paymentMethod = theBooking.getPayment().getPaymentMethod();
-		return paymentMethod;
+	public void setTotalPrice(double totalPrice) {
+		// TODO Auto-generated method stub
+
 	}
 
-	public int getCardNumber(Booking theBooking) { // xz
-		Payment payment = theBooking.getPayment();
-		int cardNumber = payment.getCardNumber();
-		return cardNumber;
+	public void setStatus(Status status) {
+		// TODO Auto-generated method stub
+
 	}
 
-	public void cancelBooking(Booking theBooking) { 
-		bookingList.cancelBooking(theBooking);
+	public void setCardNumber(int cardNumber) {
+		// TODO Auto-generated method stub
+
 	}
 
-	public Booking searchBooking(int bookingID) {
-		Booking theBooking = bookingList.getBooking(bookingID);
-		return theBooking;
+	public int getBookingID() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
-	public void checkIn(Booking theBooking) { 
-		bookingList.checkIn(theBooking);
+	public Date getCheckInDate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void checkOut(Booking theBooking) { 
-		bookingList.checkOut(theBooking);
+	public Date getCheckOutDate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void makePayment(Booking theBooking, PaymentMethod paymentMethod) {
-		bookingList.makePayment(theBooking, paymentMethod);
+	public Room getRoom() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void makePayment(Booking theBooking, PaymentMethod paymentMethod, int cardNumber) {
-		bookingList.makePayment(theBooking, paymentMethod, cardNumber);
+	public int getNumOfGuest() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
-	public UserType getUserType() { // yy
-		return this.user.getUserType();
+	public Payment getPayment() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public boolean login(String password) { //r
-		isAdministrator ia = new isAdministrator();
-		return ia.verifyAdmin(password);				
+	public Status getStatus() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	@Override
-	public int getBookingID(Booking theBooking) {
-		int bookingID = theBooking.getBookingID();
-		return bookingID;
+	public double getTotalPrice() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
-	@Override
-	public ClientProfile getClientProfile(Booking theBooking) {
-		ClientProfile clientProfile = theBooking.getClientProfile();
-		return clientProfile;
+	public boolean validatePolicy(Date dateToday) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	@Override
-	public Date getCheckInDate(Booking theBooking) {
-		Date checkInDate = theBooking.getCheckInDate();
-		return checkInDate;
+	public void makePayment(PaymentMethod paymentMethod) {
+		// TODO Auto-generated method stub
+
 	}
 
-	@Override
-	public Date getCheckOutDate(Booking theBooking) {
-		Date checkOutDate = theBooking.getCheckOutDate();
-		return checkOutDate;
+	public void makePayment(PaymentMethod paymentMethod, int cardNumber) {
+		// TODO Auto-generated method stub
+
 	}
 
-	@Override
-	public Room getRoom(Booking theBooking) {
-		Room room = theBooking.getRoom();
-		return room;
+	public void setNRIC(String NRIC) {
+		// TODO Auto-generated method stub
+
 	}
 
-	@Override
-	public int getNumOfGuest(Booking theBooking) {
-		int numOfGuest = theBooking.getNumOfGuest();
-		return numOfGuest;
+	public void setFirstName(String firstName) {
+		// TODO Auto-generated method stub
+
 	}
 
-	@Override
-	public Payment getPayment(Booking theBooking) {
-		Payment payment = theBooking.getPayment();
-		return payment;
+	public void setLastName(String lastName) {
+		// TODO Auto-generated method stub
+
 	}
 
-	@Override
-	public Status getStatus(Booking theBooking) {
-		Status status = theBooking.getStatus();
-		return status;
+	public void setGender(Gender gender) {
+		// TODO Auto-generated method stub
+
 	}
 
-	@Override
-	public double getBill(Booking theBooking) {
-		double bill = theBooking.getBill();
-		return bill;
+	public void setAddress(String address) {
+		// TODO Auto-generated method stub
+
 	}
 
-	@Override
-	public String getNRIC(ClientProfile clientProfile) {
-		String NRIC = clientProfile.getNRIC();
-		return NRIC;
+	public void addClientProfile(ClientProfile clientProfile) {
+		this.clientProfileList.addClientProfile((ClientProfile) this.clientProfile);
 	}
 
-	@Override
-	public String getFirstName(ClientProfile clientProfile) {
-		String firstName = clientProfile.getFirstName();
-		return firstName;
+	public void createClientProfile() {
+		this.clientProfile = new ClientProfile();
 	}
 
-	@Override
-	public String getLastName(ClientProfile clientProfile) {
-		String lastName = clientProfile.getLastName();
-		return lastName;
+	public ClientProfile getClientProfile() {
+		return (ClientProfile) this.clientProfile;
 	}
 
-	@Override
-	public Gender getGender(ClientProfile clientProfile) {
-		Gender gender = clientProfile.getGender();
-		return gender;
+	public String getNRIC() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	@Override
-	public String getAddress(ClientProfile clientProfile) {
-		String address = clientProfile.getAddress();
-		return address;
+	public String getFirstName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getLastName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Gender getGender() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getAddress() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public UserType getUserType() {
+		return null;
+	}
+
+	public void login(String password) {
+
 	}
 }
