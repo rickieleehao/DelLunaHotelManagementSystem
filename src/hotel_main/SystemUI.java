@@ -195,7 +195,6 @@ public class SystemUI {
 	}
 
 	private Booking searchBooking() {
-		  //int bookingID = 0;
 			Booking theBooking = null;
 			boolean error=true;
 		while(error=true){
