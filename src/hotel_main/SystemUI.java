@@ -222,26 +222,44 @@ public class SystemUI {
 		String temp;
 		Gender gender = null;
 		String address;
-
-		System.out.print("Enter client's first name ----> ");
-		firstName = scanner.nextLine();
-
-		System.out.print("Enter client's last name ----> ");
-		lastName = scanner.nextLine();
-
-		System.out.print("Enter client's gender(M/F) ----> ");
-		temp = scanner.nextLine();
-		if (temp.toLowerCase().equals("m")) {
-			gender = Gender.Male;
-		} else if (temp.toLowerCase().equals("f")) {
-			gender = Gender.Female;
+		
+		try {
+			System.out.print("Enter client's first name ----> ");
+			firstName = scanner.nextLine();
 		}
-
-		System.out.print("Enter client's address ----> ");
-		address = scanner.nextLine();
-		ClientProfile clientProfile = controller.createClientProfile(NRIC, firstName, lastName, gender, address);
-		System.out.println("Client's profile is created.");
-		return clientProfile;
+		catch(IllegalArgumentException iae) {
+			System.out.println("Invalid input");
+		}
+		
+		
+		try {
+			System.out.print("Enter client's last name ----> ");
+			lastName = scanner.nextLine();
+		}
+		catch(IllegalArgumentException iae) {
+			System.out.println("Invalid input");
+		}
+			
+		try {
+			gender.printGenderOption();
+			System.out.println("Enter a number: ");
+			int choice = scanner.nextInt();
+			gender.selectGender(choice);
+		}
+		catch(IllegalArgumentException iae) {
+			System.out.println("Invalid input");
+		}
+			
+		try {
+			System.out.print("Enter client's address ----> ");
+			address = scanner.nextLine();
+			ClientProfile clientProfile = controller.createClientProfile(NRIC, firstName, lastName, gender, address);
+			System.out.println("Client's profile is created.");
+			return clientProfile;
+		}
+		catch(IllegalArgumentException iae) {
+			System.out.println("Invalid input");
+		}
 	}
 
 	private void changeBookingDets(Booking theBooking) {
@@ -352,12 +370,21 @@ public class SystemUI {
 		if (choice.toLowerCase().equals("cash")) {
 			paymentMethod = PaymentMethod.Cash;
 			System.out.println("Pay by cash");
+			controller.makePayment(theBooking, paymentMethod);
 		} else {
 			paymentMethod = PaymentMethod.CreditCard;
 			System.out.println("Pay by credit card");
+			try {
+				System.out.print("Enter card number: ");
+				int cardNumber = scanner.nextInt();
+			}
+			catch(IllegalArgumentException iae) {
+				System.out.println("Invalid input");
+			}
+			controller.makePayment(theBooking, paymentMethod, cardNumber);
 		}
 
-		controller.makePayment(theBooking, paymentMethod);
+		printReceipt(theBooking);
 	}
 
 	private void printClientProfileDets(ClientProfile clientProfile) { // xz
@@ -387,6 +414,8 @@ public class SystemUI {
 			System.out.printf("%-16d", availableRoomList.get(i).getNumOfBed());
 			System.out.println("");
 		}
+		
+		
 		System.out.println(""); // view booking
 
 	}

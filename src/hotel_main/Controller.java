@@ -30,7 +30,7 @@ public class Controller {
 		this.bookingList.addBooking((Booking)booking);
 	}
 
-	public void updateBooking() {
+	public void updateBookingList(IBooking booking) {
 		this.bookingList.updateBookingList((Booking) this.booking);
 	}
 
@@ -138,17 +138,18 @@ public class Controller {
 	}
 
 	public boolean validatePolicy(Date dateToday) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isRefundable;
+		isRefundable = booking.validatePolicy(dateToday);
+		return isRefundable;
 	}
 
 	public void makePayment(PaymentMethod paymentMethod) {
-		// TODO Auto-generated method stub
+		booking.makePayment(paymentMethod);
 
 	}
 
 	public void makePayment(PaymentMethod paymentMethod, int cardNumber) {
-		// TODO Auto-generated method stub
+		booking.makePayment(paymentMethod, cardNumber);
 
 	}
 
@@ -214,6 +215,6 @@ public class Controller {
 	}
 
 	public void login(String password) {
-
+		
 	}
 }

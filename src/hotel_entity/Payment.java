@@ -32,10 +32,20 @@ public class Payment {
 	}
 
 	public void setcardNumber(int cardNumber) {
-		this.cardNumber = cardNumber;
+		if(cardNumber >= 0) {
+			this.cardNumber = cardNumber;
+		}
+		else {
+			throw new IllegalArgumentException("Invalid input");
+		}
 	}
 
 	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
+		if(totalPrice >= 0) {
+			this.totalPrice = totalPrice;
+		}
+		else {
+			throw new IllegalArgumentException();
+		}
 	}
 }
