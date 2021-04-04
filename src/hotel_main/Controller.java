@@ -34,7 +34,7 @@ public class Controller {
 		this.bookingList.updateBookingList((Booking) this.booking);
 	}
 
-	public Booking getBooking() {
+	public Booking getBooking(int bookingID) {
 		return (Booking) this.booking; // this is add cast, meaning convert IBooking into Booking
 	}
 

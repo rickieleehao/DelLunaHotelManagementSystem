@@ -179,7 +179,7 @@ public class SystemUI {
 			System.out.println("Booking not found.");
 		else
 			System.out.println();
-		controller.checkIn(theBooking);
+		controller.setStatus(Status.CheckedIn);
 
 	}
 
@@ -190,26 +190,31 @@ public class SystemUI {
 		else {
 			System.out.println();
 			makePayment(theBooking);
-			controller.checkOut(theBooking);
+			controller.setStatus(Status.CheckedOut);
 		}
 	}
 
 	private Booking searchBooking() {
-		int bookingID = 0;
-		try {
-			System.out.print("Enter booking ID ----> ");
-			bookingID = scanner.nextInt();
-		} catch (IllegalArgumentException ex) {
-			System.out.println("Enter only integer");
+		  //int bookingID = 0;
+			Booking theBooking = null;
+			boolean error=true;
+		while(error=true){
+		 try {
+			 System.out.print("Enter booking ID ----> ");
+			 theBooking = controller.getBooking(scanner.nextInt());
+			 error = false;
+		 
+		 }catch (InputMismatchException ex) {
+			 System.out.println("Enter only integer.");
+		 }catch (IllegalArgumentException e){
+			 System.out.println("Booking not Found.");
+		 }
 		}
-
-		Booking theBooking = controller.searchBooking(bookingID);
-		if (theBooking == null)
-			System.out.println("Booking not found.");
-		else
-			viewBooking(theBooking);
-		return theBooking;
-	}
+		  
+		 	controller.createBooking(theBooking);
+		 	viewBooking(theBooking);
+		 	return theBooking;
+		 }
 
 	private ClientProfile createClientProfile(String NRIC) { // yy
 
