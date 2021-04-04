@@ -48,31 +48,56 @@ public class ClientProfile implements IClientProfile {
 
 	@Override
 	public void setNRIC(String NRIC) {
-		// TODO Auto-generated method stub
+		if (NRIC.length() != 12 || NRIC.matches("[0-9]+")) {
+			throw new IllegalArgumentException();
+		}
+		else {
+			this.NRIC = NRIC;
+		}
 		
 	}
 
 	@Override
 	public void setFirstName(String firstName) {
-		// TODO Auto-generated method stub
+		if (firstName.length() < 5 || NRIC.matches("[a-zA-Z]+") == false) {
+			throw new IllegalArgumentException();
+		}
+		else {
+			this.firstName = firstName;
+		}
 		
 	}
 
 	@Override
 	public void setLastName(String lastName) {
-		// TODO Auto-generated method stub
+		if (lastName.length() < 5 || lastName.matches("[a-zA-Z]+") == false) {
+			throw new IllegalArgumentException();
+		}
+		else {
+			this.lastName = lastName;
+		}
 		
 	}
 
 	@Override
 	public void setGender(Gender gender) {
-		// TODO Auto-generated method stub
+		if (gender == null) {
+			throw new NullPointerException();
+		}
+		else {
+			this.gender = gender;
+		}
 		
 	}
 
 	@Override
 	public void setAddress(String address) {
-		// TODO Auto-generated method stub
+		if (address.length() < 30) {
+			throw new IllegalArgumentException();
+		}
+		else {
+			this.address = address;
+		}
 		
 	}
 }
