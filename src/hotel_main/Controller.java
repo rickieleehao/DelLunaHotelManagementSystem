@@ -153,27 +153,27 @@ public class Controller {
 	}
 
 	public void setNRIC(String NRIC) {
-		// TODO Auto-generated method stub
+		clientProfile.setNRIC(NRIC);
 
 	}
 
 	public void setFirstName(String firstName) {
-		// TODO Auto-generated method stub
+		clientProfile.setFirstName(firstName);
 
 	}
 
 	public void setLastName(String lastName) {
-		// TODO Auto-generated method stub
+		clientProfile.setLastName(lastName);
 
 	}
 
 	public void setGender(Gender gender) {
-		// TODO Auto-generated method stub
+		clientProfile.setGender(gender);
 
 	}
 
 	public void setAddress(String address) {
-		// TODO Auto-generated method stub
+		clientProfile.setAddress(address);
 
 	}
 
@@ -190,32 +190,27 @@ public class Controller {
 	}
 
 	public String getNRIC() {
-		// TODO Auto-generated method stub
-		return null;
+		return clientProfile.getNRIC();
 	}
 
 	public String getFirstName() {
-		// TODO Auto-generated method stub
-		return null;
+		return clientProfile.getFirstName();
 	}
 
 	public String getLastName() {
-		// TODO Auto-generated method stub
-		return null;
+		return clientProfile.getLastName();
 	}
 
 	public Gender getGender() {
-		// TODO Auto-generated method stub
-		return null;
+		return clientProfile.getGender();
 	}
 
 	public String getAddress() {
-		// TODO Auto-generated method stub
-		return null;
+		return clientProfile.getAddress();
 	}
 
 	public UserType getUserType() {
-		return null;
+		return user.getUserType();
 	}
 
 	public void login(String password) {
