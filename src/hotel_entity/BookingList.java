@@ -39,7 +39,13 @@ public class BookingList implements IBookingData {
 
 	@Override
 	public void updateBookingList(Booking booking) {
-		// TODO Auto-generated method stub
+		for(Booking aBooking : bookingList) {
+			if(aBooking.getBookingID() == booking.getBookingID())
+			{
+				aBooking = booking;
+				break;
+			}
+		}
 
 	}
 
@@ -54,5 +60,4 @@ public class BookingList implements IBookingData {
 		}
 		return theBooking;
 	}
-
 }
