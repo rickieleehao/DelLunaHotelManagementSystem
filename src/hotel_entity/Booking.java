@@ -73,8 +73,7 @@ public class Booking implements IBooking {
 
 	@Override
 	public void setBookingID(int bookingID) {
-		// TODO Auto-generated method stub
-
+		this.bookingID = bookingID;
 	}
 
 	@Override
@@ -101,8 +100,7 @@ public class Booking implements IBooking {
 
 	@Override
 	public void setClientProfile(ClientProfile clientProfile) {
-		// TODO Auto-generated method stub
-
+		this.client = clientProfile;
 	}
 
 	@Override
@@ -112,25 +110,25 @@ public class Booking implements IBooking {
 
 	@Override
 	public void setNumOfGuest(int numOfGuest) {
-		this.numOfGuest = numOfGuest;
+		if(numOfGuest < 0 || numOfGuest > 4)
+			throw new IllegalArgumentException("Number of guest should in the range of 1-4.");
+		else
+			this.numOfGuest = numOfGuest;
 	}
 
 	@Override
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
-		// TODO Auto-generated method stub
-
+		this.payment.setPaymentMethod(paymentMethod);
 	}
 
 	@Override
 	public void setTotalPrice(double totalPrice) {
-		// TODO Auto-generated method stub
-
+		this.payment.setTotalPrice(totalPrice);
 	}
 
 	@Override
 	public void setCardNumber(int cardNumber) {
-		// TODO Auto-generated method stub
-
+		this.payment.setcardNumber(cardNumber);
 	}
 
 	@Override
@@ -180,13 +178,11 @@ public class Booking implements IBooking {
 
 	@Override
 	public double getTotalPrice() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.payment.getTotalPrice();
 	}
 
 	@Override
 	public PaymentMethod getPaymentMethod() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.payment.getPaymentMethod();
 	}
 }

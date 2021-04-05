@@ -165,8 +165,9 @@ public class SystemUI {
 	}
 
 	private void updateBooking() {
-		int choice;
+		int choice = 0;
 		boolean exit = false;
+		boolean loop = true;
 		do {
 			Booking theBooking = searchBooking();
 			System.out.println("Update Booking");
@@ -174,10 +175,18 @@ public class SystemUI {
 			System.out.println("1. Change booking detail.");
 			System.out.println("2. Cancel booking.");
 			System.out.println("3. Exit.");
-			System.out.print("Pick option (1-3) ----> ");
-			choice = scanner.nextInt();
-			scanner.nextLine();
-
+			while(loop) {
+				try {
+					System.out.print("Pick option (1-3) ----> ");
+					choice = scanner.nextInt();
+					scanner.nextLine();
+					loop = false;
+				}
+				catch(InputMismatchException e){
+					scanner.nextLine();
+					System.out.println("Please enter number only.");
+				}
+			}
 			while (choice < 1 || choice > 3) {
 				System.out.println("Invalid oprion.");
 				System.out.print("Pick option (1-3) ----> ");
@@ -284,10 +293,11 @@ public class SystemUI {
 	}
 
 	private void changeBookingDets(Booking theBooking) {
-		int choice, roomNo, numOfGuest;
-		boolean isDate, exit = false;
-		Date checkInDate = null, checkOutDate = null;
-		List<Room> availableRoomList;
+		int choice = 0, roomNo, numOfGuest;
+		boolean exit= false;
+		boolean loop = true;
+		String checkInDateStr = null;
+		String checkOutDateStr = null;
 		Room room;
 		do {
 			System.out.println("Change Booking Detail");
@@ -296,10 +306,18 @@ public class SystemUI {
 			System.out.println("2. Change room.");
 			System.out.println("3. Change number of guest.");
 			System.out.println("4. Exit.");
-			System.out.print("Pick option (1-4) ----> ");
-			choice = scanner.nextInt();
-			scanner.nextLine();
-
+			while(loop) {
+				try {
+					System.out.print("Pick option (1-4) ----> ");
+					choice = scanner.nextInt();
+					scanner.nextLine();
+					loop = false;
+				}
+				catch(InputMismatchException e) {
+					scanner.nextLine();
+					System.out.println("Please enter number only.");
+				}
+			}
 			while (choice < 1 || choice > 4) {
 				System.out.println("Invalid option.");
 				System.out.print("Pick option (1-4) ----> ");
@@ -309,46 +327,99 @@ public class SystemUI {
 
 			switch (choice) {
 			case 1:
-				do {
-					System.out.print("Enter new check-in date (DD/MM/YYYY) ----> ");
-					String checkInDateString = scanner.nextLine();
-					System.out.print("Enter new check-out date (DD/MM/YYYY) ----> ");
-					String checkOutDateString = scanner.nextLine();
+				while (loop) {
 					try {
-						checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
-						checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
-						isDate = true;
-					} catch (ParseException pex) {
-						System.out.println("Invalid date format.");
-						isDate = false;
+						System.out.print("Enter Check-in date (YYYY-MM-DD) ----> ");
+						checkInDateStr = scanner.nextLine();
+						this.controller.setCheckInDate(checkInDateStr);
+						loop = false;
+					} catch (DateTimeParseException e) {
+						System.out.println(e.getMessage());
 					}
-				} while (!isDate);
-				availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
-				printRoomList(availableRoomList);
-				System.out.print("Enter new room ----> ");
-				roomNo = scanner.nextInt();
-				scanner.nextLine();
-				room = availableRoomList.get(roomNo - 1);
-				numOfGuest = scanner.nextInt();
-				scanner.nextLine();
-				controller.updateBooking(theBooking, checkInDate, checkOutDate, room, numOfGuest);
+				}
+				while (loop) {
+					try {
+						System.out.print("Enter check-out date (YYYY-MM-DD) ----> ");
+						checkOutDateStr = scanner.nextLine();
+						this.controller.setCheckOutDate(checkOutDateStr);
+						loop = false;
+					} catch (DateTimeParseException e) {
+						System.out.println(e.getMessage());
+					}
+				}
+				this.controller.setAvailableRoom(checkInDateStr, checkOutDateStr);
+				printRoomList();
+				while(loop) {
+					try {
+						System.out.print("Enter new room ----> ");
+						roomNo = scanner.nextInt();
+						scanner.nextLine();
+						room = this.controller.getRoom(roomNo);
+						this.controller.setRoom(room);
+						loop = false;
+					}
+					catch(InputMismatchException e){
+						scanner.nextLine();
+						System.out.println("Please enter number only.");
+					}
+				}
+				while(loop) {
+					try {
+						System.out.print("Enter new number of guest ----> ");
+						numOfGuest = scanner.nextInt();
+						scanner.nextLine();
+						this.controller.setNumOfGuest(numOfGuest);
+						loop = false;
+					}
+					catch(InputMismatchException e){
+						scanner.nextLine();
+						System.out.println("Please enter number only.");
+					}
+					catch(IllegalArgumentException e) {
+						scanner.nextLine();
+						System.out.println(e.getMessage());
+					}
+				}
+				
 				break;
 			case 2:
-				checkInDate = controller.getCheckInDate(theBooking);
-				checkOutDate = controller.getCheckOutDate(theBooking);
-				availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
-				printRoomList(availableRoomList);
-				System.out.print("Enter new room ----> ");
-				roomNo = scanner.nextInt();
-				scanner.nextLine();
-				room = availableRoomList.get(roomNo - 1);
-				controller.updateBooking(theBooking, room);
+				checkInDateStr = this.controller.getCheckInDate().toString();
+				checkOutDateStr = this.controller.getCheckOutDate().toString();
+				this.controller.setAvailableRoom(checkInDateStr, checkOutDateStr);
+				printRoomList();
+				while(loop) {
+					try {
+						System.out.print("Enter new room ----> ");
+						roomNo = scanner.nextInt();
+						scanner.nextLine();
+						room = this.controller.getRoom(roomNo);
+						this.controller.setRoom(room);
+						loop = false;
+					}
+					catch(InputMismatchException e){
+						scanner.nextLine();
+						System.out.println("Please enter number only.");
+					}
+				}
 				break;
 			case 3:
-				System.out.print("Enter new number of guest ----> ");
-				numOfGuest = scanner.nextInt();
-				scanner.nextLine();
-				controller.updateBooking(theBooking, numOfGuest);
+				while(loop) {
+					try {
+						System.out.print("Enter new number of guest ----> ");
+						numOfGuest = scanner.nextInt();
+						scanner.nextLine();
+						this.controller.setNumOfGuest(numOfGuest);
+						loop = false;
+					}
+					catch(InputMismatchException e){
+						scanner.nextLine();
+						System.out.println("Please enter number only.");
+					}
+					catch(IllegalArgumentException e) {
+						scanner.nextLine();
+						System.out.println(e.getMessage());
+					}
+				}
 				break;
 			case 4:
 				exit = true;
@@ -379,7 +450,8 @@ public class SystemUI {
 	}
 
 	private void viewBooking(Booking theBooking) {
-
+		UserType userType = this.controller.getUserType();
+		printBookingDets(userType, theBooking);
 	}
 
 	private void makePayment(Booking theBooking) { // tbc
@@ -439,7 +511,33 @@ public class SystemUI {
 	}
 
 	private void printBookingDets(UserType userType, Booking theBooking) {
-
+		if(userType == UserType.Administrator) {
+			System.out.println("Booking Detail");
+			System.out.println("--------------");
+			System.out.println("Booking ID: " + theBooking.getBookingID());
+			System.out.println("Customer: " + theBooking.getClientProfile().getFirstName() + " " + 
+					theBooking.getClientProfile().getLastName());
+			System.out.println("NRIC: " + theBooking.getClientProfile().getNRIC());
+			System.out.println("Check-in date : " + theBooking.getCheckInDate().toString());
+			System.out.println("Check-out date: " + theBooking.getCheckOutDate().toString());
+			System.out.println("Room: " + theBooking.getRoom().getRoomID());
+			System.out.println("Number of guest: " + theBooking.getNumOfGuest());
+			System.out.println("Booking status: " + theBooking.getStatus());
+			System.out.println("Payment method: " + theBooking.getPayment().getPaymentMethod());
+			System.out.println("Total price:" + theBooking.getPayment().getTotalPrice());
+		}
+		if(userType == UserType.Client) {
+			System.out.println("Booking Detail");
+			System.out.println("--------------");
+			System.out.println("Booking ID: " + theBooking.getBookingID());
+			System.out.println("Customer: " + theBooking.getClientProfile().getFirstName() + " " + 
+					theBooking.getClientProfile().getLastName());
+			System.out.println("NRIC: " + theBooking.getClientProfile().getNRIC());
+			System.out.println("Check-in date : " + theBooking.getCheckInDate().toString());
+			System.out.println("Check-out date: " + theBooking.getCheckOutDate().toString());
+			System.out.println("Room: " + theBooking.getRoom().getRoomID());
+			System.out.println("Number of guest: " + theBooking.getNumOfGuest());
+		}
 	}
 
 	private void printReceipt() {
