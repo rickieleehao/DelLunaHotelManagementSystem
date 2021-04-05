@@ -45,6 +45,7 @@ public class Booking implements IBooking {
 	private void computeBill() {
 		long stayingDay = ChronoUnit.DAYS.between(this.checkInDate, this.checkOutDate);
 		double computedBill = room.getRate() * stayingDay;
+		payment.setTotalPrice(computedBill);
 	}
 
 	@Override
