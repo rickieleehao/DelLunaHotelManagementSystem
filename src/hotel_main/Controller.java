@@ -2,6 +2,7 @@ package hotel_main;
 
 import hotel_interface.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Controller {
 		this.user = user;
 	}
 
-	public List<Room> findAvailableRoom(Date checkInDate, Date checkOutDate) { // xz
+	public List<Room> findAvailableRoom(LocalDate checkInDate, LocalDate checkOutDate) { // xz
 		List<Room> availableRoomList = bookingList.findAvailableRoom(checkInDate, checkOutDate);
 		return availableRoomList;
 	}
@@ -56,11 +57,11 @@ public class Controller {
 		booking.setClientProfile(clientProfile);
 	}
 
-	public void setCheckInDate(Date checkInDate) {
+	public void setCheckInDate(LocalDate checkInDate) {
 		booking.setCheckInDate(checkInDate);
 	}
 
-	public void setCheckOutDate(Date checkOutDate) {
+	public void setCheckOutDate(LocalDate checkOutDate) {
 		booking.setCheckOutDate(checkOutDate);
 	}
 
@@ -94,13 +95,13 @@ public class Controller {
 		return bookingID;
 	}
 
-	public Date getCheckInDate() {
-		Date checkInDate = booking.getCheckInDate();
+	public LocalDate getCheckInDate() {
+		LocalDate checkInDate = booking.getCheckInDate();
 		return checkInDate;
 	}
 
-	public Date getCheckOutDate() {
-		Date checkOutDate = booking.getCheckOutDate();
+	public LocalDate getCheckOutDate() {
+		LocalDate checkOutDate = booking.getCheckOutDate();
 		return checkOutDate;
 	}
 
@@ -129,9 +130,9 @@ public class Controller {
 		return totalPrice;
 	}
 
-	public boolean validatePolicy(Date dateToday) {
+	public boolean validatePolicy() {
 		boolean isRefundable;
-		isRefundable = booking.validatePolicy(dateToday);
+		isRefundable = booking.validatePolicy();
 		return isRefundable;
 	}
 

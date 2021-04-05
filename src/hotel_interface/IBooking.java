@@ -1,5 +1,6 @@
 package hotel_interface;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import hotel_entity.ClientProfile;
@@ -10,16 +11,16 @@ import hotel_entity.Status;
 
 public interface IBooking {
 
-	public boolean validatePolicy(Date dateToday);
+	public boolean validatePolicy();
 	public void makePayment(PaymentMethod paymentMethod);
 	public void makePayment(PaymentMethod paymentMethod, int cardNumber);
 	
 	//set method
 	public void setBookingID(int bookingID);
 	public void setClientProfile(ClientProfile clientProfile);
-	public void setCheckInDate(Date checkInDate);
-	public void setCheckOutDate(Date checkOutDate);
-	public void setRoom(int room);
+	public void setCheckInDate(LocalDate checkInDate);
+	public void setCheckOutDate(LocalDate checkOutDate);
+	public void setRoom(Room room);
 	public void setNumOfGuest(int numOfGuest);
 	public void setPaymentMethod(PaymentMethod paymentMethod);
 	public void setTotalPrice(double totalPrice);
@@ -29,8 +30,8 @@ public interface IBooking {
 	//get method
 	public int getBookingID();
 	public ClientProfile getClientProfile();
-	public Date getCheckInDate();
-	public Date getCheckOutDate();
+	public LocalDate getCheckInDate();
+	public LocalDate getCheckOutDate();
 	public Room getRoom();
 	public int getNumOfGuest();
 	public Payment getPayment();

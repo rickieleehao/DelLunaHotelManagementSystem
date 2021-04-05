@@ -9,6 +9,18 @@ public class ClientProfile implements IClientProfile {
 	private Gender gender;
 	private String address;
 	
+	public ClientProfile(String NRIC, String firstName, String lastName, String gender, String address) {
+		this.NRIC = NRIC;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		if (gender.contentEquals("Male")) {
+			this.gender = Gender.Male;
+		}else {
+			this.gender = Gender.Female;
+		}
+		this.address = address;
+	}
+	
 	public ClientProfile(String NRIC, String firstName, String lastName, Gender gender, String address) {
 		this.NRIC = NRIC;
 		this.firstName = firstName;

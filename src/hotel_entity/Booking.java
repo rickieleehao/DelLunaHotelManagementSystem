@@ -1,22 +1,21 @@
 package hotel_entity;
 
-import java.util.Date;
-import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import hotel_interface.IBooking;
 
 public class Booking implements IBooking {
 	private int bookingID;
 	private ClientProfile client;
-	private Date checkInDate;
-	private Date checkOutDate;
+	private LocalDate checkInDate;
+	private LocalDate checkOutDate;
 	private Room room;
 	private int numOfGuest;
 	private Payment payment;
 	private Status status;
 
-	public Booking(int bookingID, ClientProfile client, Date checkInDate, Date checkOutDate, Room room,
+	public Booking(int bookingID, ClientProfile client, LocalDate checkInDate, LocalDate checkOutDate, Room room,
 			int numOfGuest) {
 		this.bookingID = bookingID;
 		this.client = client;
@@ -26,26 +25,34 @@ public class Booking implements IBooking {
 		this.numOfGuest = numOfGuest;
 	}
 
+	public Booking(int bookingID, ClientProfile client, String checkInDate, String checkOutDate, Room room,
+			int numOfGuest) {
+		this.bookingID = bookingID;
+		this.client = client;
+		LocalDate checkIn = LocalDate.parse(checkInDate);
+		this.checkInDate = checkIn;
+		LocalDate checkOut = LocalDate.parse(checkOutDate);
+		this.checkOutDate = checkOut;
+		this.room = room;
+		this.numOfGuest = numOfGuest;
+	}
+
 	public Booking() {
 
 	}
 
 	private void computeBill() {
-		long timeDifference = checkOutDate.getTime() - checkInDate.getTime();
-		long dayDifference = TimeUnit.MILLISECONDS.toDays(timeDifference) % 365;
-		double computedBill = room.getRate() * dayDifference;
-		// payment.setTotalPrice(computedBill);
-		// missing setTotalPrice in payment even after I pull and refresh
+		long stayingDay = ChronoUnit.DAYS.between(this.checkInDate, this.checkOutDate);
+		double computedBill = room.getRate() * stayingDay;
 	}
 
 	@Override
-	public boolean validatePolicy(Date dateToday) {
+	public boolean validatePolicy() {
 		boolean isRefundable;
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(checkInDate);
-		cal.add(Calendar.DATE, -3);
-		Date minRefundDate = cal.getTime();
-		if (dateToday.before(minRefundDate))
+		LocalDate now = LocalDate.now();
+		long difference = ChronoUnit.DAYS.between(now, this.checkInDate);
+		int minRefundDay = 3;
+		if (difference >= minRefundDay)
 			isRefundable = true;
 		else
 			isRefundable = false;
@@ -70,12 +77,12 @@ public class Booking implements IBooking {
 	}
 
 	@Override
-	public void setCheckInDate(Date checkInDate) {
+	public void setCheckInDate(LocalDate checkInDate) {
 		this.checkInDate = checkInDate;
 	}
 
 	@Override
-	public void setCheckOutDate(Date checkOutDate) {
+	public void setCheckOutDate(LocalDate checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
 
@@ -129,12 +136,12 @@ public class Booking implements IBooking {
 	}
 
 	@Override
-	public Date getCheckInDate() {
+	public LocalDate getCheckInDate() {
 		return checkInDate;
 	}
 
 	@Override
-	public Date getCheckOutDate() {
+	public LocalDate getCheckOutDate() {
 		return checkOutDate;
 	}
 
@@ -162,5 +169,11 @@ public class Booking implements IBooking {
 	public double getTotalPrice() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public PaymentMethod getPaymentMethod() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

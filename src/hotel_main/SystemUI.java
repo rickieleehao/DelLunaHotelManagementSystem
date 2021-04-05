@@ -21,184 +21,147 @@ public class SystemUI {
 		do {
 			UserType userType = controller.getUserType();
 			System.out.println("This is the Menu.");
-			int choice;
 			if (userType == UserType.Client) {
 				clientMenu();
 			} else if (userType == UserType.Administrator) {
-				System.out.println("1. Create Booking");
-				System.out.println("2. Update Booking");
-				System.out.println("3. Search Booking");
-				System.out.println("4. Check-in");
-				System.out.println("5. Check-out");
-				System.out.println("6. Exit");
-
-				System.out.print("Pick option (1-6) ----> ");
-				choice = scanner.nextInt();
-				scanner.nextLine();
-
-				while (choice < 1 && choice > 6) {
-					System.out.print("Invalid option. ");
-					System.out.print("Pick option (1-6) ----> ");
-					choice = scanner.nextInt();
-					scanner.nextLine();
-				}
-
-				switch (choice) {
-				case 1:
-					createBooking();
-					break;
-				case 2:
-					updateBooking();
-					break;
-				case 3:
-					searchBooking();
-					break;
-				case 4:
-					checkIn();
-					break;
-				case 5:
-					checkOut();
-					break;
-				case 6:
-					exit = true;
-					break;
-				}
+				adminMenu();
 			}
 		} while (!exit);
 	}
 
 	private void login() {
-		
+
 	}
 
-	private void createBooking() { 
-		
-		controller.createBooking();		
+	private void createBooking() {
+
+		controller.createBooking();
 		controller.setBookingID();
-		
-		String NRIC=null;
-		boolean error=true;
-		
-		while(error=true) {			
-		try {			
-		System.out.print("Enter NRIC ----> ");
-		NRIC = scanner.nextLine();
-		controller.setClientProfile(NRIC);
-		error=false;					
-		}catch(IllegalArgumentException e) {			
-			System.out.println(e.getMessage());						
-		}catch(NullPointerException e) {			
-			System.out.println(e.getMessage());
-			ClientProfile clientProfile= createClientProfile(NRIC);
-			controller.setClientProfile(clientProfile);
-			error=false;			
+
+		String NRIC = null;
+		boolean error = true;
+
+		while (error = true) {
+			try {
+				System.out.print("Enter NRIC ----> ");
+				NRIC = scanner.nextLine();
+				controller.setClientProfile(NRIC);
+				error = false;
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			} catch (NullPointerException e) {
+				System.out.println(e.getMessage());
+				ClientProfile clientProfile = createClientProfile(NRIC);
+				controller.setClientProfile(clientProfile);
+				error = false;
 			}
-		}						
+		}
 		printClientProfileDets();
-		
-		error=true;
+
+		error = true;
 		Date checkInDate = null;
-		Date checkOutDate=null;
-		
-		while(error=true) {			
+		Date checkOutDate = null;
+
+		while (error = true) {
 			try {
 				System.out.print("Enter Check In Date (DD/MM/YYYY) ----> ");
 				String checkInDateString = scanner.nextLine();
 				checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
 				controller.setCheckInDate(checkInDate);
-				error=false;				
-			}catch(InputMismatchException e) {				
-				System.out.println("Please enter String only");				
-			}catch(ParseException e) {				
-				System.out.println("invliad date, please enter again");				
-			}			
+				error = false;
+			} catch (InputMismatchException e) {
+				System.out.println("Please enter String only");
+			} catch (ParseException e) {
+				System.out.println("invliad date, please enter again");
+			}
 		}
-		
-		error=true;
-		
-		while(error=true) {			
+
+		error = true;
+
+		while (error = true) {
 			try {
 				System.out.print("Enter Check Out Date (DD/MM/YYYY) ----> ");
 				String checkOutDateString = scanner.nextLine();
 				checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
 				controller.setCheckOutDate(checkOutDate);
-				error=false;				
-			}catch(InputMismatchException e) {				
-				System.out.println("Please enter String only");				
-			}catch(ParseException e) {				
-				System.out.println("invliad date, please enter again");				
-			}			
+				error = false;
+			} catch (InputMismatchException e) {
+				System.out.println("Please enter String only");
+			} catch (ParseException e) {
+				System.out.println("invliad date, please enter again");
+			}
 		}
-				
+
 		List<Room> availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
 		printRoomList(availableRoomList);
-		
-		error=true;
-		
-		while(error=true) {
+
+		error = true;
+
+		while (error = true) {
 			try {
-			System.out.print("Select available room by enter room number ----> ");
-			int room = scanner.nextInt();
-			String skip=scanner.nextLine();
-			controller.setRoom(room);
-			error=false;
-			}catch(InputMismatchException e) {
+				System.out.print("Select available room by enter room number ----> ");
+				int room = scanner.nextInt();
+				String skip = scanner.nextLine();
+				controller.setRoom(room);
+				error = false;
+			} catch (InputMismatchException e) {
 				System.out.println("Please enter a valid number");
-			}catch(IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}										
-		}
-		
-		error=true;
-		
-		while(error=true) {			
-			try {
-			System.out.print("Enter number of guest ---->");
-			int numOfGuest = scanner.nextInt();
-			String skip=scanner.nextLine();
-			controller.setNumOfGuest(numOfGuest);;
-			error=false;
-			}catch(InputMismatchException e) {
-				System.out.println("Please enter a valid number");
-			}catch(IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}										
-		}
-		
-		error=true;
-		PaymentMethod paymentMethod=PaymentMethod.Cash;				
-		while(error=true) {			
-			try {				
-				paymentMethod.printPaymentMethodOption();
-				int option=scanner.nextInt();
-				String skip=scanner.nextLine();
-				paymentMethod.selectPaymentMethod(option);
-				controller.setPaymentMethod(paymentMethod);
-				error=false;											
-			}catch(IllegalArgumentException e) {
+			} catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 			}
-		}		
-		error=true;
-		if(paymentMethod==PaymentMethod.CreditCard) {
-			
-			while(error=true) {
+		}
+
+		error = true;
+
+		while (error = true) {
+			try {
+				System.out.print("Enter number of guest ---->");
+				int numOfGuest = scanner.nextInt();
+				String skip = scanner.nextLine();
+				controller.setNumOfGuest(numOfGuest);
+				;
+				error = false;
+			} catch (InputMismatchException e) {
+				System.out.println("Please enter a valid number");
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		error = true;
+		PaymentMethod paymentMethod = PaymentMethod.Cash;
+		while (error = true) {
+			try {
+				paymentMethod.printPaymentMethodOption();
+				int option = scanner.nextInt();
+				String skip = scanner.nextLine();
+				paymentMethod.selectPaymentMethod(option);
+				controller.setPaymentMethod(paymentMethod);
+				error = false;
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		error = true;
+		if (paymentMethod == PaymentMethod.CreditCard) {
+
+			while (error = true) {
 				try {
 					System.out.println("Enter card number");
-					int cardNumber=scanner.nextInt();
-					String skip=scanner.nextLine();
+					int cardNumber = scanner.nextInt();
+					String skip = scanner.nextLine();
 					controller.setCardNumber(cardNumber);
-					error=false;
-				}catch(InputMismatchException e) {
+					error = false;
+				} catch (InputMismatchException e) {
 					System.out.println("Invalid input number,please enter only number");
-				}catch(IllegalArgumentException e) {
+				} catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
 			}
-		}		
-		controller.addBooking();			
+		}
+		controller.addBooking();
 	}
-		
+
 	private void updateBooking() {
 		int choice;
 		boolean exit = false;
@@ -256,25 +219,25 @@ public class SystemUI {
 	}
 
 	private Booking searchBooking() {
-			Booking theBooking = null;
-			boolean error=true;
-		while(error=true){
-		 try {
-			 System.out.print("Enter booking ID ----> ");
-			 theBooking = controller.getBooking(scanner.nextInt());
-			 error = false;
-		 
-		 }catch (InputMismatchException ex) {
-			 System.out.println("Enter only integer.");
-		 }catch (IllegalArgumentException e){
-			 System.out.println("Booking not Found.");
-		 }
+		Booking theBooking = null;
+		boolean error = true;
+		while (error = true) {
+			try {
+				System.out.print("Enter booking ID ----> ");
+				theBooking = controller.getBooking(scanner.nextInt());
+				error = false;
+
+			} catch (InputMismatchException ex) {
+				System.out.println("Enter only integer.");
+			} catch (IllegalArgumentException e) {
+				System.out.println("Booking not Found.");
+			}
 		}
-		  
-		 	controller.createBooking(theBooking);
-		 	viewBooking(theBooking);
-		 	return theBooking;
-		 }
+
+		controller.createBooking(theBooking);
+		viewBooking(theBooking);
+		return theBooking;
+	}
 
 	private ClientProfile createClientProfile(String NRIC) { // yy
 
@@ -283,42 +246,37 @@ public class SystemUI {
 		String temp;
 		Gender gender = null;
 		String address;
-		
+
 		try {
 			System.out.print("Enter client's first name ----> ");
 			firstName = scanner.nextLine();
-		}
-		catch(IllegalArgumentException iae) {
+		} catch (IllegalArgumentException iae) {
 			System.out.println("Invalid input");
 		}
-		
-		
+
 		try {
 			System.out.print("Enter client's last name ----> ");
 			lastName = scanner.nextLine();
-		}
-		catch(IllegalArgumentException iae) {
+		} catch (IllegalArgumentException iae) {
 			System.out.println("Invalid input");
 		}
-			
+
 		try {
 			gender.printGenderOption();
 			System.out.println("Enter a number: ");
 			int choice = scanner.nextInt();
 			gender.selectGender(choice);
-		}
-		catch(IllegalArgumentException iae) {
+		} catch (IllegalArgumentException iae) {
 			System.out.println("Invalid input");
 		}
-			
+
 		try {
 			System.out.print("Enter client's address ----> ");
 			address = scanner.nextLine();
 			ClientProfile clientProfile = controller.createClientProfile(NRIC, firstName, lastName, gender, address);
 			System.out.println("Client's profile is created.");
 			return clientProfile;
-		}
-		catch(IllegalArgumentException iae) {
+		} catch (IllegalArgumentException iae) {
 			System.out.println("Invalid input");
 		}
 	}
@@ -438,8 +396,7 @@ public class SystemUI {
 			try {
 				System.out.print("Enter card number: ");
 				int cardNumber = scanner.nextInt();
-			}
-			catch(IllegalArgumentException iae) {
+			} catch (IllegalArgumentException iae) {
 				System.out.println("Invalid input");
 			}
 			controller.makePayment(theBooking, paymentMethod, cardNumber);
@@ -448,7 +405,7 @@ public class SystemUI {
 		printReceipt(theBooking);
 	}
 
-	private void printClientProfileDets() { 
+	private void printClientProfileDets() {
 
 		System.out.println();
 
@@ -475,8 +432,7 @@ public class SystemUI {
 			System.out.printf("%-16d", availableRoomList.get(i).getNumOfBed());
 			System.out.println("");
 		}
-		
-		
+
 		System.out.println(""); // view booking
 
 	}
@@ -486,7 +442,7 @@ public class SystemUI {
 	}
 
 	private void printReceipt() {
-			
+
 		System.out.println("");
 		System.out.println("     DELLUNA HOTEL     ");
 		System.out.println("");
@@ -509,8 +465,7 @@ public class SystemUI {
 		System.out.println("-----------------------");
 	}
 
-	private boolean clientMenu() { // R
-		boolean isExit = false;
+	private void clientMenu() { // R
 		int choice;
 
 		System.out.println("1. Login");
@@ -536,14 +491,48 @@ public class SystemUI {
 			searchBooking();
 			break;
 		case 3:
-			isExit = true;
 			break;
 		}
-
-		return isExit;
 	}
 
 	private void adminMenu() {
+		int choice;
+		System.out.println("1. Create Booking");
+		System.out.println("2. Update Booking");
+		System.out.println("3. Search Booking");
+		System.out.println("4. Check-in");
+		System.out.println("5. Check-out");
+		System.out.println("6. Exit");
 
+		System.out.print("Pick option (1-6) ----> ");
+		choice = scanner.nextInt();
+		scanner.nextLine();
+
+		while (choice < 1 && choice > 6) {
+			System.out.print("Invalid option. ");
+			System.out.print("Pick option (1-6) ----> ");
+			choice = scanner.nextInt();
+			scanner.nextLine();
+		}
+
+		switch (choice) {
+		case 1:
+			createBooking();
+			break;
+		case 2:
+			updateBooking();
+			break;
+		case 3:
+			searchBooking();
+			break;
+		case 4:
+			checkIn();
+			break;
+		case 5:
+			checkOut();
+			break;
+		case 6:
+			break;
+		}
 	}
 }
