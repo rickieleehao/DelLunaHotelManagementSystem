@@ -71,73 +71,134 @@ public class SystemUI {
 		
 	}
 
-	private void createBooking() { // xz
-
-		int bookingID = controller.generateBookingID();
+	private void createBooking() { 
+		
+		controller.createBooking();		
+		controller.setBookingID();
+		
+		String NRIC=null;
+		boolean error=true;
+		
+		while(error=true) {			
+		try {			
 		System.out.print("Enter NRIC ----> ");
-		String NRIC = scanner.nextLine();
-
-		boolean isProfileFound = controller.searchClientProfile(NRIC);
-
-		String skip;
-		ClientProfile clientProfile;
-		Date checkInDate = new Date();
-		Date checkOutDate = new Date();
-
-		if (isProfileFound == true) {
-
-			clientProfile = controller.getClientProfile(NRIC);
-
-		}
-
-		else {
-
-			clientProfile = createClientProfile(NRIC);
-		}
-
-		printClientProfileDets(clientProfile);
-		boolean isDate;
-		do {
-			System.out.print("Enter Check In Date (DD/MM/YYYY) ----> ");
-			String checkInDateString = scanner.nextLine();
-
-			System.out.print("Enter Check Out Date (DD/MM/YYYY) ----> ");
-			String checkOutDateString = scanner.nextLine();
-
-			try {
-				checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
-				checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
-				isDate = true;
-			} catch (ParseException e) {
-				System.out.println("invliad date");
-				isDate = false;
+		NRIC = scanner.nextLine();
+		controller.setClientProfile(NRIC);
+		error=false;					
+		}catch(IllegalArgumentException e) {			
+			System.out.println(e.getMessage());						
+		}catch(NullPointerException e) {			
+			System.out.println(e.getMessage());
+			ClientProfile clientProfile= createClientProfile(NRIC);
+			controller.setClientProfile(clientProfile);
+			error=false;			
 			}
-		} while (!isDate);
-
+		}						
+		printClientProfileDets();
+		
+		error=true;
+		Date checkInDate = null;
+		Date checkOutDate=null;
+		
+		while(error=true) {			
+			try {
+				System.out.print("Enter Check In Date (DD/MM/YYYY) ----> ");
+				String checkInDateString = scanner.nextLine();
+				checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
+				controller.setCheckInDate(checkInDate);
+				error=false;				
+			}catch(InputMismatchException e) {				
+				System.out.println("Please enter String only");				
+			}catch(ParseException e) {				
+				System.out.println("invliad date, please enter again");				
+			}			
+		}
+		
+		error=true;
+		
+		while(error=true) {			
+			try {
+				System.out.print("Enter Check Out Date (DD/MM/YYYY) ----> ");
+				String checkOutDateString = scanner.nextLine();
+				checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
+				controller.setCheckOutDate(checkOutDate);
+				error=false;				
+			}catch(InputMismatchException e) {				
+				System.out.println("Please enter String only");				
+			}catch(ParseException e) {				
+				System.out.println("invliad date, please enter again");				
+			}			
+		}
+				
 		List<Room> availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
-
 		printRoomList(availableRoomList);
-
-		System.out.print("Select available room by enter room number ----> ");
-		int roomNo = scanner.nextInt();
-		// clear enter key
-		skip = scanner.nextLine();
-		Room room = availableRoomList.get(roomNo - 1);
-
-		System.out.print("Enter number of guest ----> ");
-		int numOfGuest = scanner.nextInt();
-		// clear enter key
-		skip = scanner.nextLine();
-
-		Booking newBooking = controller.createBooking(bookingID, clientProfile, checkInDate, checkOutDate, room,
-				numOfGuest);
-
-		controller.addBooking(newBooking);
-
-		System.out.println(" Your booking has been created successfully ");
-
+		
+		error=true;
+		
+		while(error=true) {
+			try {
+			System.out.print("Select available room by enter room number ----> ");
+			int room = scanner.nextInt();
+			String skip=scanner.nextLine();
+			controller.setRoom(room);
+			error=false;
+			}catch(InputMismatchException e) {
+				System.out.println("Please enter a valid number");
+			}catch(IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}										
+		}
+		
+		error=true;
+		
+		while(error=true) {			
+			try {
+			System.out.print("Enter number of guest ---->");
+			int numOfGuest = scanner.nextInt();
+			String skip=scanner.nextLine();
+			controller.setNumOfGuest(numOfGuest);;
+			error=false;
+			}catch(InputMismatchException e) {
+				System.out.println("Please enter a valid number");
+			}catch(IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}										
+		}
+		
+		error=true;
+		PaymentMethod paymentMethod=PaymentMethod.Cash;				
+		while(error=true) {			
+			try {				
+				paymentMethod.printPaymentMethodOption();
+				int option=scanner.nextInt();
+				String skip=scanner.nextLine();
+				paymentMethod.selectPaymentMethod(option);
+				controller.setPaymentMethod(paymentMethod);
+				error=false;											
+			}catch(IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+		}		
+		error=true;
+		if(paymentMethod==PaymentMethod.CreditCard) {
+			
+			while(error=true) {
+				try {
+					System.out.println("Enter card number");
+					int cardNumber=scanner.nextInt();
+					String skip=scanner.nextLine();
+					controller.setCardNumber(cardNumber);
+					error=false;
+				}catch(InputMismatchException e) {
+					System.out.println("Invalid input number,please enter only number");
+				}catch(IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+		}		
+		controller.addBooking();			
 	}
-
+		
 	private void updateBooking() {
 		int choice;
 		boolean exit = false;
@@ -387,16 +448,16 @@ public class SystemUI {
 		printReceipt(theBooking);
 	}
 
-	private void printClientProfileDets(ClientProfile clientProfile) { // xz
+	private void printClientProfileDets() { 
 
 		System.out.println();
 
 		System.out.println("----Here is the Client Info----");
-		System.out.println("First Name  :" + controller.getFirstName(clientProfile));
-		System.out.println("Last Name   :" + controller.getLastName(clientProfile));
-		System.out.println("NRIC        :" + controller.getNRIC(clientProfile));
-		System.out.println("Gender      :" + controller.getGender(clientProfile));
-		System.out.println("Address     :" + controller.getAddress(clientProfile));
+		System.out.println("First Name  :" + controller.getFirstName());
+		System.out.println("Last Name   :" + controller.getLastName());
+		System.out.println("NRIC        :" + controller.getNRIC());
+		System.out.println("Gender      :" + controller.getGender());
+		System.out.println("Address     :" + controller.getAddress());
 		System.out.println();
 	}
 
@@ -424,8 +485,8 @@ public class SystemUI {
 
 	}
 
-	private void printReceipt(Booking theBooking) {
-		ClientProfile clientProfile=theBooking.getClientProfile();
+	private void printReceipt() {
+			
 		System.out.println("");
 		System.out.println("     DELLUNA HOTEL     ");
 		System.out.println("");
@@ -433,15 +494,15 @@ public class SystemUI {
 		System.out.println("-----------------------");
 		System.out.println("    Booking Detail     ");
 		System.out.println("-----------------------");
-		System.out.println("Booking ID     : " + controller.getBookingID(theBooking));
-		System.out.println("First Name     : " + controller.getFirstName(clientProfile));
-		System.out.println("Last Name      : " + controller.getLastName(clientProfile));
-		System.out.println("Booking Status : " + controller.getStatus(theBooking));
+		System.out.println("Booking ID     : " + controller.getBookingID());
+		System.out.println("First Name     : " + controller.getFirstName());
+		System.out.println("Last Name      : " + controller.getLastName());
+		System.out.println("Booking Status : " + controller.getStatus());
 		System.out.println("-----------------------");
 		System.out.println("    Payment Detail     ");
 		System.out.println("-----------------------");
-		System.out.println("Payment Method : " + controller.getPaymentMethod(theBooking));
-		System.out.println("     TOTAL     : " + controller.getBill(theBooking));
+		System.out.println("Payment Method : " + controller.getPaymentMethod());
+		System.out.println("     TOTAL     : " + controller.getTotalPrice());
 		System.out.println("");
 		System.out.println("-----------------------");
 		System.out.println("       THANK YOU       ");

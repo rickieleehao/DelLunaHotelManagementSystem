@@ -19,7 +19,7 @@ public interface IBooking {
 	public void setClientProfile(ClientProfile clientProfile);
 	public void setCheckInDate(Date checkInDate);
 	public void setCheckOutDate(Date checkOutDate);
-	public void setRoom(Room room);
+	public void setRoom(int room);
 	public void setNumOfGuest(int numOfGuest);
 	public void setPaymentMethod(PaymentMethod paymentMethod);
 	public void setTotalPrice(double totalPrice);
@@ -36,4 +36,5 @@ public interface IBooking {
 	public Payment getPayment();
 	public Status getStatus();
 	public double getTotalPrice();
+	public PaymentMethod getPaymentMethod();
 }

@@ -47,34 +47,29 @@ public class Controller {
 		this.booking = booking;
 	}
 
-	public void setBookingID(int bookingID) {
-		// TODO Auto-generated method stub
-
+	public void setBookingID() {
+		int bookingID=bookingList.generateBookingID();
+		booking.setBookingID(bookingID);				
 	}
 
 	public void setClientProfile(ClientProfile clientProfile) {
-		// TODO Auto-generated method stub
-
+		booking.setClientProfile(clientProfile);
 	}
 
 	public void setCheckInDate(Date checkInDate) {
-		// TODO Auto-generated method stub
-
+		booking.setCheckInDate(checkInDate);
 	}
 
 	public void setCheckOutDate(Date checkOutDate) {
-		// TODO Auto-generated method stub
-
+		booking.setCheckOutDate(checkOutDate);
 	}
 
-	public void setRoom(Room room) {
-		// TODO Auto-generated method stub
-
+	public void setRoom(int room) {
+		booking.setRoom(room);
 	}
 
 	public void setNumOfGuest(int numOfGuest) {
-		// TODO Auto-generated method stub
-
+		booking.setNumOfGuest(numOfGuest);
 	}
 
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
@@ -83,58 +78,55 @@ public class Controller {
 	}
 
 	public void setTotalPrice(double totalPrice) {
-		// TODO Auto-generated method stub
-
+		booking.setTotalPrice(totalPrice);
 	}
 
 	public void setStatus(Status status) {
-		// TODO Auto-generated method stub
-
+		booking.setStatus(status);		
 	}
 
-	public void setCardNumber(int cardNumber) {
-		// TODO Auto-generated method stub
-
+	public void setCardNumber(int cardNumber) {		
+		
 	}
 
 	public int getBookingID() {
-		// TODO Auto-generated method stub
-		return 0;
+		int bookingID=booking.getBookingID();
+		return bookingID;
 	}
 
 	public Date getCheckInDate() {
-		// TODO Auto-generated method stub
-		return null;
+		Date checkInDate = booking.getCheckInDate();
+		return checkInDate;
 	}
 
 	public Date getCheckOutDate() {
-		// TODO Auto-generated method stub
-		return null;
+		Date checkOutDate = booking.getCheckOutDate();
+		return checkOutDate;
 	}
 
 	public Room getRoom() {
-		// TODO Auto-generated method stub
-		return null;
+		Room room = booking.getRoom();
+		return room;
 	}
 
 	public int getNumOfGuest() {
-		// TODO Auto-generated method stub
-		return 0;
+		int numOfGuest = booking.getNumOfGuest();
+		return numOfGuest;
 	}
 
 	public Payment getPayment() {
-		// TODO Auto-generated method stub
-		return null;
+		Payment payment=booking.getPayment();
+		return payment;
 	}
 
 	public Status getStatus() {
-		// TODO Auto-generated method stub
-		return null;
+		Status status=booking.getStatus();
+		return status;
 	}
 
 	public double getTotalPrice() {
-		// TODO Auto-generated method stub
-		return 0;
+		double totalPrice=booking.getTotalPrice();
+		return totalPrice;
 	}
 
 	public boolean validatePolicy(Date dateToday) {
@@ -216,5 +208,15 @@ public class Controller {
 
 	public void login(String password) {
 		
+	}
+	
+	public void setClientProfile(String NRIC) {
+		ClientProfile clientProfile=clientProfileList.getClientProfile(NRIC);
+		booking.setClientProfile(clientProfile);
+		this.clientProfile=clientProfile;
+	}
+	
+	public PaymentMethod getPaymentMethod() {
+		return booking.getPayment().getPaymentMethod();
 	}
 }
