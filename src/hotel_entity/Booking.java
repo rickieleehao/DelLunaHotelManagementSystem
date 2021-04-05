@@ -1,6 +1,7 @@
 package hotel_entity;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
 import hotel_interface.IBooking;
@@ -77,12 +78,24 @@ public class Booking implements IBooking {
 	}
 
 	@Override
-	public void setCheckInDate(LocalDate checkInDate) {
+	public void setCheckInDate(String checkInString) {
+		LocalDate checkInDate;
+		try {
+			checkInDate = LocalDate.parse(checkInString);
+		} catch (DateTimeParseException e) {
+			throw new IllegalArgumentException("Incorrect date format!");
+		}
 		this.checkInDate = checkInDate;
 	}
 
 	@Override
-	public void setCheckOutDate(LocalDate checkOutDate) {
+	public void setCheckOutDate(String checkOutString) {
+		LocalDate checkOutDate;
+		try {
+			checkOutDate = LocalDate.parse(checkOutString);
+		} catch (DateTimeParseException e) {
+			throw new IllegalArgumentException("Incorrect date format!");
+		}
 		this.checkOutDate = checkOutDate;
 	}
 

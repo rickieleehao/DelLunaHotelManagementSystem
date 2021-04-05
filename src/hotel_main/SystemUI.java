@@ -4,6 +4,8 @@ import hotel_entity.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class SystemUI {
@@ -16,21 +18,26 @@ public class SystemUI {
 	}
 
 	public void start() {
-
 		boolean exit = false;
-		do {
+		while (!exit) {
 			UserType userType = controller.getUserType();
 			System.out.println("This is the Menu.");
 			if (userType == UserType.Client) {
-				clientMenu();
+				exit = clientMenu();
 			} else if (userType == UserType.Administrator) {
-				adminMenu();
+				exit = adminMenu();
 			}
-		} while (!exit);
+		}
 	}
 
 	private void login() {
-
+		System.out.print("Enter the password ----> ");
+		String password = scanner.nextLine();
+		try {
+			this.controller.login(password);
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	private void createBooking() {
@@ -39,121 +46,116 @@ public class SystemUI {
 		controller.setBookingID();
 
 		String NRIC = null;
-		boolean error = true;
-
-		while (error = true) {
+		boolean loop = true;
+		while (loop) {
 			try {
 				System.out.print("Enter NRIC ----> ");
 				NRIC = scanner.nextLine();
 				controller.setClientProfile(NRIC);
-				error = false;
+				loop = false;
 			} catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 			} catch (NullPointerException e) {
 				System.out.println(e.getMessage());
 				ClientProfile clientProfile = createClientProfile(NRIC);
 				controller.setClientProfile(clientProfile);
-				error = false;
+				loop = false;
 			}
 		}
+
 		printClientProfileDets();
-
-		error = true;
-		Date checkInDate = null;
-		Date checkOutDate = null;
-
-		while (error = true) {
+		String checkInString = null;
+		String checkOutString = null;
+		loop = true;
+		while (loop) {
 			try {
-				System.out.print("Enter Check In Date (DD/MM/YYYY) ----> ");
-				String checkInDateString = scanner.nextLine();
-				checkInDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkInDateString);
-				controller.setCheckInDate(checkInDate);
-				error = false;
-			} catch (InputMismatchException e) {
-				System.out.println("Please enter String only");
-			} catch (ParseException e) {
-				System.out.println("invliad date, please enter again");
+				System.out.print("Enter Check In Date (YYYY-MM-DD) ----> ");
+				checkInString = scanner.nextLine();
+				controller.setCheckInDate(checkInString);
+				loop = false;
+			} catch (DateTimeParseException e) {
+				System.out.println(e.getMessage());
 			}
 		}
 
-		error = true;
-
-		while (error = true) {
+		loop = true;
+		while (loop) {
 			try {
-				System.out.print("Enter Check Out Date (DD/MM/YYYY) ----> ");
-				String checkOutDateString = scanner.nextLine();
-				checkOutDate = new SimpleDateFormat("dd/MM/yyyy").parse(checkOutDateString);
-				controller.setCheckOutDate(checkOutDate);
-				error = false;
-			} catch (InputMismatchException e) {
-				System.out.println("Please enter String only");
-			} catch (ParseException e) {
-				System.out.println("invliad date, please enter again");
+				System.out.print("Enter Check Out Date (YYYY-MM-DD) ----> ");
+				checkOutString = scanner.nextLine();
+				controller.setCheckOutDate(checkOutString);
+				loop = false;
+			} catch (DateTimeParseException e) {
+				System.out.println(e.getMessage());
 			}
 		}
 
-		List<Room> availableRoomList = controller.findAvailableRoom(checkInDate, checkOutDate);
-		printRoomList(availableRoomList);
+		this.controller.setAvailableRoom(checkInString, checkOutString);
+		printRoomList();
 
-		error = true;
-
-		while (error = true) {
+		loop = true;
+		Room selectedRoom;
+		while (loop) {
 			try {
 				System.out.print("Select available room by enter room number ----> ");
-				int room = scanner.nextInt();
-				String skip = scanner.nextLine();
-				controller.setRoom(room);
-				error = false;
+				int option = scanner.nextInt();
+				scanner.nextLine();
+				selectedRoom = controller.getRoom(option);
+				controller.setRoom(selectedRoom);
+				loop = false;
 			} catch (InputMismatchException e) {
+				scanner.nextLine();
 				System.out.println("Please enter a valid number");
 			} catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 			}
 		}
 
-		error = true;
-
-		while (error = true) {
+		loop = true;
+		while (loop) {
 			try {
 				System.out.print("Enter number of guest ---->");
 				int numOfGuest = scanner.nextInt();
-				String skip = scanner.nextLine();
+				scanner.nextLine();
 				controller.setNumOfGuest(numOfGuest);
-				;
-				error = false;
+				loop = false;
 			} catch (InputMismatchException e) {
+				scanner.nextLine();
 				System.out.println("Please enter a valid number");
 			} catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 			}
 		}
 
-		error = true;
+		loop = true;
 		PaymentMethod paymentMethod = PaymentMethod.Cash;
-		while (error = true) {
+		while (loop) {
 			try {
 				paymentMethod.printPaymentMethodOption();
 				int option = scanner.nextInt();
-				String skip = scanner.nextLine();
+				scanner.nextLine();
 				paymentMethod.selectPaymentMethod(option);
 				controller.setPaymentMethod(paymentMethod);
-				error = false;
+				loop = false;
+			} catch (InputMismatchException e) {
+				scanner.nextLine();
+				System.out.println("Please enter a valid number");
 			} catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		error = true;
+		
+		loop = true;
 		if (paymentMethod == PaymentMethod.CreditCard) {
-
-			while (error = true) {
+			while (loop) {
 				try {
-					System.out.println("Enter card number");
+					System.out.println("Enter card number (12digits)---->");
 					int cardNumber = scanner.nextInt();
-					String skip = scanner.nextLine();
+					scanner.nextLine();
 					controller.setCardNumber(cardNumber);
-					error = false;
+					loop = false;
 				} catch (InputMismatchException e) {
-					System.out.println("Invalid input number,please enter only number");
+					System.out.println("Please enter a valid number");
 				} catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
@@ -418,18 +420,17 @@ public class SystemUI {
 		System.out.println();
 	}
 
-	private void printRoomList(List<Room> availableRoomList) { // yy
+	private void printRoomList() { // yy
+		List<Room> availableRoomList = this.controller.getAvailableRoomList();
 		System.out.printf("%-9s", "Room ID");
 		System.out.printf("%-8s", "Rates");
-		System.out.printf("%-10s", "Discount");
 		System.out.printf("%-16s", "Number of Beds");
 		System.out.println("");
 		System.out.println("");
 		for (int i = 0; i < availableRoomList.size(); i++) {
-			System.out.printf("%-9d", availableRoomList.get(i).getRoomID());
-			System.out.printf("%-8.2f", availableRoomList.get(i).getRate());
-			System.out.printf("%-10.2f", availableRoomList.get(i).getDiscount());
-			System.out.printf("%-16d", availableRoomList.get(i).getNumOfBed());
+			System.out.printf("%-9d", this.controller.getRoomID(availableRoomList.get(i)));
+			System.out.printf("%-8.2f", this.controller.getRoomRate(availableRoomList.get(i)));
+			System.out.printf("%-16d", this.controller.getRoomNumOfBed(availableRoomList.get(i)));
 			System.out.println("");
 		}
 
@@ -465,9 +466,9 @@ public class SystemUI {
 		System.out.println("-----------------------");
 	}
 
-	private void clientMenu() { // R
+	private boolean clientMenu() { // R
 		int choice;
-
+		boolean exit = false;
 		System.out.println("1. Login");
 		System.out.println("2. Search Booking");
 		System.out.println("3. Exit");
@@ -491,12 +492,15 @@ public class SystemUI {
 			searchBooking();
 			break;
 		case 3:
+			exit = true;
 			break;
 		}
+		return exit;
 	}
 
-	private void adminMenu() {
+	private boolean adminMenu() {
 		int choice;
+		boolean exit = false;
 		System.out.println("1. Create Booking");
 		System.out.println("2. Update Booking");
 		System.out.println("3. Search Booking");
@@ -532,7 +536,10 @@ public class SystemUI {
 			checkOut();
 			break;
 		case 6:
+			exit = true;
 			break;
 		}
+
+		return exit;
 	}
 }

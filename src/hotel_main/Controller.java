@@ -15,6 +15,7 @@ public class Controller {
 	private IBookingData bookingList;
 	private IClientProfile clientProfile;
 	private IClientData clientProfileList;
+	private RoomList availableRoomList;
 
 	public Controller(IBookingData bookingList, IClientData clientProfileList, IUser user) {
 		this.bookingList = bookingList;
@@ -22,13 +23,33 @@ public class Controller {
 		this.user = user;
 	}
 
-	public List<Room> findAvailableRoom(LocalDate checkInDate, LocalDate checkOutDate) { // xz
-		List<Room> availableRoomList = bookingList.findAvailableRoom(checkInDate, checkOutDate);
-		return availableRoomList;
+	public void setAvailableRoom(String checkInDate, String checkOutDate) { // xz
+		List<Room> roomList = this.bookingList.findAvailableRoom(checkInDate, checkOutDate);
+		availableRoomList.setRoomList(roomList);
+	}
+
+	public List<Room> getAvailableRoomList() {
+		return this.availableRoomList.getRoomList();
+	}
+
+	public int getRoomID(Room room) {
+		return room.getRoomID();
+	}
+
+	public double getRoomRate(Room room) {
+		return room.getRate();
+	}
+
+	public int getRoomNumOfBed(Room room) {
+		return room.getNumOfBed();
+	}
+
+	public Room getRoom(int option) {
+		return this.availableRoomList.getRoom(option);
 	}
 
 	public void addBooking() {
-		this.bookingList.addBooking((Booking)booking);
+		this.bookingList.addBooking((Booking) this.booking);
 	}
 
 	public void updateBookingList(IBooking booking) {
@@ -49,28 +70,28 @@ public class Controller {
 	}
 
 	public void setBookingID() {
-		int bookingID=bookingList.generateBookingID();
-		booking.setBookingID(bookingID);				
+		int bookingID = this.bookingList.generateBookingID();
+		this.booking.setBookingID(bookingID);
 	}
 
 	public void setClientProfile(ClientProfile clientProfile) {
-		booking.setClientProfile(clientProfile);
+		this.booking.setClientProfile(clientProfile);
 	}
 
-	public void setCheckInDate(LocalDate checkInDate) {
-		booking.setCheckInDate(checkInDate);
+	public void setCheckInDate(String checkInDate) {
+		this.booking.setCheckInDate(checkInDate);
 	}
 
-	public void setCheckOutDate(LocalDate checkOutDate) {
-		booking.setCheckOutDate(checkOutDate);
+	public void setCheckOutDate(String checkOutDate) {
+		this.booking.setCheckOutDate(checkOutDate);
 	}
 
-	public void setRoom(int room) {
-		booking.setRoom(room);
+	public void setRoom(Room selectedRoom) {
+		this.booking.setRoom(selectedRoom);
 	}
 
 	public void setNumOfGuest(int numOfGuest) {
-		booking.setNumOfGuest(numOfGuest);
+		this.booking.setNumOfGuest(numOfGuest);
 	}
 
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
@@ -79,95 +100,95 @@ public class Controller {
 	}
 
 	public void setTotalPrice(double totalPrice) {
-		booking.setTotalPrice(totalPrice);
+		this.booking.setTotalPrice(totalPrice);
 	}
 
 	public void setStatus(Status status) {
-		booking.setStatus(status);		
+		this.booking.setStatus(status);
 	}
 
-	public void setCardNumber(int cardNumber) {		
-		
+	public void setCardNumber(int cardNumber) {
+
 	}
 
 	public int getBookingID() {
-		int bookingID=booking.getBookingID();
+		int bookingID = this.booking.getBookingID();
 		return bookingID;
 	}
 
 	public LocalDate getCheckInDate() {
-		LocalDate checkInDate = booking.getCheckInDate();
+		LocalDate checkInDate = this.booking.getCheckInDate();
 		return checkInDate;
 	}
 
 	public LocalDate getCheckOutDate() {
-		LocalDate checkOutDate = booking.getCheckOutDate();
+		LocalDate checkOutDate = this.booking.getCheckOutDate();
 		return checkOutDate;
 	}
 
 	public Room getRoom() {
-		Room room = booking.getRoom();
+		Room room = this.booking.getRoom();
 		return room;
 	}
 
 	public int getNumOfGuest() {
-		int numOfGuest = booking.getNumOfGuest();
+		int numOfGuest = this.booking.getNumOfGuest();
 		return numOfGuest;
 	}
 
 	public Payment getPayment() {
-		Payment payment=booking.getPayment();
+		Payment payment = this.booking.getPayment();
 		return payment;
 	}
 
 	public Status getStatus() {
-		Status status=booking.getStatus();
+		Status status = this.booking.getStatus();
 		return status;
 	}
 
 	public double getTotalPrice() {
-		double totalPrice=booking.getTotalPrice();
+		double totalPrice = this.booking.getTotalPrice();
 		return totalPrice;
 	}
 
 	public boolean validatePolicy() {
 		boolean isRefundable;
-		isRefundable = booking.validatePolicy();
+		isRefundable = this.booking.validatePolicy();
 		return isRefundable;
 	}
 
 	public void makePayment(PaymentMethod paymentMethod) {
-		booking.makePayment(paymentMethod);
+		this.booking.makePayment(paymentMethod);
 
 	}
 
 	public void makePayment(PaymentMethod paymentMethod, int cardNumber) {
-		booking.makePayment(paymentMethod, cardNumber);
+		this.booking.makePayment(paymentMethod, cardNumber);
 
 	}
 
 	public void setNRIC(String NRIC) {
-		clientProfile.setNRIC(NRIC);
+		this.clientProfile.setNRIC(NRIC);
 
 	}
 
 	public void setFirstName(String firstName) {
-		clientProfile.setFirstName(firstName);
+		this.clientProfile.setFirstName(firstName);
 
 	}
 
 	public void setLastName(String lastName) {
-		clientProfile.setLastName(lastName);
+		this.clientProfile.setLastName(lastName);
 
 	}
 
 	public void setGender(Gender gender) {
-		clientProfile.setGender(gender);
+		this.clientProfile.setGender(gender);
 
 	}
 
 	public void setAddress(String address) {
-		clientProfile.setAddress(address);
+		this.clientProfile.setAddress(address);
 
 	}
 
@@ -184,40 +205,40 @@ public class Controller {
 	}
 
 	public String getNRIC() {
-		return clientProfile.getNRIC();
+		return this.clientProfile.getNRIC();
 	}
 
 	public String getFirstName() {
-		return clientProfile.getFirstName();
+		return this.clientProfile.getFirstName();
 	}
 
 	public String getLastName() {
-		return clientProfile.getLastName();
+		return this.clientProfile.getLastName();
 	}
 
 	public Gender getGender() {
-		return clientProfile.getGender();
+		return this.clientProfile.getGender();
 	}
 
 	public String getAddress() {
-		return clientProfile.getAddress();
+		return this.clientProfile.getAddress();
 	}
 
 	public UserType getUserType() {
-		return user.getUserType();
+		return this.user.getUserType();
 	}
 
 	public void login(String password) {
-		
+		this.user.login(password);
 	}
-	
+
 	public void setClientProfile(String NRIC) {
-		ClientProfile clientProfile=clientProfileList.getClientProfile(NRIC);
-		booking.setClientProfile(clientProfile);
-		this.clientProfile=clientProfile;
+		ClientProfile clientProfile = this.clientProfileList.getClientProfile(NRIC);
+		this.booking.setClientProfile(clientProfile);
+		this.clientProfile = clientProfile;
 	}
-	
+
 	public PaymentMethod getPaymentMethod() {
-		return booking.getPayment().getPaymentMethod();
+		return this.booking.getPayment().getPaymentMethod();
 	}
 }

@@ -1,7 +1,6 @@
 package hotel_interface;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import hotel_entity.ClientProfile;
 import hotel_entity.Payment;
@@ -18,8 +17,8 @@ public interface IBooking {
 	//set method
 	public void setBookingID(int bookingID);
 	public void setClientProfile(ClientProfile clientProfile);
-	public void setCheckInDate(LocalDate checkInDate);
-	public void setCheckOutDate(LocalDate checkOutDate);
+	public void setCheckInDate(String checkInDate);
+	public void setCheckOutDate(String checkOutDate);
 	public void setRoom(Room room);
 	public void setNumOfGuest(int numOfGuest);
 	public void setPaymentMethod(PaymentMethod paymentMethod);

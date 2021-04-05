@@ -2,6 +2,7 @@ package hotel_entity;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,11 +21,9 @@ public class BookingList implements IBookingData {
 			Scanner s = new Scanner(new File($filename));
 			s.useDelimiter("(,|\r\n|\r|\n)");
 			while (s.hasNext()) {
-				this.bookingList.add(new Booking(s.nextInt(),
-						new ClientProfile(s.next(),s.next(),s.next(),s.next(),s.next()),
-						s.next(),s.next(),
-						new Room(s.nextInt(),s.nextDouble(),s.nextInt()),
-						s.nextInt()));
+				this.bookingList.add(
+						new Booking(s.nextInt(), new ClientProfile(s.next(), s.next(), s.next(), s.next(), s.next()),
+								s.next(), s.next(), new Room(s.nextInt(), s.nextDouble(), s.nextInt()), s.nextInt()));
 			}
 			s.close();
 		} catch (Exception e) {
@@ -39,7 +38,16 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public List<Room> findAvailableRoom(LocalDate checkInDate, LocalDate checkOutDate) { // yy still not complete
+	public List<Room> findAvailableRoom(String checkInString, String checkOutString) { // yy still not complete
+		LocalDate checkInDate;
+		LocalDate checkOutDate;
+		try {
+			checkInDate = LocalDate.parse(checkInString);
+			checkOutDate = LocalDate.parse(checkOutString);
+		} catch (DateTimeParseException e) {
+			throw new IllegalArgumentException("Incorrect date format!");
+		}
+
 		RoomList roomList = new RoomList();
 		List<Room> availableRoomList = roomList.getRoomList();
 		ArrayList<Room> removedRoom = new ArrayList<Room>();
