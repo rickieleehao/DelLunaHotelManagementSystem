@@ -61,12 +61,15 @@ public class BookingList implements IBookingData {
 
 	@Override
 	public Booking getBooking(int bookingID) {
-		Booking theBooking = null;
+		Booking theBooking = null;		
 		for (int i = 0; i < bookingList.size(); i++) {
 			if (bookingList.get(i).getBookingID() == bookingID) {
 				theBooking = bookingList.get(i);
 				break;
 			}
+		}		
+		if(theBooking==null) {
+			throw new IllegalArgumentException("Booking not found");
 		}
 		return theBooking;
 	}

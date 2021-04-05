@@ -55,6 +55,9 @@ public class ClientProfileList implements IClientData {
 				break;
 			}
 		}
+		if(clientProfile==null) {
+			throw new IllegalArgumentException("Client profile not found");
+		}
 		return clientProfile;
 	}
 }
