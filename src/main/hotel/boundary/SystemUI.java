@@ -211,13 +211,13 @@ public class SystemUI {
 	}
 
 	private void checkIn() {
+		searchBooking();
 		if (this.control.getStatus() == Status.Cancelled) {
 			System.out.println("The booking has already cancelled! Enter another booking.");
 		} else if (this.control.getStatus() == Status.CheckedOut) {
 			System.out.println("The booking has already checked out! Enter another booking.");
 		} else {
 			try {
-				searchBooking();
 				control.setStatus(Status.CheckedIn);
 				System.out.println("Booking checked in!");
 				this.control.updateBookingList();
@@ -228,13 +228,13 @@ public class SystemUI {
 	}
 
 	private void checkOut() {
+		searchBooking();
 		if (this.control.getStatus() == Status.Cancelled) {
 			System.out.println("The booking has already cancelled! Enter another booking.");
 		} else if (this.control.getStatus() == Status.CheckedOut) {
 			System.out.println("The booking has already checked out! Enter another booking.");
 		} else {
 			try {
-				searchBooking();
 				makePayment();
 				control.setStatus(Status.CheckedOut);
 				printReceipt();
@@ -546,6 +546,7 @@ public class SystemUI {
 				}
 			} else {
 				this.control.makePayment(paymentMethod);
+				error = false;
 			}
 		}
 	}
