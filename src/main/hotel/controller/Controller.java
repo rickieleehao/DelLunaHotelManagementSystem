@@ -188,12 +188,10 @@ public class Controller {
 
 	public void makePayment(PaymentMethod paymentMethod) {
 		this.booking.makePayment(paymentMethod);
-
 	}
 
 	public void makePayment(PaymentMethod paymentMethod, int cardNumber) {
 		this.booking.makePayment(paymentMethod, cardNumber);
-
 	}
 
 	/*
