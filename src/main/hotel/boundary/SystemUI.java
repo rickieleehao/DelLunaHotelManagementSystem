@@ -175,39 +175,44 @@ public class SystemUI {
 			return;
 		}
 
-		while (loop) {
-			try {
-				System.out.println("Update Booking");
-				System.out.println("--------------");
-				System.out.println("1. Change booking detail.");
-				System.out.println("2. Cancel booking.");
-				System.out.println("3. Exit.");
-				System.out.print("Pick option (1-3) ----> ");
-				choice = scanner.nextInt();
-				scanner.nextLine();
-				loop = false;
-			} catch (InputMismatchException e) {
-				scanner.nextLine();
-				System.out.println("Please enter a valid number.");
-			} catch (IndexOutOfBoundsException e) {
-				scanner.nextLine();
-				System.out.println("Option cannot be negative!");
-			}
-		}
+		if (this.control.getStatus() != Status.Confirmed) {
+			System.out.println("The booking cannot be cancelled! Enter another booking.");
+		} else {
 
-		switch (choice) {
-		case 1:
-			changeBookingDets();
-			break;
-		case 2:
-			cancelBooking();
-			break;
-		case 3:
-			break;
-		default:
-			System.out.println("Invalid option.\n");
+			while (loop) {
+				try {
+					System.out.println("Update Booking");
+					System.out.println("--------------");
+					System.out.println("1. Change booking detail.");
+					System.out.println("2. Cancel booking.");
+					System.out.println("3. Exit.");
+					System.out.print("Pick option (1-3) ----> ");
+					choice = scanner.nextInt();
+					scanner.nextLine();
+					loop = false;
+				} catch (InputMismatchException e) {
+					scanner.nextLine();
+					System.out.println("Please enter a valid number.");
+				} catch (IndexOutOfBoundsException e) {
+					scanner.nextLine();
+					System.out.println("Option cannot be negative!");
+				}
+			}
+
+			switch (choice) {
+			case 1:
+				changeBookingDets();
+				break;
+			case 2:
+				cancelBooking();
+				break;
+			case 3:
+				break;
+			default:
+				System.out.println("Invalid option.\n");
+			}
+			this.control.updateBookingList();
 		}
-		this.control.updateBookingList();
 	}
 
 	private void checkIn() {
@@ -331,170 +336,159 @@ public class SystemUI {
 	}
 
 	private void changeBookingDets() {
-		if (this.control.getStatus() == Status.Cancelled) {
-			System.out.println("The booking has already cancelled! Enter another booking.");
-		} else if (this.control.getStatus() == Status.CheckedOut) {
-			System.out.println("The booking has already checked out! Enter another booking.");
-		} else {
-			int choice = 0, roomNo, numOfGuest;
-			boolean loop = true;
-			String checkInDateStr = null;
-			String checkOutDateStr = null;
-			Room room;
-			System.out.println("Change Booking Detail");
-			System.out.println("---------------------");
-			System.out.println("1. Change check-in date & check-out date.");
-			System.out.println("2. Change room.");
-			System.out.println("3. Change number of guest.");
-			System.out.println("4. Exit.");
+		int choice = 0, roomNo, numOfGuest;
+		boolean loop = true;
+		String checkInDateStr = null;
+		String checkOutDateStr = null;
+		Room room;
+		System.out.println("Change Booking Detail");
+		System.out.println("---------------------");
+		System.out.println("1. Change check-in date & check-out date.");
+		System.out.println("2. Change room.");
+		System.out.println("3. Change number of guest.");
+		System.out.println("4. Exit.");
 
+		while (loop) {
+			try {
+				System.out.print("Pick option (1-4) ----> ");
+				choice = scanner.nextInt();
+				scanner.nextLine();
+				if (choice < 1 || choice > 4) {
+					throw new IllegalSelectorException();
+				}
+				loop = false;
+			} catch (InputMismatchException e) {
+				scanner.nextLine();
+				System.out.println("Please enter a valid number.");
+			} catch (IllegalSelectorException e) {
+				System.out.println("Invalid option.");
+			}
+		}
+
+		switch (choice) {
+		case 1:
+			loop = true;
 			while (loop) {
 				try {
-					System.out.print("Pick option (1-4) ----> ");
-					choice = scanner.nextInt();
+					System.out.print("Enter Check-in date (YYYY-MM-DD) ----> ");
+					checkInDateStr = scanner.nextLine();
+					this.control.setCheckInDate(checkInDateStr);
+					loop = false;
+				} catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			loop = true;
+			while (loop) {
+				try {
+					System.out.print("Enter check-out date (YYYY-MM-DD) ----> ");
+					checkOutDateStr = scanner.nextLine();
+					this.control.setCheckOutDate(checkOutDateStr);
+					loop = false;
+				} catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			this.control.setAvailableRoom(checkInDateStr, checkOutDateStr);
+			printRoomList();
+			loop = true;
+			while (loop) {
+				try {
+					System.out.print("Enter new room ----> ");
+					roomNo = scanner.nextInt();
 					scanner.nextLine();
-					if (choice < 1 || choice > 4) {
-						throw new IllegalSelectorException();
-					}
+					room = this.control.getRoom(roomNo);
+					this.control.setRoom(room);
 					loop = false;
 				} catch (InputMismatchException e) {
 					scanner.nextLine();
 					System.out.println("Please enter a valid number.");
-				} catch (IllegalSelectorException e) {
-					System.out.println("Invalid option.");
+				} catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			loop = true;
+			while (loop) {
+				try {
+					System.out.print("Enter new number of guest ----> ");
+					numOfGuest = scanner.nextInt();
+					scanner.nextLine();
+					this.control.setNumOfGuest(numOfGuest);
+					loop = false;
+				} catch (InputMismatchException e) {
+					scanner.nextLine();
+					System.out.println("Please enter a valid number.");
+				} catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
 				}
 			}
 
-			switch (choice) {
-			case 1:
-				loop = true;
-				while (loop) {
-					try {
-						System.out.print("Enter Check-in date (YYYY-MM-DD) ----> ");
-						checkInDateStr = scanner.nextLine();
-						this.control.setCheckInDate(checkInDateStr);
-						loop = false;
-					} catch (IllegalArgumentException e) {
-						System.out.println(e.getMessage());
-					}
+			break;
+		case 2:
+			checkInDateStr = this.control.getCheckInDate().toString();
+			checkOutDateStr = this.control.getCheckOutDate().toString();
+			this.control.setAvailableRoom(checkInDateStr, checkOutDateStr);
+			printRoomList();
+			loop = true;
+			while (loop) {
+				try {
+					System.out.print("Enter new room ----> ");
+					roomNo = scanner.nextInt();
+					scanner.nextLine();
+					room = this.control.getRoom(roomNo);
+					this.control.setRoom(room);
+					loop = false;
+				} catch (InputMismatchException e) {
+					scanner.nextLine();
+					System.out.println("Please enter a valid number.");
+				} catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
 				}
-				loop = true;
-				while (loop) {
-					try {
-						System.out.print("Enter check-out date (YYYY-MM-DD) ----> ");
-						checkOutDateStr = scanner.nextLine();
-						this.control.setCheckOutDate(checkOutDateStr);
-						loop = false;
-					} catch (IllegalArgumentException e) {
-						System.out.println(e.getMessage());
-					}
-				}
-				this.control.setAvailableRoom(checkInDateStr, checkOutDateStr);
-				printRoomList();
-				loop = true;
-				while (loop) {
-					try {
-						System.out.print("Enter new room ----> ");
-						roomNo = scanner.nextInt();
-						scanner.nextLine();
-						room = this.control.getRoom(roomNo);
-						this.control.setRoom(room);
-						loop = false;
-					} catch (InputMismatchException e) {
-						scanner.nextLine();
-						System.out.println("Please enter a valid number.");
-					} catch (IllegalArgumentException e) {
-						System.out.println(e.getMessage());
-					}
-				}
-				loop = true;
-				while (loop) {
-					try {
-						System.out.print("Enter new number of guest ----> ");
-						numOfGuest = scanner.nextInt();
-						scanner.nextLine();
-						this.control.setNumOfGuest(numOfGuest);
-						loop = false;
-					} catch (InputMismatchException e) {
-						scanner.nextLine();
-						System.out.println("Please enter a valid number.");
-					} catch (IllegalArgumentException e) {
-						System.out.println(e.getMessage());
-					}
-				}
-
-				break;
-			case 2:
-				checkInDateStr = this.control.getCheckInDate().toString();
-				checkOutDateStr = this.control.getCheckOutDate().toString();
-				this.control.setAvailableRoom(checkInDateStr, checkOutDateStr);
-				printRoomList();
-				loop = true;
-				while (loop) {
-					try {
-						System.out.print("Enter new room ----> ");
-						roomNo = scanner.nextInt();
-						scanner.nextLine();
-						room = this.control.getRoom(roomNo);
-						this.control.setRoom(room);
-						loop = false;
-					} catch (InputMismatchException e) {
-						scanner.nextLine();
-						System.out.println("Please enter a valid number.");
-					} catch (IllegalArgumentException e) {
-						System.out.println(e.getMessage());
-					}
-				}
-				break;
-			case 3:
-				loop = true;
-				while (loop) {
-					try {
-						System.out.print("Enter new number of guest ----> ");
-						numOfGuest = scanner.nextInt();
-						scanner.nextLine();
-						this.control.setNumOfGuest(numOfGuest);
-						loop = false;
-					} catch (InputMismatchException e) {
-						scanner.nextLine();
-						System.out.println("Please enter a valid number.");
-					} catch (IllegalArgumentException e) {
-						System.out.println(e.getMessage());
-					}
-				}
-				break;
-			case 4:
-				return;
 			}
-			System.out.println("Booking updated!\n");
+			break;
+		case 3:
+			loop = true;
+			while (loop) {
+				try {
+					System.out.print("Enter new number of guest ----> ");
+					numOfGuest = scanner.nextInt();
+					scanner.nextLine();
+					this.control.setNumOfGuest(numOfGuest);
+					loop = false;
+				} catch (InputMismatchException e) {
+					scanner.nextLine();
+					System.out.println("Please enter a valid number.");
+				} catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			break;
+		case 4:
+			return;
 		}
+		System.out.println("Booking updated!\n");
 	}
 
 	private void cancelBooking() {
-		if (this.control.getStatus() == Status.Cancelled) {
-			System.out.println("The booking has already cancelled! Enter another booking.");
-		} else if (this.control.getStatus() == Status.CheckedOut) {
-			System.out.println("The booking has already checked out! Enter another booking.");
-		} else {
-			boolean isRefundable = this.control.validatePolicy();
-			if (isRefundable) {
-				System.out.println("The deposit is refundable");
+		boolean isRefundable = this.control.validatePolicy();
+		if (isRefundable) {
+			System.out.println("The deposit is refundable");
 
-				PaymentMethod paymentMethod = control.getPaymentMethod();
-				if (paymentMethod == PaymentMethod.CreditCard) {
-					System.out.println("Payment Method ----> Credit Card");
-					int cardNumber = control.getCardNumber();
-					System.out.println("Card Number ----> " + cardNumber);
-				} else {
-					System.out.println("Payment Method ----> Cash");
-				}
-
-				double deposit = control.getDeposit();
-				System.out.println("Deposit amount ----> " + deposit);
+			PaymentMethod paymentMethod = control.getPaymentMethod();
+			if (paymentMethod == PaymentMethod.CreditCard) {
+				System.out.println("Payment Method ----> Credit Card");
+				int cardNumber = control.getCardNumber();
+				System.out.println("Card Number ----> " + cardNumber);
+			} else {
+				System.out.println("Payment Method ----> Cash");
 			}
-			control.setStatus(Status.Cancelled);
-			System.out.println("The booking is cancelled.");
+
+			double deposit = control.getDeposit();
+			System.out.println("Deposit amount ----> " + deposit);
 		}
+		control.setStatus(Status.Cancelled);
+		System.out.println("The booking is cancelled.");
+
 	}
 
 	private void viewBooking() {
