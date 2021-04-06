@@ -62,7 +62,7 @@ public class ClientProfile implements IClientProfile {
 	public void setNRIC(String NRIC) {
 		if (NRIC.length() != 12) {
 			throw new IllegalArgumentException("NRIC must have 12 digits!");
-		} else if ((NRIC.matches("[a-zA-Z\s]+"))) {
+		} else if ((NRIC.matches("[a-zA-Z ]+"))) {
 			throw new IllegalArgumentException("NRIC must consist number only!");
 		} else {
 			this.NRIC = NRIC;
