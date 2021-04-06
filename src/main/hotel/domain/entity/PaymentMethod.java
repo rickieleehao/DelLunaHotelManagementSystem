@@ -1,4 +1,4 @@
-package hotel_entity;
+package hotel.domain.entity;
 
 public enum PaymentMethod {
 	Cash,

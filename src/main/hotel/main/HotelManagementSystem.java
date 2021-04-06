@@ -1,10 +1,11 @@
-package hotel_main;
-
-import hotel_interface.*;
+package hotel.main;
 
 import java.util.Scanner;
 
-import hotel_entity.*;
+import hotel.boundary.SystemUI;
+import hotel.controller.Controller;
+import hotel.domain.IEntity.*;
+import hotel.domain.entity.*;
 
 public class HotelManagementSystem {
 

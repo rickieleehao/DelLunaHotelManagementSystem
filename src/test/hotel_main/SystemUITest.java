@@ -7,13 +7,15 @@ import java.util.Scanner;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import hotel_entity.BookingList;
-import hotel_entity.ClientProfileList;
-import hotel_entity.RoomList;
-import hotel_entity.User;
-import hotel_interface.IBookingData;
-import hotel_interface.IClientData;
-import hotel_interface.IUser;
+import hotel.boundary.SystemUI;
+import hotel.controller.Controller;
+import hotel.domain.IEntity.IBookingData;
+import hotel.domain.IEntity.IClientData;
+import hotel.domain.IEntity.IUser;
+import hotel.domain.entity.BookingList;
+import hotel.domain.entity.ClientProfileList;
+import hotel.domain.entity.RoomList;
+import hotel.domain.entity.User;
 
 public class SystemUITest {
 

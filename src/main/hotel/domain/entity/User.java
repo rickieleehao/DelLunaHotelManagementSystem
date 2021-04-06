@@ -1,24 +1,23 @@
-package hotel_entity;
+package hotel.domain.entity;
 
-import hotel_interface.IUser;
+import hotel.domain.IEntity.IUser;
 
 class isAdministrator {
 
 	private String password;
-	
+
 	public isAdministrator() {
 		this.password = "admin123";
 	}
-	
+
 	public boolean verifyAdmin(String password) {
 		boolean verify = false;
-		if(this.password.equals(password)) {
+		if (this.password.equals(password)) {
 			verify = true;
 		}
 		return verify;
 	}
 }
-
 
 public class User implements IUser {
 	private UserType type;
@@ -28,7 +27,7 @@ public class User implements IUser {
 		this.type = UserType.Client;
 		this.adminInfo = new isAdministrator();
 	}
-	
+
 	@Override
 	public UserType getUserType() {
 		return this.type;
@@ -36,9 +35,9 @@ public class User implements IUser {
 
 	@Override
 	public void login(String password) {
-		if(this.adminInfo.verifyAdmin(password)){
+		if (this.adminInfo.verifyAdmin(password)) {
 			this.type = UserType.Administrator;
-		}else {
+		} else {
 			throw new IllegalArgumentException("Incorrect password!");
 		}
 	}

@@ -1,6 +1,6 @@
-package hotel_interface;
+package hotel.domain.IEntity;
 
-import hotel_entity.Gender;
+import hotel.domain.entity.Gender;
 
 public interface IClientProfile {
 

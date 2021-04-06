@@ -1,7 +1,7 @@
-package hotel_interface;
+package hotel.domain.IEntity;
 import java.util.Date;
 
-import hotel_entity.*;
+import hotel.domain.entity.*;
 public interface IEntityCtrl{
 	
 	//Booking class

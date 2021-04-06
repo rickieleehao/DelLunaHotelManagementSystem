@@ -1,9 +1,10 @@
-package hotel_main;
-
-import hotel_entity.*;
+package hotel.boundary;
 
 import java.nio.channels.IllegalSelectorException;
 import java.util.*;
+
+import hotel.controller.Controller;
+import hotel.domain.entity.*;
 
 public class SystemUI {
 	private Scanner scanner;
@@ -563,8 +564,8 @@ public class SystemUI {
 			System.out.println("Room: " + this.controller.getRoom().getRoomID());
 			System.out.println("Number of guest: " + this.controller.getNumOfGuest());
 			System.out.println("Booking status: " + this.controller.getStatus());
-			System.out.println("Payment method: " + this.controller.getPayment().getPaymentMethod());
-			System.out.println("Total price:" + this.controller.getPayment().getTotalPrice());
+			System.out.println("Payment method: " + this.controller.getPaymentMethod());
+			System.out.println("Total price:" + this.controller.getTotalPrice());
 		}
 		if (userType == UserType.Client) {
 			System.out.println("Booking Detail");

@@ -1,6 +1,6 @@
-package hotel_entity;
+package hotel.domain.entity;
 
-import hotel_interface.IClientProfile;
+import hotel.domain.IEntity.IClientProfile;
 
 public class ClientProfile implements IClientProfile {
 	private String NRIC;
@@ -8,6 +8,10 @@ public class ClientProfile implements IClientProfile {
 	private String lastName;
 	private Gender gender;
 	private String address;
+
+	public ClientProfile() {
+
+	}
 
 	public ClientProfile(String NRIC, String firstName, String lastName, String gender, String address) {
 		this.NRIC = NRIC;
@@ -21,16 +25,13 @@ public class ClientProfile implements IClientProfile {
 		this.address = address;
 	}
 
+	// for readFromFile purpose
 	public ClientProfile(String NRIC, String firstName, String lastName, Gender gender, String address) {
 		this.NRIC = NRIC;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.gender = gender;
 		this.address = address;
-	}
-
-	public ClientProfile() {
-
 	}
 
 	@Override

@@ -1,11 +1,10 @@
-package hotel_main;
-
-import hotel_interface.*;
+package hotel.controller;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import hotel_entity.*;
+import hotel.domain.IEntity.*;
+import hotel.domain.entity.*;
 
 public class Controller {
 
@@ -22,6 +21,17 @@ public class Controller {
 		this.user = user;
 	}
 
+	public ClientProfile getClientProfile() {
+		return (ClientProfile) this.clientProfile;
+	}
+
+	public Booking getBooking(int bookingID) {
+		return this.bookingList.getBooking(bookingID);
+	}
+
+	/*
+	 * <Room> Entity
+	 */
 	public void setAvailableRoom(String checkInDate, String checkOutDate) {
 		this.availableRoomList = new RoomList();
 		List<Room> roomList = this.bookingList.findAvailableRoom(checkInDate, checkOutDate);
@@ -48,6 +58,9 @@ public class Controller {
 		return this.availableRoomList.getRoom(option);
 	}
 
+	/*
+	 * <BookingList> Entity
+	 */
 	public void addBooking() {
 		this.bookingList.addBooking((Booking) this.booking);
 	}
@@ -56,10 +69,9 @@ public class Controller {
 		this.bookingList.updateBookingList((Booking) this.booking);
 	}
 
-	public Booking getBooking(int bookingID) {
-		return this.bookingList.getBooking(bookingID);// this is add cast, meaning convert IBooking into Booking
-	}
-
+	/*
+	 * <Booking> Entity
+	 */
 	public void createBooking() {
 		this.booking = new Booking();
 	}
@@ -118,7 +130,7 @@ public class Controller {
 	}
 
 	public void setCardNumber(int cardNumber) {
-
+		this.booking.setCardNumber(cardNumber);
 	}
 
 	public int getBookingID() {
@@ -144,11 +156,6 @@ public class Controller {
 	public int getNumOfGuest() {
 		int numOfGuest = this.booking.getNumOfGuest();
 		return numOfGuest;
-	}
-
-	public Payment getPayment() { // remove
-		Payment payment = this.booking.getPayment();
-		return payment;
 	}
 
 	public PaymentMethod getPaymentMethod() {
@@ -189,41 +196,38 @@ public class Controller {
 
 	}
 
-	public void setNRIC(String NRIC) {
-		this.clientProfile.setNRIC(NRIC);
-
-	}
-
-	public void setFirstName(String firstName) {
-		this.clientProfile.setFirstName(firstName);
-
-	}
-
-	public void setLastName(String lastName) {
-		this.clientProfile.setLastName(lastName);
-
-	}
-
-	public void setGender(Gender gender) {
-		this.clientProfile.setGender(gender);
-
-	}
-
-	public void setAddress(String address) {
-		this.clientProfile.setAddress(address);
-
-	}
-
+	/*
+	 * <ClientProfileList> Entity
+	 */
 	public void addClientProfile() {
 		this.clientProfileList.addClientProfile((ClientProfile) this.clientProfile);
 	}
 
+	/*
+	 * <ClientProfile> Entity
+	 */
 	public void createClientProfile() {
 		this.clientProfile = new ClientProfile();
 	}
 
-	public ClientProfile getClientProfile() {
-		return (ClientProfile) this.clientProfile;
+	public void setNRIC(String NRIC) {
+		this.clientProfile.setNRIC(NRIC);
+	}
+
+	public void setFirstName(String firstName) {
+		this.clientProfile.setFirstName(firstName);
+	}
+
+	public void setLastName(String lastName) {
+		this.clientProfile.setLastName(lastName);
+	}
+
+	public void setGender(Gender gender) {
+		this.clientProfile.setGender(gender);
+	}
+
+	public void setAddress(String address) {
+		this.clientProfile.setAddress(address);
 	}
 
 	public String getNRIC() {
@@ -246,6 +250,9 @@ public class Controller {
 		return this.clientProfile.getAddress();
 	}
 
+	/*
+	 * <User> Entity
+	 */
 	public UserType getUserType() {
 		return this.user.getUserType();
 	}

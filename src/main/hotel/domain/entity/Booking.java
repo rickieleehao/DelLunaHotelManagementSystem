@@ -1,10 +1,10 @@
-package hotel_entity;
+package hotel.domain.entity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
-import hotel_interface.IBooking;
+import hotel.domain.IEntity.IBooking;
 
 public class Booking implements IBooking {
 	private int bookingID;
@@ -16,6 +16,10 @@ public class Booking implements IBooking {
 	private Payment payment;
 	private Status status;
 
+	public Booking() {
+		this.payment = new Payment();
+	}
+
 	public Booking(int bookingID, ClientProfile client, LocalDate checkInDate, LocalDate checkOutDate, Room room,
 			int numOfGuest, Payment payment, Status status) {
 		this.bookingID = bookingID;
@@ -26,10 +30,6 @@ public class Booking implements IBooking {
 		this.numOfGuest = numOfGuest;
 		this.payment = payment;
 		this.status = status;
-	}
-
-	public Booking() {
-		this.payment = new Payment();
 	}
 
 	private void computeTotalPrice() {

@@ -1,4 +1,4 @@
-package hotel_entity;
+package hotel.domain.entity;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import hotel_interface.IClientData;
+import hotel.domain.IEntity.IClientData;
 
 public class ClientProfileList implements IClientData {
 
@@ -27,6 +27,27 @@ public class ClientProfileList implements IClientData {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void updateToFile() {
+		String fileName = this.fileName;
+		try {
+			FileWriter $fileEmptier = new FileWriter(fileName);
+			FileWriter $writer = new FileWriter(fileName, true);
+			$fileEmptier.write("");
+			$fileEmptier.close();
+			for (ClientProfile c : this.clientProfileList) {
+				$writer.write(c.getNRIC() + "," + c.getFirstName() + "," + c.getLastName() + ","
+						+ c.getGender().toString() + "," + c.getAddress() + "\r\n");
+			}
+			$writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<ClientProfile> getClientProfileList() {
+		return this.clientProfileList;
 	}
 
 	@Override
@@ -54,26 +75,5 @@ public class ClientProfileList implements IClientData {
 			throw new NullPointerException("Client profile not found");
 		}
 		return clientProfile;
-	}
-
-	public List<ClientProfile> getClientProfileList() {
-		return this.clientProfileList;
-	}
-
-	private void updateToFile() {
-		String fileName = this.fileName;
-		try {
-			FileWriter $fileEmptier = new FileWriter(fileName);
-			FileWriter $writer = new FileWriter(fileName, true);
-			$fileEmptier.write("");
-			$fileEmptier.close();
-			for (ClientProfile c : this.clientProfileList) {
-				$writer.write(c.getNRIC() + "," + c.getFirstName() + "," + c.getLastName() + ","
-						+ c.getGender().toString() + "," + c.getAddress() + "\r\n");
-			}
-			$writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }

@@ -1,6 +1,6 @@
-package hotel_interface;
+package hotel.domain.IEntity;
 
-import hotel_entity.UserType;
+import hotel.domain.entity.UserType;
 
 public interface IUser {
 

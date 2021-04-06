@@ -1,8 +1,8 @@
-package hotel_interface;
+package hotel.domain.IEntity;
 
 import java.util.List;
 
-import hotel_entity.*;
+import hotel.domain.entity.*;
 
 public interface IBookingData {
 

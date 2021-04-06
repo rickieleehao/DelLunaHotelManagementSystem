@@ -1,4 +1,4 @@
-package hotel_entity;
+package hotel.domain.entity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ public class RoomList {
 
 	private List<Room> roomList;
 	private static String fileName;
-	
+
 	public RoomList(String fileName) {
 		RoomList.fileName = fileName;
 		this.roomList = new ArrayList<Room>();

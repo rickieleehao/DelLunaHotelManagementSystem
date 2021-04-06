@@ -1,6 +1,6 @@
-package hotel_interface;
+package hotel.domain.IEntity;
 
-import hotel_entity.ClientProfile;
+import hotel.domain.entity.ClientProfile;
 
 public interface IClientData {
 	

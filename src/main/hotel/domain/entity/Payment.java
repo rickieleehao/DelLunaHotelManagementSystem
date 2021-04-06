@@ -1,23 +1,23 @@
-package hotel_entity;
+package hotel.domain.entity;
 
 public class Payment {
-	
+
 	private PaymentMethod paymentMethod;
 	private double totalPrice;
 	private double deposit;
 	private int cardNumber;
 
 	public Payment(String paymentMethod, double totalPrice, int cardNumber) {
-		if(paymentMethod.equals("CreditCard")) {
+		if (paymentMethod.equals("CreditCard")) {
 			this.paymentMethod = PaymentMethod.CreditCard;
-		}else if(paymentMethod.equals("Cash")) {
+		} else if (paymentMethod.equals("Cash")) {
 			this.paymentMethod = PaymentMethod.Cash;
 		}
 		this.totalPrice = totalPrice;
 		this.cardNumber = cardNumber;
 		this.deposit = 100; // by default
 	}
-	
+
 	public Payment() {
 		this.deposit = 100; // by default
 		this.cardNumber = 0;
@@ -44,19 +44,17 @@ public class Payment {
 	}
 
 	public void setcardNumber(int cardNumber) {
-		if(cardNumber >= 0) {
+		if (cardNumber >= 0) {
 			this.cardNumber = cardNumber;
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("Invalid input");
 		}
 	}
 
 	public void setTotalPrice(double totalPrice) {
-		if(totalPrice >= 0) {
+		if (totalPrice >= 0) {
 			this.totalPrice = totalPrice;
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException();
 		}
 	}

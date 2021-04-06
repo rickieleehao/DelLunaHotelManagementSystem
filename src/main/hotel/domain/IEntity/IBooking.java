@@ -1,12 +1,12 @@
-package hotel_interface;
+package hotel.domain.IEntity;
 
 import java.time.LocalDate;
 
-import hotel_entity.ClientProfile;
-import hotel_entity.Payment;
-import hotel_entity.PaymentMethod;
-import hotel_entity.Room;
-import hotel_entity.Status;
+import hotel.domain.entity.ClientProfile;
+import hotel.domain.entity.Payment;
+import hotel.domain.entity.PaymentMethod;
+import hotel.domain.entity.Room;
+import hotel.domain.entity.Status;
 
 public interface IBooking {
 

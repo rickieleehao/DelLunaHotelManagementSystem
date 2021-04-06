@@ -1,4 +1,4 @@
-package hotel_entity;
+package hotel.domain.entity;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import hotel_interface.IBookingData;
+import hotel.domain.IEntity.IBookingData;
 
 public class BookingList implements IBookingData {
 
@@ -72,9 +72,29 @@ public class BookingList implements IBookingData {
 		}
 	}
 
+	private void updateToFile() {
+		String fileName = this.fileName;
+		try {
+			FileWriter $fileEmptier = new FileWriter(fileName);
+			FileWriter $writer = new FileWriter(fileName, true);
+			$fileEmptier.write("");
+			$fileEmptier.close();
+			for (Booking b : this.bookingList) {
+				$writer.write(b.getBookingID() + "," + b.getClientProfile().getNRIC() + ","
+						+ b.getCheckInDate().toString() + "," + b.getCheckOutDate().toString() + ","
+						+ b.getRoom().getRoomID() + "," + b.getNumOfGuest() + ","
+						+ b.getPayment().getPaymentMethod().toString() + "," + b.getPayment().getTotalPrice() + ","
+						+ b.getPayment().getCardNumber() + "," + b.getStatus().toString() + "\r\n");
+			}
+			$writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public int generateBookingID() {
-		int bookingID = this.bookingList.get(this.bookingList.size() - 1).getBookingID() + 1; //last ID + 1 = new ID
+		int bookingID = this.bookingList.get(this.bookingList.size() - 1).getBookingID() + 1; // last ID + 1 = new ID
 		return bookingID;
 	}
 
@@ -140,25 +160,5 @@ public class BookingList implements IBookingData {
 			throw new NullPointerException("Booking not found");
 		}
 		return theBooking;
-	}
-
-	private void updateToFile() {
-		String fileName = this.fileName;
-		try {
-			FileWriter $fileEmptier = new FileWriter(fileName);
-			FileWriter $writer = new FileWriter(fileName, true);
-			$fileEmptier.write("");
-			$fileEmptier.close();
-			for (Booking b : this.bookingList) {
-				$writer.write(b.getBookingID() + "," + b.getClientProfile().getNRIC() + ","
-						+ b.getCheckInDate().toString() + "," + b.getCheckOutDate().toString() + ","
-						+ b.getRoom().getRoomID() + "," + b.getNumOfGuest() + ","
-						+ b.getPayment().getPaymentMethod().toString() + "," + b.getPayment().getTotalPrice() + ","
-						+ b.getPayment().getCardNumber() + "," + b.getStatus().toString() + "\r\n");
-			}
-			$writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }
