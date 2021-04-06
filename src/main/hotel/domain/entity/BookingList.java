@@ -31,7 +31,7 @@ public class BookingList implements IBookingData {
 
 		try {
 			Scanner s = new Scanner(new File(fileName));
-			s.useDelimiter("(,|\r\n|\r|\n)");
+			s.useDelimiter("(#|\r\n|\r|\n)");
 			while (s.hasNext()) {
 				bookingID = s.nextInt();
 				tempString = s.next();
@@ -80,11 +80,11 @@ public class BookingList implements IBookingData {
 			$fileEmptier.write("");
 			$fileEmptier.close();
 			for (Booking b : this.bookingList) {
-				$writer.write(b.getBookingID() + "," + b.getClientProfile().getNRIC() + ","
-						+ b.getCheckInDate().toString() + "," + b.getCheckOutDate().toString() + ","
-						+ b.getRoom().getRoomID() + "," + b.getNumOfGuest() + ","
-						+ b.getPayment().getPaymentMethod().toString() + "," + b.getPayment().getTotalPrice() + ","
-						+ b.getPayment().getCardNumber() + "," + b.getStatus().toString() + "\r\n");
+				$writer.write(b.getBookingID() + "#" + b.getClientProfile().getNRIC() + "#"
+						+ b.getCheckInDate().toString() + "#" + b.getCheckOutDate().toString() + "#"
+						+ b.getRoom().getRoomID() + "#" + b.getNumOfGuest() + "#"
+						+ b.getPayment().getPaymentMethod().toString() + "#" + b.getPayment().getTotalPrice() + "#"
+						+ b.getPayment().getCardNumber() + "#" + b.getStatus().toString() + "\r\n");
 			}
 			$writer.close();
 		} catch (IOException e) {

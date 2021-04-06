@@ -161,6 +161,8 @@ public class SystemUI {
 
 		this.control.setStatus(Status.Confirmed);
 		control.addBooking();
+		printBookingDets();
+		System.out.println("New Booking created and updated!");
 	}
 
 	private void updateBooking() {
@@ -213,6 +215,7 @@ public class SystemUI {
 			searchBooking();
 			control.setStatus(Status.CheckedIn);
 			System.out.println("Booking checked in!");
+			this.control.updateBookingList();
 		} catch (NullPointerException e) {
 
 		}
@@ -225,6 +228,7 @@ public class SystemUI {
 			control.setStatus(Status.CheckedOut);
 			printReceipt();
 			System.out.println("Booking checked out!");
+			this.control.updateBookingList();
 		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
@@ -485,9 +489,8 @@ public class SystemUI {
 		}
 	}
 
-	private void viewBooking() { // pending
-		UserType userType = this.control.getUserType();
-		printBookingDets(userType);
+	private void viewBooking() {
+		printBookingDets();
 	}
 
 	private void makePayment() {
@@ -565,7 +568,8 @@ public class SystemUI {
 
 	}
 
-	private void printBookingDets(UserType userType) {
+	private void printBookingDets() {
+		UserType userType = this.control.getUserType();
 		if (userType == UserType.Administrator) {
 			System.out.println("--------------");
 			System.out.println("Booking Detail");

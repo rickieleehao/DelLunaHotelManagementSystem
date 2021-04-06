@@ -70,8 +70,10 @@ public class Booking implements IBooking {
 	@Override
 	public void setCheckInDate(String checkInString) {
 		LocalDate checkInDate;
+//		LocalDate today = new LocalDate().now();
 		try {
 			checkInDate = LocalDate.parse(checkInString);
+//			if(checkInDate > )
 		} catch (DateTimeParseException e) {
 			throw new IllegalArgumentException("Incorrect date format!");
 		}
