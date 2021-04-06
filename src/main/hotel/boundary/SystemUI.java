@@ -552,18 +552,25 @@ public class SystemUI {
 
 	private void printRoomList() {
 		List<Room> availableRoomList = this.control.getAvailableRoomList();
+		System.out.printf("%-6s", "No.");
 		System.out.printf("%-9s", "Room ID");
 		System.out.printf("%-8s", "Rates");
 		System.out.printf("%-16s", "Number of Beds");
 		System.out.println("");
 		System.out.println("");
 		for (int i = 0; i < availableRoomList.size(); i++) {
+			System.out.printf("%-2s", "");
+			System.out.printf("%-6d", i);
 			System.out.printf("%-9d", this.control.getRoomID(availableRoomList.get(i)));
 			System.out.printf("%-8.2f", this.control.getRoomRate(availableRoomList.get(i)));
+			System.out.printf("%-2s","");
 			System.out.printf("%-16d", this.control.getRoomNumOfBed(availableRoomList.get(i)));
 			System.out.println("");
 		}
-
+		String choice;
+		System.out.print("Enter a room number: ");
+		choice = scanner.nextLine();
+		
 		System.out.println("");
 
 	}

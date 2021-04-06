@@ -115,7 +115,7 @@ public class BookingList implements IBookingData {
 
 		for (int i = 0; i < bookingList.size(); i++) {
 			if (!(checkInDate.isAfter(bookingList.get(i).getCheckOutDate()))
-					&& !(checkOutDate.isBefore(bookingList.get(i).getCheckInDate()))) {
+					&& !(checkOutDate.isBefore(bookingList.get(i).getCheckInDate())) && (bookingList.get(i).getStatus() == Status.Confirmed || bookingList.get(i).getStatus() == Status.CheckedIn)) {
 				removedRoom.add(bookingList.get(i).getRoom());
 			}
 		}
