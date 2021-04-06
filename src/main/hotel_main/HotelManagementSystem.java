@@ -11,13 +11,14 @@ public class HotelManagementSystem {
 	public static void main(String[] args) {
 
 		Scanner scanner = new Scanner(System.in);
-		IBookingData bookingList = new BookingList("fileName");
-		IClientData clientProfileList = new ClientProfileList("fileName");
+		RoomList roomList = new RoomList("RoomList.txt");
+		IClientData clientProfileList = new ClientProfileList("ClientProfileList.txt");
+		IBookingData bookingList = new BookingList("BookingList.txt", (ClientProfileList) clientProfileList, roomList);
 		IUser user = new User();
-
 		Controller controller = new Controller(bookingList, clientProfileList, user);
 		SystemUI ui = new SystemUI(controller, scanner);
 		ui.start();
+		System.out.println("Thanks for using DelLuna Hotel Management System!");
 	}
 
 }

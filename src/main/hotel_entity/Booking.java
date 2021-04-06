@@ -17,32 +17,22 @@ public class Booking implements IBooking {
 	private Status status;
 
 	public Booking(int bookingID, ClientProfile client, LocalDate checkInDate, LocalDate checkOutDate, Room room,
-			int numOfGuest) {
+			int numOfGuest, Payment payment, Status status) {
 		this.bookingID = bookingID;
 		this.client = client;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.room = room;
 		this.numOfGuest = numOfGuest;
-	}
-
-	public Booking(int bookingID, ClientProfile client, String checkInDate, String checkOutDate, Room room,
-			int numOfGuest) {
-		this.bookingID = bookingID;
-		this.client = client;
-		LocalDate checkIn = LocalDate.parse(checkInDate);
-		this.checkInDate = checkIn;
-		LocalDate checkOut = LocalDate.parse(checkOutDate);
-		this.checkOutDate = checkOut;
-		this.room = room;
-		this.numOfGuest = numOfGuest;
+		this.payment = payment;
+		this.status = status;
 	}
 
 	public Booking() {
-
+		this.payment = new Payment();
 	}
 
-	private void computeBill() {
+	private void computeTotalPrice() {
 		long stayingDay = ChronoUnit.DAYS.between(this.checkInDate, this.checkOutDate);
 		double computedBill = room.getRate() * stayingDay;
 		payment.setTotalPrice(computedBill);
@@ -111,7 +101,7 @@ public class Booking implements IBooking {
 
 	@Override
 	public void setNumOfGuest(int numOfGuest) {
-		if(numOfGuest < 0 || numOfGuest > 4)
+		if (numOfGuest < 0 || numOfGuest > 4)
 			throw new IllegalArgumentException("Number of guest should in the range of 1-4.");
 		else
 			this.numOfGuest = numOfGuest;
@@ -179,6 +169,7 @@ public class Booking implements IBooking {
 
 	@Override
 	public double getTotalPrice() {
+		computeTotalPrice();
 		return this.payment.getTotalPrice();
 	}
 

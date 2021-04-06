@@ -3,7 +3,6 @@ package hotel_main;
 import hotel_interface.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import hotel_entity.*;
@@ -23,9 +22,10 @@ public class Controller {
 		this.user = user;
 	}
 
-	public void setAvailableRoom(String checkInDate, String checkOutDate) { // xz
+	public void setAvailableRoom(String checkInDate, String checkOutDate) {
+		this.availableRoomList = new RoomList();
 		List<Room> roomList = this.bookingList.findAvailableRoom(checkInDate, checkOutDate);
-		availableRoomList.setRoomList(roomList);
+		this.availableRoomList.setRoomList(roomList);
 	}
 
 	public List<Room> getAvailableRoomList() {
@@ -52,12 +52,12 @@ public class Controller {
 		this.bookingList.addBooking((Booking) this.booking);
 	}
 
-	public void updateBookingList(IBooking booking) {
+	public void updateBookingList() {
 		this.bookingList.updateBookingList((Booking) this.booking);
 	}
 
 	public Booking getBooking(int bookingID) {
-		return (Booking) this.booking; // this is add cast, meaning convert IBooking into Booking
+		return this.bookingList.getBooking(bookingID);// this is add cast, meaning convert IBooking into Booking
 	}
 
 	public void createBooking() {
@@ -78,6 +78,17 @@ public class Controller {
 		this.booking.setClientProfile(clientProfile);
 	}
 
+	public void setClientProfile(String NRIC) {
+		ClientProfile clientProfile = this.clientProfileList.getClientProfile(NRIC);
+		this.booking.setClientProfile(clientProfile);
+		this.clientProfile = clientProfile;
+	}
+
+	public void setClientProfile() {
+		this.clientProfile = new ClientProfile();
+		this.clientProfile = this.booking.getClientProfile();
+	}
+
 	public void setCheckInDate(String checkInDate) {
 		this.booking.setCheckInDate(checkInDate);
 	}
@@ -95,8 +106,7 @@ public class Controller {
 	}
 
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
-		// TODO Auto-generated method stub
-
+		this.booking.setPaymentMethod(paymentMethod);
 	}
 
 	public void setTotalPrice(double totalPrice) {
@@ -136,9 +146,21 @@ public class Controller {
 		return numOfGuest;
 	}
 
-	public Payment getPayment() {
+	public Payment getPayment() { // remove
 		Payment payment = this.booking.getPayment();
 		return payment;
+	}
+
+	public PaymentMethod getPaymentMethod() {
+		return this.booking.getPayment().getPaymentMethod();
+	}
+
+	public int getCardNumber() {
+		return this.booking.getPayment().getCardNumber();
+	}
+
+	public double getDeposit() {
+		return this.booking.getPayment().getDeposit();
 	}
 
 	public Status getStatus() {
@@ -192,7 +214,7 @@ public class Controller {
 
 	}
 
-	public void addClientProfile(ClientProfile clientProfile) {
+	public void addClientProfile() {
 		this.clientProfileList.addClientProfile((ClientProfile) this.clientProfile);
 	}
 
@@ -230,15 +252,5 @@ public class Controller {
 
 	public void login(String password) {
 		this.user.login(password);
-	}
-
-	public void setClientProfile(String NRIC) {
-		ClientProfile clientProfile = this.clientProfileList.getClientProfile(NRIC);
-		this.booking.setClientProfile(clientProfile);
-		this.clientProfile = clientProfile;
-	}
-
-	public PaymentMethod getPaymentMethod() {
-		return this.booking.getPayment().getPaymentMethod();
 	}
 }

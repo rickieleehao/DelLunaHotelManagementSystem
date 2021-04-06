@@ -1,6 +1,6 @@
 package hotel_entity;
 
-public class Room {
+public abstract class Room {
 	protected int roomID;
 	protected double rate;
 	protected int numOfBed;

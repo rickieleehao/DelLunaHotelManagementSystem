@@ -19,5 +19,6 @@ public enum PaymentMethod {
 	public void printPaymentMethodOption() {
 		System.out.println("1. Cash");
 		System.out.println("2. CreditCard");
+		System.out.print("Pick a option ----> ");
 	}
 }

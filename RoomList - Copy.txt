@@ -1,0 +1,10 @@
+Suite,101,100,1
+Suite,102,100,1
+Suite,103,100,1
+Suite,104,150,2
+Suite,105,150,2
+Deluxe,106,300,2
+Deluxe,107,300,2
+Deluxe,108,350,3
+Deluxe,109,350,3
+Deluxe,110,400,4

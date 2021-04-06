@@ -2,13 +2,25 @@ package hotel_entity;
 
 public class Payment {
 	
+	private PaymentMethod paymentMethod;
 	private double totalPrice;
 	private double deposit;
-	private PaymentMethod paymentMethod;
 	private int cardNumber;
 
+	public Payment(String paymentMethod, double totalPrice, int cardNumber) {
+		if(paymentMethod.equals("CreditCard")) {
+			this.paymentMethod = PaymentMethod.CreditCard;
+		}else if(paymentMethod.equals("Cash")) {
+			this.paymentMethod = PaymentMethod.Cash;
+		}
+		this.totalPrice = totalPrice;
+		this.cardNumber = cardNumber;
+		this.deposit = 100; // by default
+	}
+	
 	public Payment() {
 		this.deposit = 100; // by default
+		this.cardNumber = 0;
 	}
 
 	public double getDeposit() {
