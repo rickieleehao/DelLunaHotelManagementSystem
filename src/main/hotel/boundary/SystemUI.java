@@ -211,26 +211,38 @@ public class SystemUI {
 	}
 
 	private void checkIn() {
-		try {
-			searchBooking();
-			control.setStatus(Status.CheckedIn);
-			System.out.println("Booking checked in!");
-			this.control.updateBookingList();
-		} catch (NullPointerException e) {
+		if (this.control.getStatus() == Status.Cancelled) {
+			System.out.println("The booking has already cancelled! Enter another booking.");
+		} else if (this.control.getStatus() == Status.CheckedOut) {
+			System.out.println("The booking has already checked out! Enter another booking.");
+		} else {
+			try {
+				searchBooking();
+				control.setStatus(Status.CheckedIn);
+				System.out.println("Booking checked in!");
+				this.control.updateBookingList();
+			} catch (NullPointerException e) {
 
+			}
 		}
 	}
 
 	private void checkOut() {
-		try {
-			searchBooking();
-			makePayment();
-			control.setStatus(Status.CheckedOut);
-			printReceipt();
-			System.out.println("Booking checked out!");
-			this.control.updateBookingList();
-		} catch (NullPointerException e) {
-			System.out.println(e.getMessage());
+		if (this.control.getStatus() == Status.Cancelled) {
+			System.out.println("The booking has already cancelled! Enter another booking.");
+		} else if (this.control.getStatus() == Status.CheckedOut) {
+			System.out.println("The booking has already checked out! Enter another booking.");
+		} else {
+			try {
+				searchBooking();
+				makePayment();
+				control.setStatus(Status.CheckedOut);
+				printReceipt();
+				System.out.println("Booking checked out!");
+				this.control.updateBookingList();
+			} catch (NullPointerException e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 
@@ -564,7 +576,7 @@ public class SystemUI {
 			System.out.printf("%-6d", i);
 			System.out.printf("%-9d", this.control.getRoomID(availableRoomList.get(i)));
 			System.out.printf("%-8.2f", this.control.getRoomRate(availableRoomList.get(i)));
-			System.out.printf("%-2s","");
+			System.out.printf("%-2s", "");
 			System.out.printf("%-16d", this.control.getRoomNumOfBed(availableRoomList.get(i)));
 			System.out.println("");
 		}
