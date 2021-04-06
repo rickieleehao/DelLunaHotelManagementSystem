@@ -212,10 +212,8 @@ public class SystemUI {
 
 	private void checkIn() {
 		searchBooking();
-		if (this.control.getStatus() == Status.Cancelled) {
-			System.out.println("The booking has already cancelled! Enter another booking.");
-		} else if (this.control.getStatus() == Status.CheckedOut) {
-			System.out.println("The booking has already checked out! Enter another booking.");
+		if (this.control.getStatus() != Status.Confirmed) {
+			System.out.println("The booking is not longer available for checking-in! Enter another booking.");
 		} else {
 			try {
 				control.setStatus(Status.CheckedIn);
@@ -229,10 +227,8 @@ public class SystemUI {
 
 	private void checkOut() {
 		searchBooking();
-		if (this.control.getStatus() == Status.Cancelled) {
-			System.out.println("The booking has already cancelled! Enter another booking.");
-		} else if (this.control.getStatus() == Status.CheckedOut) {
-			System.out.println("The booking has already checked out! Enter another booking.");
+		if (this.control.getStatus() != Status.CheckedIn) {
+			System.out.println("The booking is not longer available for checking-out! Enter another booking.");
 		} else {
 			try {
 				makePayment();
