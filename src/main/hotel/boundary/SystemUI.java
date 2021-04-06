@@ -505,6 +505,7 @@ public class SystemUI {
 				System.out.println("Select payment method ----> ");
 				paymentMethod.printPaymentMethodOption();
 				int option = scanner.nextInt();
+				scanner.nextLine();
 				paymentMethod = paymentMethod.selectPaymentMethod(option);
 				System.out.println();
 				error = false;
@@ -567,12 +568,8 @@ public class SystemUI {
 			System.out.printf("%-16d", this.control.getRoomNumOfBed(availableRoomList.get(i)));
 			System.out.println("");
 		}
-		String choice;
-		System.out.print("Enter a room number: ");
-		choice = scanner.nextLine();
-		
-		System.out.println("");
 
+		System.out.println("");
 	}
 
 	private void printBookingDets() {
