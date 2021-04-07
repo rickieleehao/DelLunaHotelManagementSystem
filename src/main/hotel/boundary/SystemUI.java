@@ -192,7 +192,7 @@ public class SystemUI {
 		if (this.control.getStatus() != Status.Confirmed) {
 			System.out.println("\n|||||||||||||||||||||||||||||||");
 			System.out.println("The booking cannot be  ");
-			System.out.println("motified because it is either:-");
+			System.out.println("modified because it is either:-");
 			System.out.println("   i. CheckedIn");
 			System.out.println("   ii. CheckedOut");
 			System.out.println("   iii. Cancelled");
