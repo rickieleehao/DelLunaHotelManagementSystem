@@ -93,7 +93,7 @@ public class Booking implements IBooking {
 		}
 		if (checkOutDate.isBefore(this.checkInDate)) {
 			throw new IllegalArgumentException("You cannot checkout before you check in!");
-		}else if (checkOutDate.isBefore(this.checkInDate)) {
+		}else if (checkOutDate.equals(checkInDate)) {
 			throw new IllegalArgumentException("You cannot checkout on the day you checked in!");
 		}
 		this.checkOutDate = checkOutDate;
