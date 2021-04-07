@@ -97,7 +97,7 @@ public class SystemUI {
 				System.out.print("Select available room by enter room number ----> ");
 				int option = scanner.nextInt();
 				scanner.nextLine();
-				selectedRoom = control.getRoom(option);
+				selectedRoom = control.getRoom(option - 1);
 				this.control.setRoom(selectedRoom);
 				loop = false;
 			} catch (InputMismatchException e) {
@@ -131,7 +131,7 @@ public class SystemUI {
 				paymentMethod.printPaymentMethodOption();
 				int option = scanner.nextInt();
 				scanner.nextLine();
-				paymentMethod.selectPaymentMethod(option);
+				paymentMethod = paymentMethod.selectPaymentMethod(option);
 				this.control.setPaymentMethod(paymentMethod);
 				loop = false;
 			} catch (InputMismatchException e) {
@@ -142,17 +142,15 @@ public class SystemUI {
 			}
 		}
 
+		String cardNumber;
 		loop = true;
 		if (paymentMethod == PaymentMethod.CreditCard) {
 			while (loop) {
 				try {
 					System.out.println("Enter card number (12digits)----> ");
-					int cardNumber = scanner.nextInt();
-					scanner.nextLine();
+					cardNumber = scanner.nextLine();
 					this.control.setCardNumber(cardNumber);
 					loop = false;
-				} catch (InputMismatchException e) {
-					System.out.println("Please enter a valid number.");
 				} catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
@@ -477,16 +475,16 @@ public class SystemUI {
 			PaymentMethod paymentMethod = control.getPaymentMethod();
 			if (paymentMethod == PaymentMethod.CreditCard) {
 				System.out.println("Payment Method ----> Credit Card");
-				int cardNumber = control.getCardNumber();
+				String cardNumber = this.control.getCardNumber();
 				System.out.println("Card Number ----> " + cardNumber);
 			} else {
 				System.out.println("Payment Method ----> Cash");
 			}
 
-			double deposit = control.getDeposit();
+			double deposit = this.control.getDeposit();
 			System.out.println("Deposit amount ----> " + deposit);
 		}
-		control.setStatus(Status.Cancelled);
+		this.control.setStatus(Status.Cancelled);
 		System.out.println("The booking is cancelled.");
 
 	}
@@ -524,13 +522,10 @@ public class SystemUI {
 			if (paymentMethod == PaymentMethod.CreditCard) {
 				try {
 					System.out.print("Enter card number: ");
-					int cardNumber = scanner.nextInt();
+					String cardNumber = scanner.nextLine();
 					scanner.nextLine();
 					this.control.makePayment(paymentMethod, cardNumber);
 					error = false;
-				} catch (InputMismatchException ex) {
-					scanner.nextLine();
-					System.out.println("Please enter a valid number.");
 				} catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
@@ -539,6 +534,7 @@ public class SystemUI {
 				error = false;
 			}
 		}
+
 	}
 
 	private void printClientProfileDets() {
@@ -564,7 +560,7 @@ public class SystemUI {
 		System.out.println("");
 		for (int i = 0; i < availableRoomList.size(); i++) {
 			System.out.printf("%-2s", "");
-			System.out.printf("%-6d", i);
+			System.out.printf("%-6d", i + 1);
 			System.out.printf("%-9d", this.control.getRoomID(availableRoomList.get(i)));
 			System.out.printf("%-8.2f", this.control.getRoomRate(availableRoomList.get(i)));
 			System.out.printf("%-2s", "");

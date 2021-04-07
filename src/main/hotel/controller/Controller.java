@@ -129,7 +129,7 @@ public class Controller {
 		this.booking.setStatus(status);
 	}
 
-	public void setCardNumber(int cardNumber) {
+	public void setCardNumber(String cardNumber) {
 		this.booking.setCardNumber(cardNumber);
 	}
 
@@ -162,7 +162,7 @@ public class Controller {
 		return this.booking.getPayment().getPaymentMethod();
 	}
 
-	public int getCardNumber() {
+	public String getCardNumber() {
 		return this.booking.getPayment().getCardNumber();
 	}
 
@@ -190,7 +190,7 @@ public class Controller {
 		this.booking.makePayment(paymentMethod);
 	}
 
-	public void makePayment(PaymentMethod paymentMethod, int cardNumber) {
+	public void makePayment(PaymentMethod paymentMethod, String cardNumber) {
 		this.booking.makePayment(paymentMethod, cardNumber);
 	}
 

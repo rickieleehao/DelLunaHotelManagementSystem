@@ -12,7 +12,7 @@ public interface IBooking {
 
 	public boolean validatePolicy();
 	public void makePayment(PaymentMethod paymentMethod);
-	public void makePayment(PaymentMethod paymentMethod, int cardNumber);
+	public void makePayment(PaymentMethod paymentMethod, String cardNumber);
 	
 	//set method
 	public void setBookingID(int bookingID);
@@ -24,7 +24,7 @@ public interface IBooking {
 	public void setPaymentMethod(PaymentMethod paymentMethod);
 	public void setTotalPrice(double totalPrice);
 	public void setStatus (Status status);
-	public void setCardNumber(int cardNumber);
+	public void setCardNumber(String cardNumber);
 	
 	//get method
 	public int getBookingID();

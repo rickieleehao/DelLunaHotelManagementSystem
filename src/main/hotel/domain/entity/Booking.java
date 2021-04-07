@@ -57,7 +57,7 @@ public class Booking implements IBooking {
 	}
 
 	@Override
-	public void makePayment(PaymentMethod paymentMethod, int cardNumber) {
+	public void makePayment(PaymentMethod paymentMethod, String cardNumber) {
 		payment.setPaymentMethod(paymentMethod);
 		payment.setcardNumber(cardNumber);
 	}
@@ -120,7 +120,7 @@ public class Booking implements IBooking {
 	}
 
 	@Override
-	public void setCardNumber(int cardNumber) {
+	public void setCardNumber(String cardNumber) {
 		this.payment.setcardNumber(cardNumber);
 	}
 

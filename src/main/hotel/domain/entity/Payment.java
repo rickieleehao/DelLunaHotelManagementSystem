@@ -5,9 +5,9 @@ public class Payment {
 	private PaymentMethod paymentMethod;
 	private double totalPrice;
 	private double deposit;
-	private int cardNumber;
+	private String cardNumber;
 
-	public Payment(String paymentMethod, double totalPrice, int cardNumber) {
+	public Payment(String paymentMethod, double totalPrice, String cardNumber) {
 		if (paymentMethod.equals("CreditCard")) {
 			this.paymentMethod = PaymentMethod.CreditCard;
 		} else if (paymentMethod.equals("Cash")) {
@@ -20,7 +20,7 @@ public class Payment {
 
 	public Payment() {
 		this.deposit = 100; // by default
-		this.cardNumber = 0;
+		this.cardNumber = "";
 	}
 
 	public double getDeposit() {
@@ -31,7 +31,7 @@ public class Payment {
 		return this.paymentMethod;
 	}
 
-	public int getCardNumber() {
+	public String getCardNumber() {
 		return this.cardNumber;
 	}
 
@@ -43,11 +43,13 @@ public class Payment {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public void setcardNumber(int cardNumber) {
-		if (cardNumber >= 0) {
-			this.cardNumber = cardNumber;
+	public void setcardNumber(String cardNumber) {
+		if (cardNumber.matches("[a-zA-Z ]+")) {
+			throw new IllegalArgumentException("Card number must consist number only!");
+		} else if (cardNumber.length() != 12) {
+			throw new IllegalArgumentException("Card number must have 12 digits!");
 		} else {
-			throw new IllegalArgumentException("Invalid input");
+			this.cardNumber = cardNumber;
 		}
 	}
 

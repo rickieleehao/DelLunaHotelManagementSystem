@@ -1,4 +1,4 @@
-package hotel_main;
+package hotel.main;
 
 import static org.junit.Assert.*;
 

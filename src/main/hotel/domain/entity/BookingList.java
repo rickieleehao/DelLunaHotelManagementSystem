@@ -51,7 +51,7 @@ public class BookingList implements IBookingData {
 					}
 				}
 				numOfGuest = s.nextInt();
-				payment = new Payment(s.next(), s.nextDouble(), s.nextInt());
+				payment = new Payment(s.next(), s.nextDouble(), s.next());
 				tempString = s.next();
 				if (tempString.equals("CheckedIn")) {
 					status = Status.CheckedIn;
@@ -99,7 +99,7 @@ public class BookingList implements IBookingData {
 	}
 
 	@Override
-	public List<Room> findAvailableRoom(String checkInString, String checkOutString) { // yy still not complete
+	public List<Room> findAvailableRoom(String checkInString, String checkOutString) {
 		LocalDate checkInDate;
 		LocalDate checkOutDate;
 		try {
@@ -115,7 +115,9 @@ public class BookingList implements IBookingData {
 
 		for (int i = 0; i < bookingList.size(); i++) {
 			if (!(checkInDate.isAfter(bookingList.get(i).getCheckOutDate()))
-					&& !(checkOutDate.isBefore(bookingList.get(i).getCheckInDate())) && (bookingList.get(i).getStatus() == Status.Confirmed || bookingList.get(i).getStatus() == Status.CheckedIn)) {
+					&& !(checkOutDate.isBefore(bookingList.get(i).getCheckInDate()))
+					&& (bookingList.get(i).getStatus() == Status.Confirmed
+							|| bookingList.get(i).getStatus() == Status.CheckedIn)) {
 				removedRoom.add(bookingList.get(i).getRoom());
 			}
 		}
@@ -160,5 +162,9 @@ public class BookingList implements IBookingData {
 			throw new NullPointerException("Booking not found");
 		}
 		return theBooking;
+	}
+	
+	public List<Booking>getBookingList(){
+		return this.bookingList;
 	}
 }
