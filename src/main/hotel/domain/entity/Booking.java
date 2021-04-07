@@ -70,12 +70,15 @@ public class Booking implements IBooking {
 	@Override
 	public void setCheckInDate(String checkInString) {
 		LocalDate checkInDate;
-//		LocalDate today = new LocalDate().now();
+		LocalDate today = LocalDate.now();
+
 		try {
 			checkInDate = LocalDate.parse(checkInString);
-//			if(checkInDate > )
 		} catch (DateTimeParseException e) {
 			throw new IllegalArgumentException("Incorrect date format!");
+		}
+		if (checkInDate.isBefore(today)) {
+			throw new IllegalArgumentException("You cannot make a booking for the past!");
 		}
 		this.checkInDate = checkInDate;
 	}
@@ -87,6 +90,11 @@ public class Booking implements IBooking {
 			checkOutDate = LocalDate.parse(checkOutString);
 		} catch (DateTimeParseException e) {
 			throw new IllegalArgumentException("Incorrect date format!");
+		}
+		if (checkInDate.isBefore(this.checkInDate)) {
+			throw new IllegalArgumentException("You cannot checkout before you check in!");
+		}else if (checkInDate.isBefore(this.checkInDate)) {
+			throw new IllegalArgumentException("You cannot checkout on the day you checked in!");
 		}
 		this.checkOutDate = checkOutDate;
 	}
