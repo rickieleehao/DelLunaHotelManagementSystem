@@ -32,13 +32,22 @@ public class SystemUI {
 		String password = scanner.nextLine();
 		try {
 			this.control.login(password);
+			System.out.println("\n-----------------------");
+			System.out.println("     Login successful");
+			System.out.println("Welcome back Administrator!");
+			System.out.println("-----------------------\n");
 		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
+			System.out.println("\n-----------------------");
+			System.out.println("      Login failed");
+			System.out.println("   " + e.getMessage());
+			System.out.println("-----------------------\n");
 		}
 	}
 
 	private void createBooking() {
-
+		System.out.println("\n-----------------------");
+		System.out.println("  Creating new Booking");
+		System.out.println("-----------------------\n");
 		this.control.createBooking();
 		this.control.setBookingID();
 
@@ -94,7 +103,6 @@ public class SystemUI {
 		Room selectedRoom;
 		while (loop) {
 			try {
-				System.out.print("Select available room by enter room number ----> ");
 				int option = scanner.nextInt();
 				scanner.nextLine();
 				selectedRoom = control.getRoom(option - 1);
@@ -147,7 +155,7 @@ public class SystemUI {
 		if (paymentMethod == PaymentMethod.CreditCard) {
 			while (loop) {
 				try {
-					System.out.println("Enter card number (12digits)----> ");
+					System.out.print("Enter card number (12digits)----> ");
 					cardNumber = scanner.nextLine();
 					this.control.setCardNumber(cardNumber);
 					loop = false;
@@ -160,21 +168,32 @@ public class SystemUI {
 		this.control.setStatus(Status.Confirmed);
 		control.addBooking();
 		printBookingDets();
+		System.out.println("-----------------------");
 		System.out.println("New Booking created and updated!");
+		System.out.println("-----------------------\n");
 	}
 
 	private void updateBooking() {
+		System.out.println("\n-----------------------");
+		System.out.println("  Updating new Booking");
+		System.out.println("-----------------------\n");
+
 		int choice = 0;
 		boolean loop = true;
 
 		try {
 			searchBooking();
 		} catch (NullPointerException e) {
+			System.out.println("-----------------------\n");
 			return;
 		}
 
 		if (this.control.getStatus() != Status.Confirmed) {
-			System.out.println("The booking cannot be cancelled! Enter another booking.");
+			System.out.println("\n-----------------------");
+			System.out.println("The booking cannot be motified!");
+			System.out.println("Select another booking.");
+			System.out.println("Back to the menu.");
+			System.out.println("-----------------------\n");
 		} else {
 
 			while (loop) {
@@ -210,38 +229,59 @@ public class SystemUI {
 				System.out.println("Invalid option.\n");
 			}
 			this.control.updateBookingList();
+			System.out.println("\n-----------------------");
+			System.out.println("Booking updated!\n");
+			System.out.println("-----------------------\n");
 		}
 	}
 
 	private void checkIn() {
-		searchBooking();
-		if (this.control.getStatus() != Status.Confirmed) {
-			System.out.println("The booking is not longer available for checking-in! Enter another booking.");
-		} else {
-			try {
-				control.setStatus(Status.CheckedIn);
-				System.out.println("Booking checked in!");
-				this.control.updateBookingList();
-			} catch (NullPointerException e) {
+		System.out.println("\n-----------------------");
+		System.out.println("  Checking-in Booking");
+		System.out.println("-----------------------\n");
 
-			}
+		try {
+			searchBooking();
+		} catch (NullPointerException e) {
+			return;
 		}
+
+		if (this.control.getStatus() != Status.Confirmed) {
+			System.out.println("The booking is not longer available for checking-in!");
+			System.out.println("Enter another booking");
+			System.out.println("");
+		} else {
+			control.setStatus(Status.CheckedIn);
+			System.out.println("Booking checked in!");
+			System.out.println("-----------------------\n");
+			System.out.println("");
+			this.control.updateBookingList();
+		}
+
 	}
 
 	private void checkOut() {
-		searchBooking();
-		if (this.control.getStatus() != Status.CheckedIn) {
-			System.out.println("The booking is not longer available for checking-out! Enter another booking.");
+		System.out.println("\n-----------------------");
+		System.out.println("  Checking-out Booking");
+		System.out.println("-----------------------\n");
+
+		try {
+			searchBooking();
+		} catch (NullPointerException e) {
+			return;
+		}
+		if (this.control.getStatus() != Status.Confirmed) {
+			System.out.println("The booking is not longer available for checking-out!");
+			System.out.println("Enter another booking");
+			System.out.println("");
 		} else {
-			try {
-				makePayment();
-				control.setStatus(Status.CheckedOut);
-				printReceipt();
-				System.out.println("Booking checked out!");
-				this.control.updateBookingList();
-			} catch (NullPointerException e) {
-				System.out.println(e.getMessage());
-			}
+			makePayment();
+			control.setStatus(Status.CheckedOut);
+			printReceipt();
+			System.out.println("Booking checked out!");
+			System.out.println("-----------------------\n");
+			System.out.println("");
+			this.control.updateBookingList();
 		}
 	}
 
@@ -260,7 +300,9 @@ public class SystemUI {
 				scanner.nextLine();
 				System.out.println("Please enter a valid number.");
 			} catch (NullPointerException e) {
-				System.out.println(e.getMessage());
+				System.out.println("\n-----------------------");
+				System.out.println("   " + e.getMessage());
+				System.out.println("-----------------------\n");
 				error = false;
 				throw new NullPointerException();
 			}
@@ -339,6 +381,7 @@ public class SystemUI {
 		String checkInDateStr = null;
 		String checkOutDateStr = null;
 		Room room;
+		System.out.println("\n-----------------------");
 		System.out.println("Change Booking Detail");
 		System.out.println("---------------------");
 		System.out.println("1. Change check-in date & check-out date.");
@@ -464,12 +507,12 @@ public class SystemUI {
 		case 4:
 			return;
 		}
-		System.out.println("Booking updated!\n");
 	}
 
 	private void cancelBooking() {
 		boolean isRefundable = this.control.validatePolicy();
 		if (isRefundable) {
+			System.out.println("\n-----------------------");
 			System.out.println("The deposit is refundable");
 
 			PaymentMethod paymentMethod = control.getPaymentMethod();
@@ -485,7 +528,9 @@ public class SystemUI {
 			System.out.println("Deposit amount ----> " + deposit);
 		}
 		this.control.setStatus(Status.Cancelled);
+		System.out.println("\n-----------------------");
 		System.out.println("The booking is cancelled.");
+		System.out.println("-----------------------\n");
 
 	}
 
@@ -552,6 +597,7 @@ public class SystemUI {
 
 	private void printRoomList() {
 		List<Room> availableRoomList = this.control.getAvailableRoomList();
+		System.out.println("\n-----------------------");
 		System.out.printf("%-6s", "No.");
 		System.out.printf("%-9s", "Room ID");
 		System.out.printf("%-8s", "Rates");
@@ -567,14 +613,16 @@ public class SystemUI {
 			System.out.printf("%-16d", this.control.getRoomNumOfBed(availableRoomList.get(i)));
 			System.out.println("");
 		}
-
 		System.out.println("");
+		System.out.println("These are the available room.");
+		System.out.println("");
+		System.out.print("Pick a room (No.) ----> ");
 	}
 
 	private void printBookingDets() {
 		UserType userType = this.control.getUserType();
 		if (userType == UserType.Administrator) {
-			System.out.println("--------------");
+			System.out.println("\n--------------");
 			System.out.println("Booking Detail");
 			System.out.println("--------------");
 			System.out.println("Booking ID: " + this.control.getBookingID());
@@ -588,10 +636,9 @@ public class SystemUI {
 			System.out.println("Booking status: " + this.control.getStatus());
 			System.out.println("Payment method: " + this.control.getPaymentMethod());
 			System.out.println("Total price:" + this.control.getTotalPrice());
-			System.out.println("--------------");
-		}
-		if (userType == UserType.Client) {
-			System.out.println("--------------");
+			System.out.println("");
+		} else if (userType == UserType.Client) {
+			System.out.println("\n--------------");
 			System.out.println("Booking Detail");
 			System.out.println("--------------");
 			System.out.println("Booking ID: " + this.control.getBookingID());
@@ -602,7 +649,7 @@ public class SystemUI {
 			System.out.println("Check-out date: " + this.control.getCheckOutDate().toString());
 			System.out.println("Room: " + this.control.getRoom().getRoomID());
 			System.out.println("Number of guest: " + this.control.getNumOfGuest());
-			System.out.println("--------------");
+			System.out.println("");
 		}
 	}
 
@@ -643,7 +690,7 @@ public class SystemUI {
 				System.out.println("1. Login as Administrator");
 				System.out.println("2. Search Booking");
 				System.out.println("3. Exit");
-				System.out.print("Pick option (1-2) ----> ");
+				System.out.print("Pick option (1-3) ----> ");
 				choice = scanner.nextInt();
 				scanner.nextLine();
 				error = false;

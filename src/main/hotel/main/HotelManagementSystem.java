@@ -19,6 +19,8 @@ public class HotelManagementSystem {
 		Controller control = new Controller(bookingList, clientProfileList, user);
 		SystemUI ui = new SystemUI(control, scanner);
 		ui.start();
-		System.out.println("\nThanks for using DelLuna Hotel Management System!");
+		System.out.println("\n--------------------------------------------------");
+		System.out.println("Thanks for using DelLuna Hotel Management System!");
+		System.out.println("--------------------------------------------------");
 	}
 }
