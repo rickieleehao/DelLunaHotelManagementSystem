@@ -435,10 +435,9 @@ public class SystemUI {
 			loop = true;
 			while (loop) {
 				try {
-					System.out.print("Enter new room ----> ");
 					roomNo = scanner.nextInt();
 					scanner.nextLine();
-					room = this.control.getRoom(roomNo);
+					room = this.control.getRoom(roomNo-1);
 					this.control.setRoom(room);
 					loop = false;
 				} catch (InputMismatchException e) {
@@ -473,7 +472,6 @@ public class SystemUI {
 			loop = true;
 			while (loop) {
 				try {
-					System.out.print("Enter new room ----> ");
 					roomNo = scanner.nextInt();
 					scanner.nextLine();
 					room = this.control.getRoom(roomNo);
