@@ -25,15 +25,6 @@ public class ClientProfile implements IClientProfile {
 		this.address = address;
 	}
 
-	// for readFromFile purpose
-	public ClientProfile(String NRIC, String firstName, String lastName, Gender gender, String address) {
-		this.NRIC = NRIC;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.gender = gender;
-		this.address = address;
-	}
-
 	@Override
 	public String getNRIC() {
 		return NRIC;
@@ -73,7 +64,7 @@ public class ClientProfile implements IClientProfile {
 	@Override
 	public void setFirstName(String firstName) {
 		if (firstName.length() < 3) {
-			throw new IllegalArgumentException("Name must have at least 5 characters!");
+			throw new IllegalArgumentException("Name must have at least 3 characters!");
 		} else if ((firstName.matches("[0-9]+"))) {
 			throw new IllegalArgumentException("Name cannot consist number!");
 		} else {
@@ -84,7 +75,7 @@ public class ClientProfile implements IClientProfile {
 	@Override
 	public void setLastName(String lastName) {
 		if (lastName.length() < 3) {
-			throw new IllegalArgumentException("Name must have at least 5 characters!");
+			throw new IllegalArgumentException("Name must have at least 3 characters!");
 		} else if ((lastName.matches("[0-9]+"))) {
 			throw new IllegalArgumentException("Name cannot consist number!");
 		} else {

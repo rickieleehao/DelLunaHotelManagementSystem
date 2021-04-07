@@ -1,6 +1,2 @@
-960325565623,Rickie,Lee,Male,Ampang
-960325565623,Rickie,Lee,Male,Ampang
-960325565623,Rickie,Lee,Male,Ampang
-960325565623,Rickie,Lee,Male,Ampang
-111222333444,xin zhe,zheee,Female,12222222222222222222
-222333444555,Lee,Hao,Female,ampang 123123
+960325565623#Rickie#Lee#Male#Ampang
+111222333444,lee,lee,Male,123123123123

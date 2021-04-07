@@ -19,7 +19,7 @@ public class ClientProfileList implements IClientData {
 		this.fileName = fileName;
 		try {
 			Scanner s = new Scanner(new File(fileName));
-			s.useDelimiter("(,|\r\n|\r|\n)");
+			s.useDelimiter("(#|\r\n|\r|\n)");
 			while (s.hasNext()) {
 				this.clientProfileList.add(new ClientProfile(s.next(), s.next(), s.next(), s.next(), s.next()));
 			}
@@ -37,8 +37,8 @@ public class ClientProfileList implements IClientData {
 			$fileEmptier.write("");
 			$fileEmptier.close();
 			for (ClientProfile c : this.clientProfileList) {
-				$writer.write(c.getNRIC() + "," + c.getFirstName() + "," + c.getLastName() + ","
-						+ c.getGender().toString() + "," + c.getAddress() + "\r\n");
+				$writer.write(c.getNRIC() + "#" + c.getFirstName() + "#" + c.getLastName() + "#"
+						+ c.getGender().toString() + "#" + c.getAddress() + "\r\n");
 			}
 			$writer.close();
 		} catch (IOException e) {

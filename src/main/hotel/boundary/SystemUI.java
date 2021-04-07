@@ -366,7 +366,7 @@ public class SystemUI {
 		error = true;
 		while (error) {
 			try {
-				gender.printGenderOption();
+				this.control.printGenderOption();
 				int choice = scanner.nextInt();
 				scanner.nextLine();
 				gender = this.control.selectGender(choice);
