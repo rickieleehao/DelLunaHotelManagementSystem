@@ -118,14 +118,17 @@ public class BookingList implements IBookingData {
 					&& !(checkOutDate.isBefore(bookingList.get(i).getCheckInDate()))
 					&& (bookingList.get(i).getStatus() == Status.Confirmed
 							|| bookingList.get(i).getStatus() == Status.CheckedIn)) {
-				removedRoom.add(bookingList.get(i).getRoom());
+				if (!removedRoom.contains(bookingList.get(i).getRoom())) {
+					removedRoom.add(bookingList.get(i).getRoom());
+				}
 			}
 		}
 
-		for (int j = 0; j < availableRoomList.size(); j++) {
-			for (int k = 0; k < removedRoom.size(); k++) {
+		for (int k = 0; k < removedRoom.size(); k++) {
+			for (int j = 0; j < availableRoomList.size(); j++) {
 				if (availableRoomList.get(j).getRoomID() == removedRoom.get(k).getRoomID()) {
-					availableRoomList.remove(k);
+					availableRoomList.remove(j);
+					break;
 				}
 			}
 		}
@@ -163,8 +166,8 @@ public class BookingList implements IBookingData {
 		}
 		return theBooking;
 	}
-	
-	public List<Booking>getBookingList(){
+
+	public List<Booking> getBookingList() {
 		return this.bookingList;
 	}
 }
