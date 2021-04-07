@@ -452,10 +452,11 @@ public class SystemUI {
 				}
 			}
 			this.control.setAvailableRoom(checkInDateStr, checkOutDateStr);
-			printRoomList();
+			
 			loop = true;
 			while (loop) {
 				try {
+					printRoomList();
 					roomNo = scanner.nextInt();
 					scanner.nextLine();
 					room = this.control.getRoom(roomNo - 1);
