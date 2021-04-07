@@ -91,9 +91,9 @@ public class Booking implements IBooking {
 		} catch (DateTimeParseException e) {
 			throw new IllegalArgumentException("Incorrect date format!");
 		}
-		if (checkInDate.isBefore(this.checkInDate)) {
+		if (checkOutDate.isBefore(this.checkInDate)) {
 			throw new IllegalArgumentException("You cannot checkout before you check in!");
-		}else if (checkInDate.isBefore(this.checkInDate)) {
+		}else if (checkOutDate.isBefore(this.checkInDate)) {
 			throw new IllegalArgumentException("You cannot checkout on the day you checked in!");
 		}
 		this.checkOutDate = checkOutDate;

@@ -97,12 +97,12 @@ public class SystemUI {
 		}
 
 		this.control.setAvailableRoom(checkInString, checkOutString);
-		printRoomList();
 
 		loop = true;
 		Room selectedRoom;
 		while (loop) {
 			try {
+				printRoomList();
 				int option = scanner.nextInt();
 				scanner.nextLine();
 				selectedRoom = control.getRoom(option - 1);
@@ -133,13 +133,13 @@ public class SystemUI {
 		}
 
 		loop = true;
-		PaymentMethod paymentMethod = PaymentMethod.Cash;
+		PaymentMethod paymentMethod = PaymentMethod.Undefined;
 		while (loop) {
 			try {
-				paymentMethod.printPaymentMethodOption();
+				this.control.printPaymentMethodOption();
 				int option = scanner.nextInt();
 				scanner.nextLine();
-				paymentMethod = paymentMethod.selectPaymentMethod(option);
+				paymentMethod = this.control.selectPaymentMethod(option);
 				this.control.setPaymentMethod(paymentMethod);
 				loop = false;
 			} catch (InputMismatchException e) {
@@ -198,7 +198,7 @@ public class SystemUI {
 
 			while (loop) {
 				try {
-					System.out.println("Update Booking");
+					System.out.println("Pick an action:-");
 					System.out.println("--------------");
 					System.out.println("1. Change booking detail.");
 					System.out.println("2. Cancel booking.");
@@ -270,15 +270,15 @@ public class SystemUI {
 		} catch (NullPointerException e) {
 			return;
 		}
-		if (this.control.getStatus() != Status.Confirmed) {
-			System.out.println("The booking is not longer available for checking-out!");
+		if (this.control.getStatus() != Status.CheckedIn) {
+			System.out.println("The booking is not available for checking-out!");
 			System.out.println("Enter another booking");
 			System.out.println("");
 		} else {
 			makePayment();
 			control.setStatus(Status.CheckedOut);
 			printReceipt();
-			System.out.println("Booking checked out!");
+			System.out.println(" Booking checked out!");
 			System.out.println("-----------------------\n");
 			System.out.println("");
 			this.control.updateBookingList();
@@ -312,7 +312,7 @@ public class SystemUI {
 	private ClientProfile createClientProfile(String NRIC) {
 		String firstName;
 		String lastName;
-		Gender gender = Gender.Male;
+		Gender gender = Gender.Undefined;
 		String address;
 
 		System.out.println("Creating new client profile.");
@@ -348,7 +348,7 @@ public class SystemUI {
 				gender.printGenderOption();
 				int choice = scanner.nextInt();
 				scanner.nextLine();
-				gender = gender.selectGender(choice);
+				gender = this.control.selectGender(choice);
 				this.control.setGender(gender);
 				error = false;
 			} catch (InputMismatchException e) {
@@ -437,7 +437,7 @@ public class SystemUI {
 				try {
 					roomNo = scanner.nextInt();
 					scanner.nextLine();
-					room = this.control.getRoom(roomNo-1);
+					room = this.control.getRoom(roomNo - 1);
 					this.control.setRoom(room);
 					loop = false;
 				} catch (InputMismatchException e) {
@@ -468,13 +468,14 @@ public class SystemUI {
 			checkInDateStr = this.control.getCheckInDate().toString();
 			checkOutDateStr = this.control.getCheckOutDate().toString();
 			this.control.setAvailableRoom(checkInDateStr, checkOutDateStr);
-			printRoomList();
+
 			loop = true;
 			while (loop) {
 				try {
+					printRoomList();
 					roomNo = scanner.nextInt();
 					scanner.nextLine();
-					room = this.control.getRoom(roomNo);
+					room = this.control.getRoom(roomNo - 1);
 					this.control.setRoom(room);
 					loop = false;
 				} catch (InputMismatchException e) {
@@ -539,17 +540,16 @@ public class SystemUI {
 	private void makePayment() {
 		double totalPrice = this.control.getTotalPrice();
 		this.control.setTotalPrice(totalPrice);
-		PaymentMethod paymentMethod = PaymentMethod.Cash;
+		PaymentMethod paymentMethod = PaymentMethod.Undefined;
 
 		boolean error = true;
 
 		while (error) {
 			try {
-				System.out.println("Select payment method ----> ");
-				paymentMethod.printPaymentMethodOption();
+				this.control.printPaymentMethodOption();
 				int option = scanner.nextInt();
 				scanner.nextLine();
-				paymentMethod = paymentMethod.selectPaymentMethod(option);
+				paymentMethod = this.control.selectPaymentMethod(option);
 				System.out.println();
 				error = false;
 			} catch (InputMismatchException ex) {
@@ -566,7 +566,6 @@ public class SystemUI {
 				try {
 					System.out.print("Enter card number: ");
 					String cardNumber = scanner.nextLine();
-					scanner.nextLine();
 					this.control.makePayment(paymentMethod, cardNumber);
 					error = false;
 				} catch (IllegalArgumentException e) {

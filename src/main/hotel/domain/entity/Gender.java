@@ -1,7 +1,7 @@
 package hotel.domain.entity;
 
 public enum Gender {
-	Male, Female;
+	Undefined, Male, Female;
 
 	public Gender selectGender(int option) {
 		Gender gender;

@@ -258,4 +258,30 @@ public class Controller {
 	public void login(String password) {
 		this.user.login(password);
 	}
+
+	/*
+	 * <PaymentMethod> Enum
+	 */
+	public void printPaymentMethodOption() {
+		PaymentMethod paymentMethod = PaymentMethod.Undefined;
+		paymentMethod.printPaymentMethodOption();
+	}
+
+	public PaymentMethod selectPaymentMethod(int option) {
+		PaymentMethod paymentMethod = PaymentMethod.Undefined;
+		return paymentMethod.selectPaymentMethod(option);
+	}
+	
+	/*
+	 * <Gender> Enum
+	 */
+	public void printGenderOption() {
+		Gender gender = Gender.Undefined;
+		gender.printGenderOption();
+	}
+	
+	public Gender selectGender(int choice) {
+		Gender gender = Gender.Undefined;
+		return gender.selectGender(choice);
+	}
 }
