@@ -46,6 +46,10 @@ public class Controller {
 		return room.getRoomID();
 	}
 
+	public String getRoomType(Room room) {
+		return room.getType();
+	}
+	
 	public double getRoomRate(Room room) {
 		return room.getRate();
 	}

@@ -56,10 +56,6 @@ public class RoomList {
 		return roomList;
 	}
 
-	public void setRoomList(List<Room> listOfRoom) {
-		this.roomList = listOfRoom;
-	}
-
 	public Room getRoom(int option) {
 		if (option < 0) {
 			throw new IllegalArgumentException("Invalid option! cannot be negative value!");
@@ -68,5 +64,9 @@ public class RoomList {
 		}
 
 		return this.roomList.get(option);
+	}
+
+	public void setRoomList(List<Room> listOfRoom) {
+		this.roomList = listOfRoom;
 	}
 }

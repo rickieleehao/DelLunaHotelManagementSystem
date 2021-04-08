@@ -166,8 +166,4 @@ public class BookingList implements IBookingData {
 		}
 		return theBooking;
 	}
-
-	public List<Booking> getBookingList() {
-		return this.bookingList;
-	}
 }

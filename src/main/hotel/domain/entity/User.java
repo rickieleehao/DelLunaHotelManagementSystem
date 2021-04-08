@@ -10,7 +10,7 @@ class isAdministrator {
 		this.password = "admin123";
 	}
 
-	public boolean verifyAdmin(String password) {
+	public boolean verifyPassword(String password) {
 		boolean verify = false;
 		if (this.password.equals(password)) {
 			verify = true;
@@ -35,7 +35,7 @@ public class User implements IUser {
 
 	@Override
 	public void login(String password) {
-		if (this.adminInfo.verifyAdmin(password)) {
+		if (this.adminInfo.verifyPassword(password)) {
 			this.type = UserType.Administrator;
 		} else {
 			throw new IllegalArgumentException("Incorrect password!");

@@ -46,10 +46,6 @@ public class ClientProfileList implements IClientData {
 		}
 	}
 
-	public List<ClientProfile> getClientProfileList() {
-		return this.clientProfileList;
-	}
-
 	@Override
 	public void addClientProfile(ClientProfile newClientProfile) {
 		clientProfileList.add(newClientProfile);
@@ -75,5 +71,9 @@ public class ClientProfileList implements IClientData {
 			throw new NullPointerException("Client profile not found");
 		}
 		return clientProfile;
+	}
+
+	public List<ClientProfile> getClientProfileList() {
+		return this.clientProfileList;
 	}
 }

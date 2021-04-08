@@ -16,10 +16,6 @@ public class Booking implements IBooking {
 	private Payment payment;
 	private Status status;
 
-	public Booking() {
-		this.payment = new Payment();
-	}
-
 	public Booking(int bookingID, ClientProfile client, LocalDate checkInDate, LocalDate checkOutDate, Room room,
 			int numOfGuest, Payment payment, Status status) {
 		this.bookingID = bookingID;
@@ -30,6 +26,10 @@ public class Booking implements IBooking {
 		this.numOfGuest = numOfGuest;
 		this.payment = payment;
 		this.status = status;
+	}
+
+	public Booking() {
+		this.payment = new Payment();
 	}
 
 	private void computeTotalPrice() {

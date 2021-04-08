@@ -2,6 +2,7 @@ package hotel.domain.entity;
 
 public abstract class Room {
 	protected int roomID;
+	protected String type;
 	protected double rate;
 	protected int numOfBed;
 
@@ -15,6 +16,10 @@ public abstract class Room {
 		return roomID;
 	}
 
+	public String getType() {
+		return this.type;
+	}
+	
 	public double getRate() {
 		return rate;
 	}

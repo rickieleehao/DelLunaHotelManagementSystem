@@ -14,7 +14,7 @@ public interface IBooking {
 	public void makePayment(PaymentMethod paymentMethod);
 	public void makePayment(PaymentMethod paymentMethod, String cardNumber);
 	
-	//set method
+	//set method (10)
 	public void setBookingID(int bookingID);
 	public void setClientProfile(ClientProfile clientProfile);
 	public void setCheckInDate(String checkInDate);
@@ -26,7 +26,7 @@ public interface IBooking {
 	public void setStatus (Status status);
 	public void setCardNumber(String cardNumber);
 	
-	//get method
+	//get method (10)
 	public int getBookingID();
 	public ClientProfile getClientProfile();
 	public LocalDate getCheckInDate();
