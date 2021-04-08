@@ -30,7 +30,7 @@ public class Controller {
 	}
 
 	/*
-	 * <Room> Entity
+	 * <Room> Entity (7)
 	 */
 	public void setAvailableRoom(String checkInDate, String checkOutDate) {
 		this.availableRoomList = new RoomList();
@@ -90,8 +90,9 @@ public class Controller {
 		this.booking.setBookingID(bookingID);
 	}
 
-	public void setClientProfile(ClientProfile clientProfile) {
-		this.booking.setClientProfile(clientProfile);
+	public void setClientProfile() {
+		this.clientProfile = new ClientProfile();
+		this.clientProfile = this.booking.getClientProfile();
 	}
 
 	public void setClientProfile(String NRIC) {
@@ -100,9 +101,8 @@ public class Controller {
 		this.clientProfile = clientProfile;
 	}
 
-	public void setClientProfile() {
-		this.clientProfile = new ClientProfile();
-		this.clientProfile = this.booking.getClientProfile();
+	public void setClientProfile(ClientProfile clientProfile) {
+		this.booking.setClientProfile(clientProfile);
 	}
 
 	public void setCheckInDate(String checkInDate) {
