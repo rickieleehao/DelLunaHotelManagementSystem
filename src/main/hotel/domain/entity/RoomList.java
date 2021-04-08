@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class RoomList {
+import hotel.domain.IEntity.IRoomData;
+
+public class RoomList implements IRoomData {
 
 	private List<Room> roomList;
 	private static String fileName;
@@ -52,10 +54,12 @@ public class RoomList {
 		}
 	}
 
+	@Override
 	public List<Room> getRoomList() {
 		return roomList;
 	}
 
+	@Override
 	public Room getRoom(int option) {
 		if (option < 0) {
 			throw new IllegalArgumentException("Invalid option! cannot be negative value!");
@@ -66,6 +70,7 @@ public class RoomList {
 		return this.roomList.get(option);
 	}
 
+	@Override
 	public void setRoomList(List<Room> listOfRoom) {
 		this.roomList = listOfRoom;
 	}

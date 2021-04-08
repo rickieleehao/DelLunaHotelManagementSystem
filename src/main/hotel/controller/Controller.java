@@ -13,7 +13,7 @@ public class Controller {
 	private IBookingData bookingList;
 	private IClientProfile clientProfile;
 	private IClientData clientProfileList;
-	private RoomList availableRoomList;
+	private IRoomData availableRoomList;
 
 	public Controller(IBookingData bookingList, IClientData clientProfileList, IUser user) {
 		this.bookingList = bookingList;
