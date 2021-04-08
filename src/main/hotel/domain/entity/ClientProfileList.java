@@ -58,19 +58,19 @@ public class ClientProfileList implements IClientData {
 			throw new IllegalArgumentException("NRIC must have 12 digits!");
 		} else if (!(NRIC.matches("[0-9]+"))) {
 			throw new IllegalArgumentException("NRIC must consist number only!");
-		}
-
-		ClientProfile clientProfile = null;
-		for (int i = 0; i < clientProfileList.size(); i++) {
-			if (clientProfileList.get(i).getNRIC().equals(NRIC)) {
-				clientProfile = clientProfileList.get(i);
-				break;
+		} else {
+			ClientProfile clientProfile = null;
+			for (int i = 0; i < clientProfileList.size(); i++) {
+				if (clientProfileList.get(i).getNRIC().equals(NRIC)) {
+					clientProfile = clientProfileList.get(i);
+					break;
+				}
 			}
+			if (clientProfile == null) {
+				throw new NullPointerException("Client profile not found");
+			}
+			return clientProfile;
 		}
-		if (clientProfile == null) {
-			throw new NullPointerException("Client profile not found");
-		}
-		return clientProfile;
 	}
 
 	public List<ClientProfile> getClientProfileList() {

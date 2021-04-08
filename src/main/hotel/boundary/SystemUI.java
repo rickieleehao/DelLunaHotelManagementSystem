@@ -18,10 +18,10 @@ public class SystemUI {
 	public void start() {
 		boolean exit = false;
 		while (!exit) {
-			UserType userType = control.getUserType();
+			UserType userType = this.control.getUserType();
 			if (userType == UserType.Client) {
 				exit = clientMenu();
-			} else if (userType == UserType.Administrator) {
+			} else { //userType == UserType.Administrator
 				exit = adminMenu();
 			}
 		}
@@ -57,7 +57,7 @@ public class SystemUI {
 			try {
 				System.out.print("Enter NRIC ----> ");
 				NRIC = scanner.nextLine();
-				control.setClientProfile(NRIC);
+				this.control.setClientProfile(NRIC);
 				loop = false;
 			} catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
@@ -105,7 +105,7 @@ public class SystemUI {
 				printRoomList();
 				int option = scanner.nextInt();
 				scanner.nextLine();
-				selectedRoom = control.getRoom(option - 1);
+				selectedRoom = this.control.getRoom(option - 1);
 				this.control.setRoom(selectedRoom);
 				loop = false;
 			} catch (InputMismatchException e) {
@@ -166,7 +166,7 @@ public class SystemUI {
 		}
 
 		this.control.setStatus(Status.Confirmed);
-		control.addBooking();
+		this.control.addBooking();
 		printBookingDets();
 		System.out.println("\n|||||||||||||||||||||||");
 		System.out.println("  New Booking created");
@@ -261,7 +261,7 @@ public class SystemUI {
 			System.out.println("   Back to the menu.");
 			System.out.println("|||||||||||||||||||||||||||\n");
 		} else {
-			control.setStatus(Status.CheckedIn);
+			this.control.setStatus(Status.CheckedIn);
 			System.out.println("\n|||||||||||||||||||||||");
 			System.out.println("  Booking checked in!");
 			System.out.println("|||||||||||||||||||||||\n");
@@ -294,7 +294,7 @@ public class SystemUI {
 			System.out.println("||||||||||||||||||||||||||||\n");
 		} else {
 			makePayment();
-			control.setStatus(Status.CheckedOut);
+			this.control.setStatus(Status.CheckedOut);
 			printReceipt();
 			System.out.println("\n||||||||||||||||||||||||");
 			System.out.println("  Booking checked out!");
@@ -536,7 +536,7 @@ public class SystemUI {
 			System.out.println("\n-----------------------");
 			System.out.println("The deposit is refundable");
 
-			PaymentMethod paymentMethod = control.getPaymentMethod();
+			PaymentMethod paymentMethod = this.control.getPaymentMethod();
 			if (paymentMethod == PaymentMethod.CreditCard) {
 				System.out.println("Payment Method ----> Credit Card");
 				String cardNumber = this.control.getCardNumber();
@@ -652,12 +652,13 @@ public class SystemUI {
 			System.out.println("Check-in date : " + this.control.getCheckInDate().toString());
 			System.out.println("Check-out date: " + this.control.getCheckOutDate().toString());
 			System.out.println("Room: " + this.control.getRoom().getRoomID());
+			System.out.println("Room Type: " + this.control.getRoom().getType());
 			System.out.println("Number of guest: " + this.control.getNumOfGuest());
 			System.out.println("Booking status: " + this.control.getStatus());
 			System.out.println("Payment method: " + this.control.getPaymentMethod());
 			System.out.println("Total price:" + this.control.getTotalPrice());
 			System.out.println("");
-		} else if (userType == UserType.Client) {
+		} else { //userType == UserType.Client
 			System.out.println("\n--------------");
 			System.out.println("Booking Detail");
 			System.out.println("--------------");
@@ -682,22 +683,22 @@ public class SystemUI {
 		System.out.println("-----------------------");
 		System.out.println("    Booking Detail     ");
 		System.out.println("-----------------------");
-		System.out.println("Booking ID     : " + control.getBookingID());
-		System.out.println("First Name     : " + control.getFirstName());
-		System.out.println("Last Name      : " + control.getLastName());
-		System.out.println("Booking Status : " + control.getStatus());
+		System.out.println("Booking ID     : " + this.control.getBookingID());
+		System.out.println("First Name     : " + this.control.getFirstName());
+		System.out.println("Last Name      : " + this.control.getLastName());
+		System.out.println("Booking Status : " + this.control.getStatus());
 		System.out.println("-----------------------");
 		System.out.println("    Payment Detail     ");
 		System.out.println("-----------------------");
-		System.out.println("Payment Method : " + control.getPaymentMethod());
-		System.out.println("     TOTAL     : " + control.getTotalPrice());
+		System.out.println("Payment Method : " + this.control.getPaymentMethod());
+		System.out.println("     TOTAL     : " + this.control.getTotalPrice());
 		System.out.println("");
 		System.out.println("-----------------------");
 		System.out.println("       THANK YOU       ");
 		System.out.println("-----------------------");
 	}
 
-	private boolean clientMenu() { // R
+	private boolean clientMenu() {
 		int choice = 0;
 		boolean exit = false;
 		boolean error = true;

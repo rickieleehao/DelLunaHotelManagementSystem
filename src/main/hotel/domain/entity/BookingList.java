@@ -59,7 +59,7 @@ public class BookingList implements IBookingData {
 					status = Status.Cancelled;
 				} else if (tempString.equals("CheckedOut")) {
 					status = Status.CheckedOut;
-				} else if (tempString.equals("Confirmed")) {
+				} else { // tempString.equals("Confirmed")
 					status = Status.Confirmed;
 				}
 
